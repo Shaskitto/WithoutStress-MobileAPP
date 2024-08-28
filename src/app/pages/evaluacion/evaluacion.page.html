@@ -1,0 +1,72 @@
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ questions[currentQuestionIndex].texto }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-select *ngIf="questions[currentQuestionIndex].id === 'carrera'" 
+                  [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
+                  name="carrera"
+                  placeholder="Selecciona tu carrera">
+        <ion-select-option value="Ingeniería de Sistemas">Ingeniería de Sistemas</ion-select-option>
+        <ion-select-option value="Ingeniería Multimedia">Ingeniería Multimedia</ion-select-option>
+      </ion-select>
+
+      <ion-select *ngIf="questions[currentQuestionIndex].id === 'semestre'" 
+                  [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
+                  name="semestre"
+                  placeholder="Selecciona tu semestre">
+        <ion-select-option value="1">1 semestre</ion-select-option>
+        <ion-select-option value="2">2 semestre</ion-select-option>
+        <ion-select-option value="3">3 semestre</ion-select-option>
+        <ion-select-option value="4">4 semestre</ion-select-option>
+      </ion-select>
+
+      <ion-input 
+        *ngIf="questions[currentQuestionIndex].id === 'edad'" 
+        [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
+        [type]="'number'" 
+        name="edad"
+        required>
+      </ion-input>
+
+      <ion-select *ngIf="questions[currentQuestionIndex].id === 'sexo'" 
+                  [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
+                  name="sexo" 
+                  placeholder="Selecciona tu sexo">
+        <ion-select-option value="Masculino">Masculino</ion-select-option>
+        <ion-select-option value="Femenino">Femenino</ion-select-option>
+      </ion-select>
+
+      <ion-select *ngIf="questions[currentQuestionIndex].id === 'tecnicas'" 
+            [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
+            placeholder="Selecciona una opción">
+      <ion-select-option value="si">Sí</ion-select-option>
+      <ion-select-option value="no">No</ion-select-option>
+    </ion-select>
+
+      <ion-select *ngIf="questions[currentQuestionIndex].id === 'actividades'" 
+                  [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
+                  name="actividades" 
+                  multiple="true" 
+                  placeholder="Selecciona tus actividades">
+        <ion-select-option value="Meditación">Meditación</ion-select-option>
+        <ion-select-option value="Sonidos Relajantes">Sonidos Relajantes</ion-select-option>
+        <ion-select-option value="Ejercicios de respiración">Ejercicios de respiración</ion-select-option>
+        <ion-select-option value="Prácticas para Dormir">Prácticas para Dormir</ion-select-option>
+      </ion-select>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-button *ngIf="currentQuestionIndex !== questions.length - 1 || questions[currentQuestionIndex].id !== 'actividades'" 
+  expand="full" 
+  (click)="nextQuestion()" 
+  [disabled]="!isQuestionAnswered()">
+Siguiente
+</ion-button>
+
+  <ion-button expand="full" (click)="updateUser()" 
+              *ngIf="currentQuestionIndex === questions.length - 1">
+    Guardar Respuestas
+  </ion-button>
+</ion-content>

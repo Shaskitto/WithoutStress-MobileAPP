@@ -1,0 +1,136 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Perfil</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ng-container *ngIf="!isEditing; else editMode">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Información del Usuario</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-label>Nombre de Usuario:</ion-label>
+          <ion-text>{{ user?.username }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Correo Electrónico:</ion-label>
+          <ion-text>{{ user?.email }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Edad:</ion-label>
+          <ion-text>{{ user?.edad }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Sexo:</ion-label>
+          <ion-text>{{ user?.sexo }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Semestre:</ion-label>
+          <ion-text>{{ user?.semestre }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Carrera:</ion-label>
+          <ion-text>{{ user?.carrera }}</ion-text>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Actividades:</ion-label>
+          <ion-text>{{ user?.actividades.join(', ') }}</ion-text>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Imagen de Perfil</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-img [src]="user?.profileImage" *ngIf="user?.profileImage" 
+                  style="border-radius: 8px; width: 100%; height: auto;"></ion-img>
+        <ion-text *ngIf="!user?.profileImage" color="medium">No se ha establecido ninguna imagen de perfil.</ion-text>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-button expand="block" color="primary" (click)="toggleEdit()">
+      {{ isEditing ? 'Cancelar' : 'Editar' }}
+    </ion-button>
+    <ion-button expand="block" color="danger" (click)="logout()">Cerrar sesión</ion-button>
+  </ng-container>
+
+  <ng-template #editMode>
+    <form [formGroup]="perfilForm" (ngSubmit)="updateUser()">
+      
+      <ion-item>
+        <ion-label position="floating">Nombre de Usuario</ion-label>
+        <ion-input formControlName="username"></ion-input>
+      </ion-item>
+      
+      <ion-item>
+        <ion-label position="floating">Imagen de Perfil</ion-label>
+        <ion-input type="file" (change)="onFileSelected($event)"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Edad</ion-label>
+        <ion-input formControlName="edad" type="number"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Sexo</ion-label>
+        <ion-select formControlName="sexo">
+          <ion-select-option value="Masculino">Masculino</ion-select-option>
+          <ion-select-option value="Femenino">Femenino</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Semestre</ion-label>
+        <ion-select formControlName="semestre">
+          <ion-select-option *ngFor="let i of [1, 2, 3, 4]" [value]="i">{{ i }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Carrera</ion-label>
+        <ion-select formControlName="carrera">
+          <ion-select-option value="Ingeniería de Sistemas">Ingeniería de Sistemas</ion-select-option>
+          <ion-select-option value="Ingeniería Multimedia">Ingeniería Multimedia</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Actividades</ion-label>
+        <ion-select formControlName="actividades" multiple="true">
+          <ion-select-option value="Meditación">Meditación</ion-select-option>
+          <ion-select-option value="Sonidos Relajantes">Sonidos Relajantes</ion-select-option>
+          <ion-select-option value="Ejercicios de respiración">Ejercicios de respiración</ion-select-option>
+          <ion-select-option value="Prácticas para Dormir">Prácticas para Dormir</ion-select-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-button expand="block" type="submit" [disabled]="!perfilForm.valid">
+        Guardar Cambios
+      </ion-button>
+
+      <ion-button expand="block" color="medium" (click)="toggleEdit()">
+        Cancelar
+      </ion-button>
+    </form>
+  </ng-template>
+</ion-content>

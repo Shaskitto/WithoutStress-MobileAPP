@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Comunidad</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="users$ | async as users; else loading">
+    <ion-list>
+      <ion-item *ngFor="let user of users">
+        {{ user.username }} 
+      </ion-item>
+    </ion-list>
+  </div>
+  <ng-template #loading>
+    <ion-spinner></ion-spinner>
+  </ng-template>
+</ion-content>

@@ -1,0 +1,7 @@
+{
+  "name": "WSApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
