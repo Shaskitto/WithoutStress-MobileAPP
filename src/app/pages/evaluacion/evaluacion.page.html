@@ -4,6 +4,7 @@
       <ion-card-title>{{ questions[currentQuestionIndex].texto }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
+      <!-- Carrera -->
       <ion-select *ngIf="questions[currentQuestionIndex].id === 'carrera'" 
                   [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
                   name="carrera"
@@ -12,6 +13,7 @@
         <ion-select-option value="Ingeniería Multimedia">Ingeniería Multimedia</ion-select-option>
       </ion-select>
 
+      <!-- Semestre -->
       <ion-select *ngIf="questions[currentQuestionIndex].id === 'semestre'" 
                   [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
                   name="semestre"
@@ -22,6 +24,7 @@
         <ion-select-option value="4">4 semestre</ion-select-option>
       </ion-select>
 
+      <!-- Edad -->
       <ion-input 
         *ngIf="questions[currentQuestionIndex].id === 'edad'" 
         [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
@@ -30,6 +33,7 @@
         required>
       </ion-input>
 
+      <!-- Sexo -->
       <ion-select *ngIf="questions[currentQuestionIndex].id === 'sexo'" 
                   [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
                   name="sexo" 
@@ -38,13 +42,15 @@
         <ion-select-option value="Femenino">Femenino</ion-select-option>
       </ion-select>
 
+      <!-- Técnicas -->
       <ion-select *ngIf="questions[currentQuestionIndex].id === 'tecnicas'" 
             [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
             placeholder="Selecciona una opción">
       <ion-select-option value="si">Sí</ion-select-option>
       <ion-select-option value="no">No</ion-select-option>
-    </ion-select>
+      </ion-select>
 
+      <!-- Actividades -->
       <ion-select *ngIf="questions[currentQuestionIndex].id === 'actividades'" 
                   [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
                   name="actividades" 
@@ -55,10 +61,49 @@
         <ion-select-option value="Ejercicios de respiración">Ejercicios de respiración</ion-select-option>
         <ion-select-option value="Prácticas para Dormir">Prácticas para Dormir</ion-select-option>
       </ion-select>
+
+      <!-- Horarios -->
+      <div *ngIf="questions[currentQuestionIndex].id === 'horario'">      
+        <ion-list>
+          <ion-item-divider color="light">Mañana</ion-item-divider>
+          <ion-item *ngFor="let opcion of questions[currentQuestionIndex].opcionesHorarios?.manana">
+            <ion-label>{{ opcion }}</ion-label>
+            <ion-checkbox 
+              [checked]="answers['horario']?.manana?.includes(opcion)" 
+              (ionChange)="toggleHorario(opcion, 'manana')"
+              [disabled]="answers['horario']?.manana?.length >= 2 && !answers['horario']?.manana?.includes(opcion)">
+            </ion-checkbox>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-item-divider color="light">Tarde</ion-item-divider>
+          <ion-item *ngFor="let opcion of questions[currentQuestionIndex].opcionesHorarios?.tarde">
+            <ion-label>{{ opcion }}</ion-label>
+            <ion-checkbox 
+              [checked]="answers['horario']?.tarde?.includes(opcion)" 
+              (ionChange)="toggleHorario(opcion, 'tarde')"
+              [disabled]="answers['horario']?.tarde?.length >= 2 && !answers['horario']?.tarde?.includes(opcion)">
+            </ion-checkbox>
+          </ion-item>
+        </ion-list>
+
+        <ion-list>
+          <ion-item-divider color="light">Noche</ion-item-divider>
+          <ion-item *ngFor="let opcion of questions[currentQuestionIndex].opcionesHorarios?.noche">
+            <ion-label>{{ opcion }}</ion-label>
+            <ion-checkbox 
+              [checked]="answers['horario']?.noche?.includes(opcion)" 
+              (ionChange)="toggleHorario(opcion, 'noche')"
+              [disabled]="answers['horario']?.noche?.length >= 2 && !answers['horario']?.noche?.includes(opcion)">
+            </ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </div>
     </ion-card-content>
   </ion-card>
 
-  <ion-button *ngIf="currentQuestionIndex !== questions.length - 1 || questions[currentQuestionIndex].id !== 'actividades'" 
+  <ion-button *ngIf="currentQuestionIndex !== questions.length - 1 || questions[currentQuestionIndex].id !== 'horario'" 
   expand="full" 
   (click)="nextQuestion()" 
   [disabled]="!isQuestionAnswered()">

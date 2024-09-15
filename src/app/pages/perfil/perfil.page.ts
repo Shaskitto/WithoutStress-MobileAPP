@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { environment } from 'src/environments/environment';
 
@@ -49,7 +49,12 @@ export class PerfilPage implements OnInit {
       sexo: [this.user.sexo],
       carrera: [this.user.carrera],
       actividades: [this.user.actividades],
-      email: [this.user.email]
+      email: [this.user.email],
+      horario: this.fb.group({  
+        manana: [this.user.horario?.manana || ''],  
+        tarde: [this.user.horario?.tarde || ''],    
+        noche: [this.user.horario?.noche || '']     
+      })
     });
   }
 
@@ -79,6 +84,24 @@ export class PerfilPage implements OnInit {
       formData.append('sexo', userData.sexo);
       formData.append('carrera', userData.carrera);
       formData.append('email', userData.email);
+
+      if (userData.horario) {
+        if (userData.horario.manana) {
+          userData.horario.manana.forEach((hora: string) => {
+            formData.append('horario[manana][]', hora);
+          });
+        }
+        if (userData.horario.tarde) {
+          userData.horario.tarde.forEach((hora: string) => {
+            formData.append('horario[tarde][]', hora);
+          });
+        }
+        if (userData.horario.noche) {
+          userData.horario.noche.forEach((hora: string) => {
+            formData.append('horario[noche][]', hora);
+          });
+        }
+      }
 
       if (this.selectedFile) {
         formData.append('profileImage', this.selectedFile);
