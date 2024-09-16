@@ -10,6 +10,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LoginPage{
   email: string | undefined;
   password: string | undefined;
+  rememberMe: boolean = false;
   user: any;
 
   constructor(private authService: AuthService, private router: Router) { }
@@ -50,5 +51,9 @@ export class LoginPage{
   
   navigateRegister(){
     this.router.navigate(['/registro'])
+  }
+
+  navigateForgotPassword(){
+    
   }
 }

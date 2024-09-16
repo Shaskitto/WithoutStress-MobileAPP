@@ -1,0 +1,46 @@
+.welcome-grid {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    height: 100%;
+}
+
+.welcome-content {
+    background-size: cover;
+    color: white;
+}
+
+.welcome-title {
+    text-align: center;
+    font-size: 2rem; 
+    margin-bottom: 16px;
+}
+
+.welcome-description {
+    text-align: center;
+    font-size: 1.2rem; 
+    line-height: 1.5; 
+    margin-bottom: 20px; 
+}
+
+.welcome-button {
+    background-color: #007bff; 
+    color: white; 
+    margin-top: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease; 
+    border: none;
+    border-radius: 8px; 
+}
+
+.welcome-button:hover {
+    background-color: #0056b3; 
+    transform: translateY(-2px); 
+}
+
+.welcome-button.secondary {
+    background-color: #6c757d; 
+}
+
+.welcome-button.secondary:hover {
+    background-color: #5a6268; 
+}

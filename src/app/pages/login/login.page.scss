@@ -1,0 +1,66 @@
+ion-grid {
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    height: 100%;
+    padding: 20px; /* Añadir un poco de padding para móviles */
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 20px; /* Espacio inferior */
+}
+
+.login-title {
+    font-size: 1.8rem; /* Ajuste de tamaño para móviles */
+    color: #007bff; /* Color personalizado */
+}
+
+.login-item {
+    margin-bottom: 16px; /* Espacio entre los elementos del formulario */
+}
+
+.login-button {
+    margin-top: 20px;
+    background-color: #007bff; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Efecto de transición */
+    font-size: 1rem; /* Tamaño de fuente más grande para mejor legibilidad */
+}
+
+.login-button:hover {
+    background-color: #0056b3; /* Color de fondo en hover */
+    transform: translateY(-2px); /* Efecto de elevación en hover */
+}
+
+.login-footer {
+    display: flex; /* Usar flexbox para alinear los elementos */
+    flex-direction: column; /* Colocar los elementos uno debajo del otro */
+    align-items: center; /* Centrar los elementos horizontalmente */
+    margin-top: 20px; /* Espacio superior */
+}
+
+.register-link {
+    display: flex; /* Usar flexbox para alinear el texto y el botón */
+    align-items: center; /* Centrar verticalmente */
+    margin-bottom: 10px; /* Espacio inferior */
+}
+
+.register-link ion-button {
+    margin-left: 5px; /* Espacio a la izquierda del botón */
+    font-weight: bold; /* Texto en negrita para el botón */
+}
+
+.remember-me-container {
+    display: flex;
+    align-items: center; /* Alinea verticalmente el checkbox y el texto */
+    margin-top: 20px; /* Espacio superior */
+}
+
+.remember-me-container ion-checkbox {
+    margin-right: 10px; /* Espacio entre el checkbox y el texto */
+}
+
+.forgot-password-button {
+    margin-left: 5px; /* Espacio a la izquierda del botón */
+}

@@ -1,15 +1,15 @@
-<ion-content [fullscreen]="true">
-  <ion-grid>
-    <ion-row class="ion-align-items-center ion-justify-content-center" style="margin-top: 20px;">
+<ion-content [fullscreen]="true" class="welcome-content">
+  <ion-grid class="welcome-grid">
+    <ion-row class="ion-align-items-center ion-justify-content-center">
       <ion-col size="12" size-md="6" size-lg="4">
-        <h1 style="text-align: center;">¡Bienvenido a nuestra aplicación!</h1>
+        <h1 class="welcome-title">¡Bienvenido a nuestra aplicación!</h1>
       </ion-col>
     </ion-row>
 
     <ion-row class="ion-align-items-center ion-justify-content-center">
       <ion-col size="12" size-md="6" size-lg="4">
         <ion-text color="medium">
-          <p style="text-align: center;">
+          <p class="welcome-description">
             Aprende a relajarte con sesiones guiadas, a dormir mejor con sonidos y a mejorar tu bienestar general. 
             Explora nuestra amplia biblioteca de meditaciones, ejercicios de respiración, y más, diseñados para ayudarte a 
             encontrar la calma y equilibrio en tu día a día.
@@ -18,12 +18,12 @@
       </ion-col>
     </ion-row>
     
-    <ion-row class="ion-align-items-center ion-justify-content-center" style="height: 100%;">
+    <ion-row class="ion-align-items-center ion-justify-content-center">
       <ion-col size="12" size-md="6" size-lg="4">
-        <ion-button expand="full" color="primary" (click)="navigateLogin()">
+        <ion-button expand="full" class="welcome-button" (click)="navigateLogin()">
           Iniciar Sesión
         </ion-button>
-        <ion-button expand="full" color="secondary" style="margin-top: 16px;" (click)="navigateRegister()">
+        <ion-button expand="full" class="welcome-button secondary" (click)="navigateRegister()">
           Registrarse
         </ion-button>
       </ion-col>
