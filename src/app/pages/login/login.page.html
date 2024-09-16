@@ -22,8 +22,10 @@
         </form>
 
         <div class="remember-me-container">
-          <ion-checkbox [(ngModel)]="rememberMe" name="rememberMe"></ion-checkbox>
-          <ion-label>Recuérdame</ion-label>
+          <div style="display: flex; align-items: center;"> 
+            <ion-checkbox [(ngModel)]="rememberMe" name="rememberMe"></ion-checkbox>
+            <ion-label>Recuérdame</ion-label>
+          </div>
           <ion-button fill="clear" color="medium" (click)="navigateForgotPassword()" class="forgot-password-button">
             ¿Olvidaste tu contraseña?
           </ion-button>

@@ -54,13 +54,10 @@ ion-grid {
 .remember-me-container {
     display: flex;
     align-items: center; 
-    margin-top: 20px; 
+    justify-content: space-between;
+    width: 100%; 
 }
 
 .remember-me-container ion-checkbox {
     margin-right: 10px; 
-}
-
-.forgot-password-button {
-    margin-left: 5px; 
 }
