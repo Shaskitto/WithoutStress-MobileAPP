@@ -13,7 +13,17 @@ export class LoginPage{
   rememberMe: boolean = false;
   user: any;
 
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router) { 
+    this.loadEmail();
+  }
+
+  loadEmail() {
+    const storedEmail = localStorage.getItem('rememberedEmail');
+    if (storedEmail) {
+      this.email = storedEmail;
+      this.rememberMe = true; 
+    }
+  }
 
   login() {
     const userData = {
@@ -24,6 +34,7 @@ export class LoginPage{
     this.authService.login(userData).subscribe(
       response => {
         console.log('Login exitoso:', response);
+        this.saveEmail();
         this.loadUserData();
       },
       error => {
@@ -32,6 +43,15 @@ export class LoginPage{
     );
   }
 
+  saveEmail() {
+    if (this.rememberMe) {
+      localStorage.setItem('rememberedEmail', this.email || '');
+    } else {
+      localStorage.removeItem('rememberedEmail');
+    }
+  }
+
+  
   loadUserData() {
     this.authService.getUser().subscribe({
       next: (userData) => {
