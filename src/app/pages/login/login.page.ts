@@ -12,6 +12,12 @@ export class LoginPage{
   password: string | undefined;
   rememberMe: boolean = false;
   user: any;
+  forgotPasswordMode: boolean = false; 
+  forgotPasswordEmail: string | undefined; 
+  codeSent: boolean = false; 
+  otp: string | undefined; 
+  newPassword: string | undefined;
+  isSubmitting: boolean = false;
 
   constructor(private authService: AuthService, private router: Router) { 
     this.loadEmail();
@@ -50,7 +56,6 @@ export class LoginPage{
       localStorage.removeItem('rememberedEmail');
     }
   }
-
   
   loadUserData() {
     this.authService.getUser().subscribe({
@@ -61,6 +66,7 @@ export class LoginPage{
     });
   }
 
+  // Método para redirigir al home o evaluación inicial
   navigate(){
     if (!this.user || !this.user.semestre) {
       this.router.navigate(['/evaluacion']);
@@ -69,11 +75,61 @@ export class LoginPage{
     }
   }
   
+  // Método para redirigir al registro
   navigateRegister(){
     this.router.navigate(['/registro'])
   }
 
-  navigateForgotPassword(){
-    
+  // Método para habilitar el modo de recuperación de contraseña
+  navigateForgotPassword() {
+    this.forgotPasswordMode = true;
+    this.resetForgotPasswordFields();
+  }
+
+  // Método para restablecer campos de recuperación de contraseña
+  resetForgotPasswordFields() {
+    this.forgotPasswordEmail = undefined;
+    this.codeSent = false; 
+    this.otp = undefined;
+    this.newPassword = undefined;
+    this.isSubmitting = false; 
+  }
+
+  // Método para enviar el correo de recuperación
+  submitForgotPassword() {
+    if (this.forgotPasswordEmail) {
+      const userData = { email: this.forgotPasswordEmail };
+      this.isSubmitting = true; 
+      this.authService.forgotPassword(userData).subscribe(
+        response => {
+          console.log('Correo de recuperación enviado:', response);
+          this.codeSent = true; 
+        },
+        error => {
+          console.error('Error al enviar correo de recuperación:', error);
+          this.isSubmitting = false;
+        }
+      );
+    }
+  }
+
+  // Método para restablecer la contraseña
+  resetPassword() {
+    const resetData = {
+      email: this.forgotPasswordEmail,
+      otp: this.otp,
+      newPassword: this.newPassword
+    };
+
+    this.authService.resetPassword(resetData).subscribe(
+      response => {
+        console.log('Contraseña restablecida:', response);
+        this.forgotPasswordMode = false; 
+        this.resetForgotPasswordFields();
+      },
+      error => {
+        console.error('Error al restablecer la contraseña:', error);
+      }
+    );
   }
 }

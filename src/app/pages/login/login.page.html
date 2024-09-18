@@ -2,10 +2,12 @@
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-md="8" offset-md="2">
-        <div class="login-header">
+        <div class="login-header" *ngIf="!forgotPasswordMode">
           <h1 class="login-title">Inicio de Sesión</h1>
         </div>
-        <form (ngSubmit)="login()">
+
+        <!-- Formulario de Inicio de Sesión -->
+        <form *ngIf="!forgotPasswordMode" (ngSubmit)="login()">
           <ion-item class="login-item">
             <ion-label position="floating">Correo Electrónico</ion-label>
             <ion-input type="email" [(ngModel)]="email" name="email" required></ion-input>
@@ -21,7 +23,7 @@
           </ion-button>
         </form>
 
-        <div class="remember-me-container">
+        <div class="remember-me-container" *ngIf="!forgotPasswordMode">
           <div style="display: flex; align-items: center;"> 
             <ion-checkbox [(ngModel)]="rememberMe" name="rememberMe"></ion-checkbox>
             <ion-label>Recuérdame</ion-label>
@@ -31,7 +33,7 @@
           </ion-button>
         </div>
 
-        <div class="login-footer">
+        <div class="login-footer" *ngIf="!forgotPasswordMode">
           <div class="register-link">
             <ion-text color="medium">¿No tienes una cuenta?</ion-text>
             <ion-button fill="clear" color="primary" (click)="navigateRegister()">
@@ -39,6 +41,31 @@
             </ion-button>
           </div>
         </div>        
+
+        <!-- Sección para "Recuperar Contraseña" -->
+        <div *ngIf="forgotPasswordMode">
+          <h2>Recuperar Contraseña</h2>
+          <form (ngSubmit)="submitForgotPassword()">
+            <ion-item class="login-item">
+              <ion-label position="floating">Correo Electrónico</ion-label>
+              <ion-input type="email" [(ngModel)]="forgotPasswordEmail" name="forgotPasswordEmail" required></ion-input>
+            </ion-item>
+            <ion-button expand="full" type="submit" [disabled]="isSubmitting">Enviar Correo</ion-button>
+          </form>
+
+          <div *ngIf="codeSent">
+            <h3>Ingresa el código de verificación</h3>
+            <ion-item class="login-item">
+              <ion-label position="floating">Código de Verificación</ion-label>
+              <ion-input type="text" [(ngModel)]="otp" name="otp" required></ion-input>
+            </ion-item>
+            <ion-item class="login-item">
+              <ion-label position="floating">Nueva Contraseña</ion-label>
+              <ion-input type="password" [(ngModel)]="newPassword" name="newPassword" required></ion-input>
+            </ion-item>
+            <ion-button expand="full" (click)="resetPassword()">Restablecer Contraseña</ion-button>
+          </div>
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -27,6 +27,16 @@ export class AuthService {
     );
   }
 
+  // Método para verificar user al restablecer contraseña 
+  forgotPassword(userData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/user/forgot-password`, userData);
+  }
+  
+  // Método para restablecer contraseña 
+  resetPassword(userData: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/api/user/forgot-password/reset`, userData);
+  }
+
   // Método para obtener los usuarios
   getUsers(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/users/`);
