@@ -1,10 +1,4 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Perfil</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="perfil-content">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Perfil</ion-title>
@@ -12,12 +6,21 @@
   </ion-header>
 
   <ng-container *ngIf="!isEditing; else editMode">
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Información del Usuario</ion-card-title>
-      </ion-card-header>
+    <ion-card class="perfil-card">
+      <ion-card-header class="perfil-card-header">
+        <ion-card-title class="perfil-card-title">Información del Usuario</ion-card-title>
+      </ion-card-header>      
 
       <ion-card-content>
+        <div class="perfil-img-container">
+          <ion-img [src]="user?.profileImage" *ngIf="user?.profileImage"
+                   class="perfil-img"></ion-img>
+          <ion-text *ngIf="!user?.profileImage" color="medium">
+            No se ha establecido ninguna imagen de perfil.
+          </ion-text>
+        </div>
+
+        <!-- Información Personal -->
         <ion-item>
           <ion-label>Nombre de Usuario:</ion-label>
           <ion-text>{{ user?.username }}</ion-text>
@@ -53,48 +56,33 @@
           <ion-text>{{ user?.actividades.join(', ') }}</ion-text>
         </ion-item>
 
-        <ion-item>
-          <ion-label>Actividades:</ion-label>
-          <ion-text>{{ user?.actividades.join(', ') }}</ion-text>
-        </ion-item>
-
+        <!-- Horarios -->
         <ion-item>
           <ion-label>Horario:</ion-label>
           <ion-text>
-            Mañana: {{ user?.horario?.manana.join(', ') }} <br>
-            Tarde: {{ user?.horario?.tarde.join(', ') }} <br>
+            Mañana: {{ user?.horario?.manana.join(', ') }}<br>
+            Tarde: {{ user?.horario?.tarde.join(', ') }}<br>
             Noche: {{ user?.horario?.noche.join(', ') }}
           </ion-text>
         </ion-item>
       </ion-card-content>
     </ion-card>
 
-    <ion-card>
-      <ion-card-header>
-        <ion-card-title>Imagen de Perfil</ion-card-title>
-      </ion-card-header>
-
-      <ion-card-content>
-        <ion-img [src]="user?.profileImage" *ngIf="user?.profileImage" 
-                  style="border-radius: 8px; width: 100%; height: auto;"></ion-img>
-        <ion-text *ngIf="!user?.profileImage" color="medium">No se ha establecido ninguna imagen de perfil.</ion-text>
-      </ion-card-content>
-    </ion-card>
-
+    <!-- Botones de Acción -->
     <ion-button expand="block" color="primary" (click)="toggleEdit()">
       {{ isEditing ? 'Cancelar' : 'Editar' }}
     </ion-button>
     <ion-button expand="block" color="danger" (click)="logout()">Cerrar sesión</ion-button>
   </ng-container>
 
+  <!-- Modo de Edición -->
   <ng-template #editMode>
     <form [formGroup]="perfilForm" (ngSubmit)="updateUser()">
-      
       <ion-item>
         <ion-label position="floating">Nombre de Usuario</ion-label>
         <ion-input formControlName="username"></ion-input>
       </ion-item>
-      
+
       <ion-item>
         <ion-label position="floating">Imagen de Perfil</ion-label>
         <ion-input type="file" (change)="onFileSelected($event)"></ion-input>
@@ -138,6 +126,7 @@
         </ion-select>
       </ion-item>
 
+      <!-- Edición de Horarios -->
       <ng-container formGroupName="horario">
         <ion-item>
           <ion-label position="floating">Horario Mañana</ion-label>
@@ -145,14 +134,14 @@
             <ion-select-option *ngFor="let hour of ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00']" [value]="hour">{{ hour }}</ion-select-option>
           </ion-select>
         </ion-item>
-    
+
         <ion-item>
           <ion-label position="floating">Horario Tarde</ion-label>
           <ion-select formControlName="tarde" multiple="true">
             <ion-select-option *ngFor="let hour of ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00']" [value]="hour">{{ hour }}</ion-select-option>
           </ion-select>
         </ion-item>
-    
+
         <ion-item>
           <ion-label position="floating">Horario Noche</ion-label>
           <ion-select formControlName="noche" multiple="true">
@@ -161,6 +150,7 @@
         </ion-item>
       </ng-container>
 
+      <!-- Botones de Acción -->
       <ion-button expand="block" type="submit" [disabled]="!perfilForm.valid">
         Guardar Cambios
       </ion-button>

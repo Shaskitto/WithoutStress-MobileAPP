@@ -1,0 +1,57 @@
+.plan-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.plan-title {
+    font-size: 1.8rem;
+    color: #007bff;
+}
+
+.plan-list {
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.plan-divider {
+    text-align: center; 
+    background-color: transparent; 
+    color: white; 
+    font-weight: bold;
+    padding: 10px 0;
+    font-size: 1.1rem;
+}
+
+
+.plan-item {
+    padding: 12px 0;
+}
+
+.task-container {
+    display: flex;
+    flex-direction: column; 
+    width: 100%;
+}
+
+.task-time {
+    font-size: 0.9rem;
+    color: white;
+    margin-bottom: 15px; 
+}
+
+.task-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.task-info ion-checkbox {
+    --background: #007bff;
+    --border-radius: 50%;
+    margin-right: 10px; 
+}
+
+.task-info ion-label {
+    font-size: 1rem;
+    color: #333;
+}
