@@ -9,6 +9,10 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 
 export class EvaluacionPage{
+  mostrarManana: boolean = false;
+  mostrarTarde: boolean = false;
+  mostrarNoche: boolean = false
+
   questions = [
     { id: 'carrera', texto: '¿Cuál es tu carrera?' },
     { id: 'semestre', texto: '¿Qué semestre estás cursando?' },
@@ -51,12 +55,54 @@ export class EvaluacionPage{
   
   isQuestionAnswered(): boolean {
     const currentQuestion = this.questions[this.currentQuestionIndex];
-    if (currentQuestion.id === 'horario') {
-      return this.answers[currentQuestion.id] !== undefined;
+  
+    if (currentQuestion.id === 'carrera') {
+      return this.answers['carrera'] !== '';
     }
-    return this.answers[currentQuestion.id] !== undefined && this.answers[currentQuestion.id] !== '';
+  
+    if (currentQuestion.id === 'semestre') {
+      return this.answers['semestre'] > 0; 
+    }
+  
+    if (currentQuestion.id === 'edad') {
+      return this.answers['edad'] > 0; 
+    }
+  
+    if (currentQuestion.id === 'sexo') {
+      return this.answers['sexo'] !== ''; 
+    }
+  
+    if (currentQuestion.id === 'tecnicas') {
+      return this.answers['tecnicas'] !== ''; 
+    }
+  
+    if (currentQuestion.id === 'actividades') {
+      return this.answers['actividades'].length > 0; 
+    }
+  
+    if (currentQuestion.id === 'horario') {
+      const horarios = this.answers['horario'];
+      return horarios?.manana?.length > 0 || horarios?.tarde?.length > 0 || horarios?.noche?.length > 0;
+    }
+  
+    return false; 
   }
+  
 
+  toggleSeleccion(periodo: 'manana' | 'tarde' | 'noche') {
+    switch (periodo) {
+      case 'manana':
+        this.mostrarManana = !this.mostrarManana;
+        break;
+      case 'tarde':
+        this.mostrarTarde = !this.mostrarTarde;
+        break;
+      case 'noche':
+        this.mostrarNoche = !this.mostrarNoche;
+        break;
+    }
+  }
+  
   toggleHorario(opcion: string, periodo: 'manana' | 'tarde' | 'noche') {
     const selectedHorarios = this.answers['horario'][periodo];
     
