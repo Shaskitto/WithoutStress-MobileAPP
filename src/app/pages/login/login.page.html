@@ -61,36 +61,30 @@
           </ion-button>
 
           <h2>Recuperar Contraseña</h2>
-          
 
-          <form [formGroup]="forgotPasswordForm" (ngSubmit)="submitForgotPassword()">
+          <form (ngSubmit)="submitForgotPassword()">
             <ion-item class="login-item">
               <ion-label position="floating">Correo Electrónico</ion-label>
-              <ion-input type="email" formControlName="forgotPasswordEmail"></ion-input>
+              <ion-input type="email" [(ngModel)]="forgotPasswordEmail" name="forgotPasswordEmail" required></ion-input>
             </ion-item>
-            <ion-note color="danger" *ngIf="forgotPasswordForm.controls['forgotPasswordEmail'].invalid && forgotPasswordForm.controls['forgotPasswordEmail'].touched">
-              El correo electrónico es obligatorio y debe ser válido.
-            </ion-note>
-            <ion-button expand="full" type="submit" [disabled]="isSubmitting">Enviar Correo</ion-button>
+            <ion-note color="success" *ngIf="successMessage">{{ successMessage }}</ion-note>
+            <ion-note color="danger" *ngIf="errorMessage && !codeSent">{{ errorMessage }}</ion-note>
+            <ion-button expand="full" type="submit">Enviar Correo</ion-button>
           </form>
 
           <div *ngIf="codeSent">
             <h3>Ingresa el código de verificación</h3>
             <ion-item class="login-item">
               <ion-label position="floating">Código de Verificación</ion-label>
-              <ion-input type="text" formControlName="otp"></ion-input>
-            </ion-item>
-            <ion-note color="danger" *ngIf="forgotPasswordForm.controls['otp'].invalid && forgotPasswordForm.controls['otp'].touched">
-              El código de verificación es obligatorio.
-            </ion-note>
+              <ion-input type="text" [(ngModel)]="otp" name="otp" required></ion-input>
+            </ion-item> 
 
             <ion-item class="login-item">
               <ion-label position="floating">Nueva Contraseña</ion-label>
-              <ion-input type="password" formControlName="newPassword"></ion-input>
+              <ion-input type="password" [(ngModel)]="newPassword" name="newPassword" required></ion-input>
             </ion-item>
-            <ion-note color="danger" *ngIf="forgotPasswordForm.controls['newPassword'].invalid && forgotPasswordForm.controls['newPassword'].touched">
-              La nueva contraseña es obligatoria.
-            </ion-note>
+
+            <ion-note color="danger" *ngIf="errorMessage && codeSent">{{ errorMessage }}</ion-note>
 
             <ion-button expand="full" (click)="resetPassword()">Restablecer Contraseña</ion-button>
           </div>
