@@ -30,12 +30,14 @@ export class LoginPage{
     this.authService.getLogoutObservable().subscribe(() => {
       this.loginForm.reset(); 
       this.loginForm.updateValueAndValidity(); 
+      this.initializeForms();
     });
   }
 
   initializeForms() {
+    const savedEmail = localStorage.getItem('rememberedEmail') || '';
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: [savedEmail, [Validators.required, Validators.email]],
       password: ['', [Validators.required]],
     });
 
@@ -57,6 +59,11 @@ export class LoginPage{
     this.authService.login(userData).subscribe(
       response => {
         console.log('Login exitoso:', response);
+        if (this.rememberMe) {
+          localStorage.setItem('rememberedEmail', this.loginForm.value.email); 
+        } else {
+          localStorage.removeItem('rememberedEmail'); 
+        }
         this.loadUserData();
       },
       error => {
