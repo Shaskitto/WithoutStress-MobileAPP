@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
-import { environment } from 'src/environments/environment';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-comunidad',
@@ -9,17 +8,16 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./comunidad.page.scss'],
 })
 export class ComunidadPage implements OnInit {
-  private apiUrl = environment.apiUrl;
   users$: Observable<any> | undefined;
 
-  constructor(private authService: AuthService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.fetchUsers();
   }
 
   fetchUsers(): void {
-    this.users$ = this.authService.getUsers(); 
+    this.users$ = this.userService.getUsers(); 
   }
 
 }

@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -14,12 +14,12 @@ export class AuthService {
 
   // Método para registrar un nuevo usuario
   registerUser(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/user/register`, userData);
+    return this.http.post(`${this.apiUrl}/api/auth/register`, userData);
   }
 
   // Método para iniciar sesión
   login(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/user/login`, userData).pipe(
+    return this.http.post(`${this.apiUrl}/api/auth/login`, userData).pipe(
       tap((response: any) => {
         localStorage.setItem('userId', response.userId);
         localStorage.setItem('token', response.token);
@@ -29,45 +29,24 @@ export class AuthService {
 
   // Método para verificar user al restablecer contraseña 
   forgotPassword(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/user/forgot-password`, userData);
+    return this.http.post(`${this.apiUrl}/api/auth/forgot-password`, userData);
   }
   
   // Método para restablecer contraseña 
   resetPassword(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/user/forgot-password/reset`, userData);
+    return this.http.post(`${this.apiUrl}/api/auth/forgot-password/reset`, userData);
   }
 
-  // Método para obtener los usuarios
-  getUsers(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/users/`);
+  // Método para validar username 
+  checkUsernameExists(username: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/auth/check-username`, { params: { username } });
   }
 
-  // Método para obtener datos de un usuario
-  getUser(): Observable<any>{
-    const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get(`${this.apiUrl}/api/user/${userId}`, { headers });
-    } else {
-      throw new Error('Token no encontrado');
-    }
+  // Método para validar correo
+  checkEmailExists(email: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/auth/check-email`, { params: { email } });
   }
-
-  // Metódo para actualizar información de un usuario
-  updateUser(updateData: any): Observable<any>{
-    const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.patch(`${this.apiUrl}/api/user/${userId}`, updateData, { headers });
-    } else {
-      throw new Error('Token no encontrado');
-    }
-  }
-
+  
   // Método para logout
   logout(): void {
     localStorage.removeItem('userId');

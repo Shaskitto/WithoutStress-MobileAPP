@@ -6,23 +6,38 @@
           <h1 class="register-title">Crear Cuenta</h1> 
         </div>
 
-        <form (ngSubmit)="register()">
+        <form [formGroup]="registerForm" (ngSubmit)="register()">
           <ion-item class="register-item">
             <ion-label position="floating">Nombre de Usuario</ion-label>
-            <ion-input [(ngModel)]="user.username" name="username" required></ion-input>
+            <ion-input formControlName="username"></ion-input>
           </ion-item>
+          <ion-note color="danger" *ngIf="registerForm.controls['username'].errors?.['usernameTaken']">
+            El nombre de usuario ya está en uso.
+          </ion-note>
+          <ion-note color="danger" *ngIf="registerForm.controls['username'].invalid && registerForm.controls['username'].touched && !registerForm.controls['username'].errors?.['usernameTaken']">
+            El nombre de usuario es obligatorio.
+          </ion-note>          
 
           <ion-item class="register-item">
             <ion-label position="floating">Correo Electrónico</ion-label>
-            <ion-input [(ngModel)]="user.email" name="email" type="email" required></ion-input>
+            <ion-input formControlName="email" type="email"></ion-input>
           </ion-item>
+          <ion-note color="danger" *ngIf="registerForm.controls['email'].errors?.['emailTaken']">
+            El correo ya está en uso.
+          </ion-note>
+          <ion-note color="danger" *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched && !registerForm.controls['email'].errors?.['emailTaken']">
+            Email es obligatorio
+          </ion-note>
 
           <ion-item class="register-item">
             <ion-label position="floating">Contraseña</ion-label>
-            <ion-input [(ngModel)]="user.password" name="password" type="password" required></ion-input>
+            <ion-input formControlName="password" type="password"></ion-input>
           </ion-item>
+          <ion-note color="danger" *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched">
+            La contraseña debe tener al menos 8 caracteres.
+          </ion-note>
 
-          <ion-button expand="full" type="submit" class="register-button">
+          <ion-button expand="full" type="submit" [disabled]="registerForm.invalid" class="register-button">
             Registrar
           </ion-button>
         </form>
@@ -34,7 +49,7 @@
               Inicia Sesión aquí
             </ion-button>
           </div>
-        </div>   
+        </div>
       </ion-col>
     </ion-row>
   </ion-grid>

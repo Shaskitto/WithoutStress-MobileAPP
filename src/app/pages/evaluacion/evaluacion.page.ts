@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-evaluacion',
@@ -43,7 +43,7 @@ export class EvaluacionPage{
 
   currentQuestionIndex = 0;
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   nextQuestion() {
     if (this.isQuestionAnswered()) {
@@ -117,7 +117,7 @@ export class EvaluacionPage{
 
   updateUser() {
     console.log('Datos a enviar:', this.answers);
-    this.authService.updateUser(this.answers).subscribe(
+    this.userService.updateUser(this.answers).subscribe(
       response => {
         console.log('Usuario actualizado con éxito:', response);
         this.navigateHome();

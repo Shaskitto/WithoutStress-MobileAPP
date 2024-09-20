@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,7 @@ export class LoginPage{
   newPassword: string | undefined;
   isSubmitting: boolean = false;
 
-  constructor(private authService: AuthService, private router: Router) { 
+  constructor(private authService: AuthService, private userService: UserService, private router: Router) { 
     this.loadEmail();
   }
 
@@ -58,7 +59,7 @@ export class LoginPage{
   }
   
   loadUserData() {
-    this.authService.getUser().subscribe({
+    this.userService.getUser().subscribe({
       next: (userData) => {
         this.user = userData; 
         this.navigate();

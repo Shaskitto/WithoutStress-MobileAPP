@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { catchError, Observable } from 'rxjs';
-import { AuthService } from 'src/app/services/auth.service';
 import { ViewWillEnter } from '@ionic/angular';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-plan',
@@ -12,7 +12,7 @@ export class PlanPage implements OnInit, ViewWillEnter {
   user$: Observable<any> | undefined;
   horarios: any;
 
-  constructor(private authService: AuthService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.loadUserData();
@@ -23,7 +23,7 @@ export class PlanPage implements OnInit, ViewWillEnter {
   }
 
   loadUserData() {
-    this.user$ = this.authService.getUser().pipe(
+    this.user$ = this.userService.getUser().pipe(
       catchError(error => {
         console.error('Error al obtener los datos del usuario', error);
         return [];

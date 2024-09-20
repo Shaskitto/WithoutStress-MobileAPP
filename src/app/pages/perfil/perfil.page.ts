@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -16,7 +17,7 @@ export class PerfilPage implements OnInit {
   isEditing = false;
   selectedFile: File | null = null;
 
-  constructor(private authService: AuthService, private fb: FormBuilder) { }
+  constructor(private userService: UserService, private authService: AuthService, private fb: FormBuilder) { }
 
   ngOnInit() { 
     this.loadUserData();
@@ -24,7 +25,7 @@ export class PerfilPage implements OnInit {
 
   // Método para cargar los datos del usuario
   loadUserData() {
-    this.authService.getUser().subscribe({
+    this.userService.getUser().subscribe({
       next: (userData) => {
         this.user = userData; 
         if (this.user.profileImage) {
@@ -111,7 +112,7 @@ export class PerfilPage implements OnInit {
         formData.append('actividades[]', actividad);
       });
 
-      this.authService.updateUser(formData).subscribe(
+      this.userService.updateUser(formData).subscribe(
         response => {
           console.log('Usuario actualizado con éxito:', response);
           this.isEditing = false; 
