@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
@@ -9,53 +10,63 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage{
-  email: string | undefined;
-  password: string | undefined;
+  loginForm!: FormGroup;
+  forgotPasswordForm!: FormGroup;
+  forgotPasswordMode: boolean = false; 
+  codeSent: boolean = false; 
+  isSubmitting: boolean = false;
+  email: string = ''; 
+  errorMessage: string = ''; 
   rememberMe: boolean = false;
   user: any;
-  forgotPasswordMode: boolean = false; 
-  forgotPasswordEmail: string | undefined; 
-  codeSent: boolean = false; 
-  otp: string | undefined; 
-  newPassword: string | undefined;
-  isSubmitting: boolean = false;
 
-  constructor(private authService: AuthService, private userService: UserService, private router: Router) { 
-    this.loadEmail();
+  constructor(private fb: FormBuilder, private authService: AuthService, private userService: UserService, private router: Router) { 
+    this.initializeForms();
+
+    this.loginForm.valueChanges.subscribe(() => {
+      this.errorMessage = ''; 
+    });
+
+    this.authService.getLogoutObservable().subscribe(() => {
+      this.loginForm.reset(); 
+    });
   }
 
-  loadEmail() {
-    const storedEmail = localStorage.getItem('rememberedEmail');
-    if (storedEmail) {
-      this.email = storedEmail;
-      this.rememberMe = true; 
-    }
+  initializeForms() {
+    this.loginForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
+    });
+
+    this.forgotPasswordForm = this.fb.group({
+      forgotPasswordEmail: ['', [Validators.required, Validators.email]],
+      otp: ['', [Validators.required]],
+      newPassword: ['', [Validators.required]],
+    });
   }
 
   login() {
-    const userData = {
-      email: this.email,
-      password: this.password
-    };
-
+    if (this.loginForm.invalid) {
+      return; 
+    }
+  
+    this.isSubmitting = true; 
+    const userData = this.loginForm.value;
+  
     this.authService.login(userData).subscribe(
       response => {
         console.log('Login exitoso:', response);
-        this.saveEmail();
         this.loadUserData();
       },
       error => {
         console.error('Error de login:', error);
+        this.isSubmitting = false; 
+        
+        if (error.status === 400 || error.status === 404) { 
+          this.errorMessage = 'Credenciales incorrectas. Por favor, verifica tu correo y contraseña.'; 
+        } 
       }
     );
-  }
-
-  saveEmail() {
-    if (this.rememberMe) {
-      localStorage.setItem('rememberedEmail', this.email || '');
-    } else {
-      localStorage.removeItem('rememberedEmail');
-    }
   }
   
   loadUserData() {
@@ -81,51 +92,50 @@ export class LoginPage{
     this.router.navigate(['/registro'])
   }
 
+  // Método para reiniciar los campos del formulario de recuperación de contraseña
+  resetForgotPasswordFields() {
+    this.forgotPasswordForm.reset();
+    this.codeSent = false;
+    this.isSubmitting = false;
+  }
+  
   // Método para habilitar el modo de recuperación de contraseña
   navigateForgotPassword() {
     this.forgotPasswordMode = true;
     this.resetForgotPasswordFields();
   }
 
-  // Método para restablecer campos de recuperación de contraseña
-  resetForgotPasswordFields() {
-    this.forgotPasswordEmail = undefined;
-    this.codeSent = false; 
-    this.otp = undefined;
-    this.newPassword = undefined;
-    this.isSubmitting = false; 
-  }
-
   // Método para enviar el correo de recuperación
   submitForgotPassword() {
-    if (this.forgotPasswordEmail) {
-      const userData = { email: this.forgotPasswordEmail };
-      this.isSubmitting = true; 
-      this.authService.forgotPassword(userData).subscribe(
-        response => {
-          console.log('Correo de recuperación enviado:', response);
-          this.codeSent = true; 
-        },
-        error => {
-          console.error('Error al enviar correo de recuperación:', error);
-          this.isSubmitting = false;
-        }
-      );
+    if (this.forgotPasswordForm.invalid) {
+      return;
     }
+
+    const userData = { email: this.forgotPasswordForm.value.forgotPasswordEmail };
+    this.isSubmitting = true; 
+
+    this.authService.forgotPassword(userData).subscribe(
+      response => {
+        console.log('Correo de recuperación enviado:', response);
+        this.codeSent = true; 
+      },
+      error => {
+        console.error('Error al enviar correo de recuperación:', error);
+        this.isSubmitting = false;
+      }
+    );
   }
 
   // Método para restablecer la contraseña
   resetPassword() {
-    const resetData = {
-      email: this.forgotPasswordEmail,
-      otp: this.otp,
-      newPassword: this.newPassword
-    };
+    if (this.forgotPasswordForm.invalid) {
+      return; 
+    }
 
+    const resetData = this.forgotPasswordForm.value;
     this.authService.resetPassword(resetData).subscribe(
       response => {
         console.log('Contraseña restablecida:', response);
-        this.forgotPasswordMode = false; 
         this.resetForgotPasswordFields();
       },
       error => {

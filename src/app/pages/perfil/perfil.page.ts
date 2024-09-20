@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
+import { LoginPage } from '../login/login.page';
 
 @Component({
   selector: 'app-perfil',
@@ -17,7 +19,7 @@ export class PerfilPage implements OnInit {
   isEditing = false;
   selectedFile: File | null = null;
 
-  constructor(private userService: UserService, private authService: AuthService, private fb: FormBuilder) { }
+  constructor(private userService: UserService, private authService: AuthService, private fb: FormBuilder, private router: Router) { }
 
   ngOnInit() { 
     this.loadUserData();
@@ -127,5 +129,8 @@ export class PerfilPage implements OnInit {
 
   logout() {
     this.authService.logout();
+    const loginPage = new LoginPage(this.fb, this.authService, this.userService, this.router); 
+    loginPage.loginForm.reset();
+    this.router.navigate(['/login']);
   }
 }

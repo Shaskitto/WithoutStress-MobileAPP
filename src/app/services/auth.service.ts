@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private apiUrl = environment.apiUrl;
+  private logoutSubject = new Subject<void>();
   
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
   // Método para registrar un nuevo usuario
   registerUser(userData: any): Observable<any> {
@@ -51,6 +51,10 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('userId');
     localStorage.removeItem('token');
-    this.router.navigate(['/login']);
+    this.logoutSubject.next();
+  }
+
+  getLogoutObservable(): Observable<void> {
+    return this.logoutSubject.asObservable();
   }
 }
