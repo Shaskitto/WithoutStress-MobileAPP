@@ -29,6 +29,7 @@ export class LoginPage{
 
     this.authService.getLogoutObservable().subscribe(() => {
       this.loginForm.reset(); 
+      this.loginForm.updateValueAndValidity(); 
     });
   }
 
