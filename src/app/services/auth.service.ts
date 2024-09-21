@@ -43,7 +43,6 @@ export class AuthService {
         .pipe(map(response => response.exists)); 
   }
 
-
   // Método para validar correo
   checkEmailExists(email: string): Observable<any> {
     return this.http.get<{ exists: boolean }>(`${this.apiUrl}/api/auth/check-email`, { params: { email } })

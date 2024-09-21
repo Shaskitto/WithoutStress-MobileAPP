@@ -125,29 +125,28 @@ export class LoginPage{
       return;
     }
 
-    if (this.forgotPasswordEmail) {
-      this.authService.checkEmailExists(this.forgotPasswordEmail).subscribe(
-        (response) => {
-          if (response.exists) { 
-            const userData = { email: this.forgotPasswordEmail };
-            this.isSubmitting = true; 
-            this.authService.forgotPassword(userData).subscribe(
-              (response) => {
-                console.log('Correo de recuperación enviado:', response);
-                this.codeSent = true; 
-                this.successMessage = 'Se ha enviado un código de verificación a tu correo electrónico.';
-              },
-              (error) => {
-                console.error('Error al enviar correo de recuperación:', error);
-                this.isSubmitting = false;
-              }
-            );
+    const normalizedEmail = this.forgotPasswordEmail.toLowerCase();
+    this.isSubmitting = true; 
+
+    this.authService.checkEmailExists(normalizedEmail).subscribe(
+      (exists) => {
+          if (exists) {
+              const userData = { email: normalizedEmail };
+
+              this.authService.forgotPassword(userData).subscribe(
+                  (response) => {
+                      console.log('Correo de recuperación enviado:', response);
+                      this.codeSent = true; 
+                      this.successMessage = 'Se ha enviado un código de verificación a tu correo electrónico.';
+                      this.isSubmitting = false; 
+                  }
+              );
           } else {
-            this.errorMessage = 'Correo electronico de usuario no encontrado.';
+              this.isSubmitting = false; 
+              this.errorMessage = 'Correo electrónico de usuario no encontrado.';
           }
-        }
-      );
-    }
+      }
+    );
   }
 
   resetPassword() {
