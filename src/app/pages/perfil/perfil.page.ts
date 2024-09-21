@@ -28,6 +28,10 @@ export class PerfilPage implements OnInit {
     this.loadUserData();
   }
 
+  ionViewWillEnter() {
+    this.loadUserData(); 
+  }
+
   // Método para cargar los datos del usuario
   loadUserData() {
     this.userService.getUser().subscribe({

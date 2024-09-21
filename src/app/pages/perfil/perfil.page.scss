@@ -27,15 +27,15 @@ ion-note{
    
 .perfil-img-container {
     display: flex;
-    justify-content: center;
+    align-items: center;
     margin-bottom: 15px;
 }
 
 .perfil-img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border: 3px solid #007bff;
+    width: 150px; 
+    height: auto; 
+    object-fit: contain; 
+    margin: auto;
 }
 
 ion-item {

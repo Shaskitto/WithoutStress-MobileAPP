@@ -13,11 +13,7 @@
 
       <ion-card-content>
         <div class="perfil-img-container">
-          <ion-img [src]="user?.profileImage" *ngIf="user?.profileImage"
-                   class="perfil-img"></ion-img>
-          <ion-text *ngIf="!user?.profileImage" color="medium">
-            No se ha establecido ninguna imagen de perfil.
-          </ion-text>
+          <ion-img [src]="user?.profileImage" *ngIf="user?.profileImage" class="perfil-img"></ion-img>
         </div>
 
         <!-- Información Personal -->
