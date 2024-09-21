@@ -82,16 +82,25 @@
         <ion-label position="floating">Nombre de Usuario</ion-label>
         <ion-input formControlName="username"></ion-input>
       </ion-item>
+      <ion-note color="danger" *ngIf="perfilForm.controls['username'].invalid && perfilForm.controls['username'].touched">
+        El nombre de usuario es obligatorio.
+      </ion-note>     
 
       <ion-item>
         <ion-label position="floating">Imagen de Perfil</ion-label>
-        <ion-input type="file" (change)="onFileSelected($event)"></ion-input>
+        <ion-input formControlName = "profileImage" type="file" (change)="onFileSelected($event)" accept="image/*"></ion-input>
       </ion-item>
+      <ion-note *ngIf="!isValidFileType" color="danger">
+        {{ validationMessage }}
+      </ion-note>
 
       <ion-item>
         <ion-label position="floating">Edad</ion-label>
         <ion-input formControlName="edad" type="number"></ion-input>
       </ion-item>
+      <ion-note color="danger" *ngIf="perfilForm.controls['edad'].invalid && perfilForm.controls['edad'].touched">
+        La edad es obligatoria.
+      </ion-note>  
 
       <ion-item>
         <ion-label position="floating">Sexo</ion-label>
@@ -125,15 +134,23 @@
           <ion-select-option value="Prácticas para Dormir">Prácticas para Dormir</ion-select-option>
         </ion-select>
       </ion-item>
+      <ion-note color="danger" *ngIf="perfilForm.controls['actividades'].invalid && perfilForm.controls['actividades'].touched">
+        Selecciona al menos 1 actividad.
+      </ion-note> 
 
       <!-- Edición de Horarios -->
       <ng-container formGroupName="horario">
         <ion-item>
           <ion-label position="floating">Horario Mañana</ion-label>
           <ion-select formControlName="manana" multiple="true">
-            <ion-select-option *ngFor="let hour of ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00']" [value]="hour">{{ hour }}</ion-select-option>
+            <ion-select-option *ngFor="let hour of ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00']" [value]="hour">
+              {{ hour }}
+            </ion-select-option>
           </ion-select>
         </ion-item>
+        <ion-note *ngIf="perfilForm.get('horario.manana')?.hasError('maxLengthArray')" color="danger">
+          Solo puedes seleccionar hasta 2 horarios.
+        </ion-note>
 
         <ion-item>
           <ion-label position="floating">Horario Tarde</ion-label>
@@ -141,6 +158,9 @@
             <ion-select-option *ngFor="let hour of ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00']" [value]="hour">{{ hour }}</ion-select-option>
           </ion-select>
         </ion-item>
+        <ion-note *ngIf="perfilForm.get('horario.tarde')?.hasError('maxLengthArray')" color="danger">
+          Solo puedes seleccionar hasta 2 horarios.
+        </ion-note>
 
         <ion-item>
           <ion-label position="floating">Horario Noche</ion-label>
@@ -148,10 +168,13 @@
             <ion-select-option *ngFor="let hour of ['18:00', '19:00', '20:00', '21:00', '22:00', '23:00']" [value]="hour">{{ hour }}</ion-select-option>
           </ion-select>
         </ion-item>
+        <ion-note *ngIf="perfilForm.get('horario.noche')?.hasError('maxLengthArray')" color="danger">
+          Solo puedes seleccionar hasta 2 horarios.
+        </ion-note>
       </ng-container>
 
       <!-- Botones de Acción -->
-      <ion-button expand="block" type="submit" [disabled]="!perfilForm.valid">
+      <ion-button expand="block" type="submit" [disabled]="!perfilForm.valid || !isValidFileType">
         Guardar Cambios
       </ion-button>
 

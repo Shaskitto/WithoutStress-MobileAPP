@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
@@ -18,7 +18,9 @@ export class PerfilPage implements OnInit {
   user: any;
   perfilForm!: FormGroup;
   isEditing = false;
+  isValidFileType = true;
   selectedFile: File | null = null;
+  validationMessage: string = '';
 
   constructor(private userService: UserService, private authService: AuthService, private fb: FormBuilder, private router: Router, private alertController: AlertController) { }
 
@@ -46,35 +48,58 @@ export class PerfilPage implements OnInit {
   // Inicializa el formulario con los datos del usuario
   initializeForm() {
     this.perfilForm = this.fb.group({
-      username: [this.user.username],
+      username: [this.user.username, [Validators.required]],
       profileImage: [this.user.profileImage], 
-      edad: [this.user.edad, [Validators.min(1)]],
+      edad: [this.user.edad, [Validators.required, Validators.min(17)]],
       semestre: [this.user.semestre, [Validators.min(1), Validators.max(4)]],
       sexo: [this.user.sexo],
       carrera: [this.user.carrera],
-      actividades: [this.user.actividades],
+      actividades: [this.user.actividades, [Validators.required]],
       email: [this.user.email],
       horario: this.fb.group({  
-        manana: [this.user.horario?.manana || ''],  
-        tarde: [this.user.horario?.tarde || ''],    
-        noche: [this.user.horario?.noche || '']     
+        manana: [this.user.horario?.manana || '', [this.maxLengthArrayValidator(2)]], 
+        tarde: [this.user.horario?.tarde || '', [this.maxLengthArrayValidator(2)]],    
+        noche: [this.user.horario?.noche || '', [this.maxLengthArrayValidator(2)]]   
       })
     });
+  }
+
+  // Validador personalizado para limitar la cantidad de horarios seleccionados
+  maxLengthArrayValidator(max: number) {
+    return (control: AbstractControl) => {
+      if (control.value && control.value.length > max) {
+        return { maxLengthArray: true };
+      }
+      return null;
+    };
   }
 
   // Maneja la selección de archivos
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length) {
-      this.selectedFile = input.files[0]; 
-    }
+      const file = input.files[0];
+      const fileType = file.type.split('/')[0];
+
+      if (fileType !== 'image') {
+        this.isValidFileType = false; 
+        this.selectedFile = null;  
+        this.validationMessage = 'El archivo seleccionado no es una imagen';
+        console.error(this.validationMessage);
+      } else {
+        this.isValidFileType = true;  
+        this.selectedFile = file;
+        this.validationMessage = '';
+      }
+    } 
   }
 
+  // Si está en modo de edición y la edición se cierra, resetear a los valores originales
   toggleEdit() {
-    this.isEditing = !this.isEditing;
-    if (!this.isEditing) {
-      this.perfilForm.reset(this.user); 
+    if (this.isEditing) {
+      this.perfilForm.reset(this.user);
     }
+    this.isEditing = !this.isEditing;
   }
 
   updateUser() {
@@ -130,8 +155,6 @@ export class PerfilPage implements OnInit {
 
   logout() {
     this.authService.logout();
-    const loginPage = new LoginPage(this.fb, this.authService, this.userService, this.router, this.alertController); 
-    loginPage.loginForm.reset();
     this.router.navigate(['/login']);
   }
 }
