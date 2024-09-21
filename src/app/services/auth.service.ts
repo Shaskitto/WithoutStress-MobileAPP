@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject, tap } from 'rxjs';
+import { map, Observable, Subject, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -38,13 +38,16 @@ export class AuthService {
   }
 
   // Método para validar username 
-  checkUsernameExists(username: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/auth/check-username`, { params: { username } });
+  checkUsernameExists(username: string): Observable<boolean> {
+    return this.http.get<{ exists: boolean }>(`${this.apiUrl}/api/auth/check-username`, { params: { username } })
+        .pipe(map(response => response.exists)); 
   }
+
 
   // Método para validar correo
   checkEmailExists(email: string): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/auth/check-email`, { params: { email } });
+    return this.http.get<{ exists: boolean }>(`${this.apiUrl}/api/auth/check-email`, { params: { email } })
+    .pipe(map(response => response.exists)); 
   }
   
   // Método para logout
