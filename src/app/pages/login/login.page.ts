@@ -19,7 +19,7 @@ export class LoginPage{
   email: string = ''; 
   errorMessage: string = '';
   successMessage: string = '';  
-  rememberMe: boolean = false;
+  rememberMe: boolean = true;
   user: any;
   forgotPasswordEmail: string | undefined; 
   otp: string | undefined; 

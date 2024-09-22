@@ -1,10 +1,4 @@
 <ion-content [fullscreen]="true" class="perfil-content">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Perfil</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
   <ng-container *ngIf="!isEditing; else editMode">
     <ion-card class="perfil-card">
       <ion-card-header class="perfil-card-header">
@@ -12,55 +6,69 @@
       </ion-card-header>      
 
       <ion-card-content>
+        <!-- Información Personal -->
         <div class="perfil-img-container">
           <ion-img [src]="user?.profileImage" *ngIf="user?.profileImage" class="perfil-img"></ion-img>
         </div>
 
-        <!-- Información Personal -->
+        <!-- Username -->
         <ion-item>
           <ion-label>Nombre de Usuario:</ion-label>
           <ion-text>{{ user?.username }}</ion-text>
         </ion-item>
 
+        <!-- correo -->
         <ion-item>
           <ion-label>Correo Electrónico:</ion-label>
           <ion-text>{{ user?.email }}</ion-text>
         </ion-item>
 
+        <!-- Edad -->
         <ion-item>
           <ion-label>Edad:</ion-label>
           <ion-text>{{ user?.edad }}</ion-text>
         </ion-item>
 
+        <!-- Sexo -->
         <ion-item>
           <ion-label>Sexo:</ion-label>
           <ion-text>{{ user?.sexo }}</ion-text>
         </ion-item>
 
+        <!-- Semestre -->
         <ion-item>
           <ion-label>Semestre:</ion-label>
           <ion-text>{{ user?.semestre }}</ion-text>
         </ion-item>
 
+        <!-- Carrera -->
         <ion-item>
           <ion-label>Carrera:</ion-label>
           <ion-text>{{ user?.carrera }}</ion-text>
         </ion-item>
 
+        <!-- Actividades -->
         <ion-item>
           <ion-label>Actividades:</ion-label>
           <ion-text>{{ user?.actividades.join(', ') }}</ion-text>
         </ion-item>
 
         <!-- Horarios -->
-        <ion-item>
+        <ion-item *ngIf="user?.horario">
           <ion-label>Horario:</ion-label>
           <ion-text>
-            Mañana: {{ user?.horario?.manana.join(', ') }}<br>
-            Tarde: {{ user?.horario?.tarde.join(', ') }}<br>
-            Noche: {{ user?.horario?.noche.join(', ') }}
+            <div *ngIf="user?.horario?.manana?.length > 0">
+              Mañana: {{ user?.horario?.manana.join(', ') }}<br>
+            </div>
+            <div *ngIf="user?.horario?.tarde?.length > 0">
+              Tarde: {{ user?.horario?.tarde.join(', ') }}<br>
+            </div>
+            <div *ngIf="user?.horario?.noche?.length > 0">
+              Noche: {{ user?.horario?.noche.join(', ') }}
+            </div>
           </ion-text>
         </ion-item>
+        
       </ion-card-content>
     </ion-card>
 
