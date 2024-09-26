@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
-import { LoginPage } from '../login/login.page';
 import { AlertController } from '@ionic/angular';
 
 @Component({
