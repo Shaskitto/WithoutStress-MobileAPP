@@ -33,17 +33,20 @@
     <ion-card>
       <ion-card-header>
         <ion-card-title>Agregar Amigos</ion-card-title>
+        <ion-item>
+          <ion-input type="text" placeholder="Buscar amigos" [(ngModel)]="searchTerm" (ionInput)="searchFriends()"></ion-input>
+        </ion-item>
       </ion-card-header>
       <ion-card-content>
         <ion-list>
-          <ion-item *ngFor="let user of users$ | async">
+          <ion-item *ngFor="let user of filteredUsers">
             <ion-label>{{ user.username }}</ion-label>
             <ion-button slot="end" (click)="sendFriendRequest(user._id)">Agregar</ion-button>
           </ion-item>
         </ion-list>
       </ion-card-content>
     </ion-card>
-  </div>
+  </div>  
 
   <div *ngIf="activeSection === 'friendRequests'">
     <ion-card>

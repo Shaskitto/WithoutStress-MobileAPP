@@ -12,8 +12,11 @@ export class ComunidadPage implements OnInit {
   private apiUrl = environment.apiUrl;
   users$: Observable<any> | undefined;
   friends: any[] = [];
-  pendingRequests: any[] = [];
   activeSection: string = 'friendsList';
+  pendingRequests: any[] = [];
+  searchTerm: string = ''; 
+  filteredUsers: any[] = [];
+  allUsers: any[] = [];
 
   constructor(private userService: UserService) { }
 
@@ -36,9 +39,24 @@ export class ComunidadPage implements OnInit {
 
     this.users$ = this.userService.getUsers().pipe(
       map(users => {
-        return users.filter((user: { _id: string | null; }) => user._id !== loggedInUserId);
+        const filteredUsers = users.filter((user: { _id: string | null; }) => user._id !== loggedInUserId);
+        this.allUsers = filteredUsers; 
+        return filteredUsers; 
       })
     );
+
+    this.users$.subscribe(users => {
+      this.filteredUsers = users; 
+    });
+  }
+
+  searchFriends() {
+    const term = this.searchTerm.toLowerCase();
+    if (term === '') {
+      this.filteredUsers = [...this.allUsers];
+    } else {
+      this.filteredUsers = this.allUsers.filter(user => user.username.toLowerCase().includes(term));
+    }
   }
 
   fetchFriends() {

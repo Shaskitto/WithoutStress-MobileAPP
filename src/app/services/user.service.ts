@@ -49,59 +49,86 @@ export class UserService {
 
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.post(`${this.apiUrl}/api/user/friends/request/${userId}`, { friendId }, { headers });
+      return this.http.post(`${this.apiUrl}/api/friend/request/${userId}`, { friendId }, { headers });
     } else {
       throw new Error('Token no encontrado');
     }
   }
 
-  // Método para obtener solicitudes pendientes de amistad
+  
+  // Método para aceptar solicitud de amistad
+  acceptFriendRequest(friendId: string): Observable<any> {
+    const userId = localStorage.getItem('userId'); 
+    const token = localStorage.getItem('token');
+    
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.post(`${this.apiUrl}/api/friend/request/accept/${userId}`, { friendId }, { headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
+  
+  // Método para eliminar solicitud de amistad
+  declineFriendRequest(friendId: string): Observable<any> {
+    const userId = localStorage.getItem('userId'); 
+    const token = localStorage.getItem('token');
+    
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.post(`${this.apiUrl}/api/friend/request/decline/${userId}`, { friendId }, { headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
+  
+  // Método para obtener solicitudes 
   getPendingRequests(): Observable<any> {
     const userId = localStorage.getItem('userId'); 
     const token = localStorage.getItem('token');
     
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get(`${this.apiUrl}/api/user/friends/request/pending/${userId}`, { headers });
+      return this.http.get(`${this.apiUrl}/api/friend/request/pending/${userId}`, { headers });
     } else {
       throw new Error('Token no encontrado');
     }
   }
 
-  // Método para aceptar solicitud de amistad
-  acceptFriendRequest(friendId: string): Observable<any> {
-    const userId = localStorage.getItem('userId'); 
-    const token = localStorage.getItem('token');
-
-    if (token) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.post(`${this.apiUrl}/api/user/friends/request/accept/${userId}`, { friendId }, { headers });
-    } else {
-      throw new Error('Token no encontrado');
-    }
-  }
-
-  // Método para eliminar solicitud de amistad
-  declineFriendRequest(friendId: string): Observable<any> {
-    const userId = localStorage.getItem('userId'); 
-    const token = localStorage.getItem('token');
-
-    if (token) {
-        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-        return this.http.post(`${this.apiUrl}/api/user/friends/request/decline/${userId}`, { friendId }, { headers });
-    } else {
-      throw new Error('Token no encontrado');
-    }
-  }
-
-  // Método para obtener los amigos
+  // Método para obtener amigos
   getFriends(): Observable<any> {
     const userId = localStorage.getItem('userId'); 
     const token = localStorage.getItem('token');
     
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get(`${this.apiUrl}/api/user/friends/${userId}`, { headers });
+      return this.http.get(`${this.apiUrl}/api/friend/${userId}`, { headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
+
+  // Método para buscar amigos
+  searchFriends(username: string): Observable<any> {
+    const token = localStorage.getItem('token');
+    
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get(`${this.apiUrl}/api/friend/search-friends/${username}`, { headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  } 
+
+  // Método para eliminar un amigo
+  deleteFriend(friendId: string): Observable<any> {
+    const userId = localStorage.getItem('userId'); 
+    const token = localStorage.getItem('token');
+    
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      // Enviamos friendId en el cuerpo de la solicitud
+      return this.http.delete(`${this.apiUrl}/api/friend/${userId}`, { headers, body: { friendId } });
     } else {
       throw new Error('Token no encontrado');
     }
