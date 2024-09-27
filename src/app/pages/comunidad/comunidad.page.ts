@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
   templateUrl: './comunidad.page.html',
   styleUrls: ['./comunidad.page.scss'],
 })
+
 export class ComunidadPage implements OnInit {
   private apiUrl = environment.apiUrl;
   users$: Observable<any> | undefined;
@@ -17,6 +18,7 @@ export class ComunidadPage implements OnInit {
   searchTerm: string = ''; 
   filteredUsers: any[] = [];
   allUsers: any[] = [];
+  manageFriends: boolean = false;
 
   constructor(private userService: UserService) { }
 
@@ -25,13 +27,23 @@ export class ComunidadPage implements OnInit {
   }
 
   ionViewWillEnter() {
+    this.resetSearchTerm(); 
     this.fetchUsers();
     this.fetchPendingRequests(); 
     this.fetchFriends();
   }
 
+  toggleManageFriends() {
+    this.manageFriends = !this.manageFriends;
+  }
+
   setActiveSection(section: string) {
     this.activeSection = section;
+  }
+
+  resetSearchTerm() {
+    this.searchTerm = ''; 
+    this.filteredUsers = [...this.allUsers]; 
   }
 
   fetchUsers() {
@@ -54,7 +66,7 @@ export class ComunidadPage implements OnInit {
     const term = this.searchTerm.toLowerCase();
     if (term === '') {
       this.filteredUsers = [...this.allUsers];
-    } else {
+    } else {  
       this.filteredUsers = this.allUsers.filter(user => user.username.toLowerCase().includes(term));
     }
   }
@@ -119,4 +131,21 @@ export class ComunidadPage implements OnInit {
       }
     );
   }
+
+  deleteFriend(friendId: string) {
+    this.userService.deleteFriend(friendId).subscribe(
+      response => {
+        console.log('Amigo eliminado:', response);
+        this.fetchFriends(); 
+      },
+      error => {
+        console.error('Error al eliminar amigo:', error);
+      }
+    );
+  }
+
+  goToChat(friendId: string) {
+    console.log("Enviando al chat del amigo")
+  }
+
 }

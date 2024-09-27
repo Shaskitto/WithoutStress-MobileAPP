@@ -4,11 +4,12 @@
     <ion-button (click)="setActiveSection('addFriends')" [color]="activeSection === 'addFriends' ? 'primary' : 'medium'">Agregar Amigos</ion-button>
     <ion-button (click)="setActiveSection('friendRequests')" [color]="activeSection === 'friendRequests' ? 'primary' : 'medium'">Solicitudes</ion-button>
   </div>
-
+  
   <div *ngIf="activeSection === 'friendsList'">
     <ion-card>
       <ion-card-header>
         <ion-card-title>Lista de Amigos</ion-card-title>
+        <ion-button (click)="toggleManageFriends()">{{ manageFriends ? 'Cancelar Gestión' : 'Gestionar Amigos' }}</ion-button>
       </ion-card-header>
       <ion-card-content>
         <ion-list *ngIf="friends.length > 0; else noFriends">
@@ -20,6 +21,9 @@
               <h2>{{ friend.friendId.username }}</h2>
               <p>{{ friend.friendId.informacion }}</p>
             </ion-label>
+            <ion-button slot="end" (click)="manageFriends ? deleteFriend(friend.friendId._id) : goToChat(friend.friendId._id)">
+              {{ manageFriends ? 'Eliminar' : 'Ir al Chat' }}
+            </ion-button>
           </ion-item>
         </ion-list>
         <ng-template #noFriends>

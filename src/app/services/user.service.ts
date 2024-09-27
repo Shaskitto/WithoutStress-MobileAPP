@@ -127,8 +127,7 @@ export class UserService {
     
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      // Enviamos friendId en el cuerpo de la solicitud
-      return this.http.delete(`${this.apiUrl}/api/friend/${userId}`, { headers, body: { friendId } });
+      return this.http.post(`${this.apiUrl}/api/friend/${userId}`, { friendId }, { headers });
     } else {
       throw new Error('Token no encontrado');
     }
