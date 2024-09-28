@@ -17,6 +17,12 @@
           <ion-text>{{ user?.username }}</ion-text>
         </ion-item>
 
+        <!-- Información -->
+        <ion-item>
+          <ion-label>Información</ion-label>
+          <ion-text>{{ user?.informacion }}</ion-text>
+        </ion-item>
+
         <!-- correo -->
         <ion-item>
           <ion-label>Correo Electrónico:</ion-label>
@@ -88,7 +94,18 @@
       </ion-item>
       <ion-note color="danger" *ngIf="perfilForm.controls['username'].invalid && perfilForm.controls['username'].touched">
         El nombre de usuario es obligatorio.
-      </ion-note>     
+      </ion-note>
+      
+      <ion-item>
+        <ion-label position="floating">Informacion</ion-label>
+        <ion-input formControlName="informacion"></ion-input>
+      </ion-item>
+      <ion-note color="danger" *ngIf="perfilForm.controls['informacion'].hasError('required') && !perfilForm.controls['informacion'].hasError('maxlength') && perfilForm.controls['informacion'].touched">
+        La Información es obligatoria.
+      </ion-note>
+      <ion-note color="danger" *ngIf="perfilForm.controls['informacion'].hasError('maxlength') && perfilForm.controls['informacion'].touched">
+        La Información no puede exceder los 140 caracteres.
+      </ion-note>
 
       <ion-item>
         <ion-label position="floating">Imagen de Perfil</ion-label>

@@ -44,7 +44,13 @@
       <ion-card-content>
         <ion-list>
           <ion-item *ngFor="let user of filteredUsers">
-            <ion-label>{{ user.username }}</ion-label>
+            <ion-avatar slot="start">
+              <img [src]="user.profileImage" alt="{{ user.username }}" />
+            </ion-avatar>
+            <ion-label>
+              <h2>{{ user.username }}</h2>
+              <p>{{ user.informacion }}</p>
+            </ion-label>
             <ion-button slot="end" (click)="sendFriendRequest(user._id)">Agregar</ion-button>
           </ion-item>
         </ion-list>

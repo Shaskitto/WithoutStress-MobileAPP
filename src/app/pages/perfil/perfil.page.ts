@@ -59,6 +59,7 @@ export class PerfilPage implements OnInit {
       carrera: [this.user.carrera],
       actividades: [this.user.actividades, [Validators.required]],
       email: [this.user.email],
+      informacion: [this.user.informacion, [Validators.required, Validators.maxLength(140)]],
       horario: this.fb.group({  
         manana: [this.user.horario?.manana || '', [this.maxLengthArrayValidator(2)]], 
         tarde: [this.user.horario?.tarde || '', [this.maxLengthArrayValidator(2)]],    
@@ -116,6 +117,7 @@ export class PerfilPage implements OnInit {
       formData.append('sexo', userData.sexo);
       formData.append('carrera', userData.carrera);
       formData.append('email', userData.email);
+      formData.append('informacion', userData.informacion);
 
       if (userData.horario) {
         if (userData.horario.manana) {

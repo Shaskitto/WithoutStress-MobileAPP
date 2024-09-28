@@ -48,19 +48,26 @@ export class ComunidadPage implements OnInit {
 
   fetchUsers() {
     const loggedInUserId = localStorage.getItem('userId');
-
+  
     this.users$ = this.userService.getUsers().pipe(
       map(users => {
-        const filteredUsers = users.filter((user: { _id: string | null; }) => user._id !== loggedInUserId);
+        const filteredUsers = users
+          .filter((user: { _id: string | null; }) => user._id !== loggedInUserId)
+          .map((user: { profileImage: string; _id: any; }) => {
+            const timestamp = new Date().getTime();
+            user.profileImage = `${this.apiUrl}/api/user/${user._id}/profile-image?t=${timestamp}`;
+            return user;
+          });
         this.allUsers = filteredUsers; 
         return filteredUsers; 
       })
     );
-
+  
     this.users$.subscribe(users => {
       this.filteredUsers = users; 
     });
   }
+  
 
   searchFriends() {
     const term = this.searchTerm.toLowerCase();
