@@ -21,7 +21,7 @@
               <h2>{{ friend.friendId.username }}</h2>
               <p>{{ friend.friendId.informacion }}</p>
             </ion-label>
-            <ion-button slot="end" (click)="manageFriends ? deleteFriend(friend.friendId._id) : goToChat(friend.friendId._id)">
+            <ion-button slot="end" (click)="manageFriends ? deleteFriend(friend.friendId._id) : goToChat(friend.friendId._id)" [color]="manageFriends ? 'danger' : 'primary'">
               {{ manageFriends ? 'Eliminar' : 'Ir al Chat' }}
             </ion-button>
           </ion-item>

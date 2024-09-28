@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
 import { map, Observable } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
@@ -20,7 +21,7 @@ export class ComunidadPage implements OnInit {
   allUsers: any[] = [];
   manageFriends: boolean = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private alertController: AlertController) { }
 
   ngOnInit() {
     this.fetchUsers();
@@ -31,6 +32,16 @@ export class ComunidadPage implements OnInit {
     this.fetchUsers();
     this.fetchPendingRequests(); 
     this.fetchFriends();
+  }
+
+  // Método para mostrar alertas
+  async showAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['Aceptar']
+    });
+    await alert.present();
   }
 
   toggleManageFriends() {
@@ -104,12 +115,14 @@ export class ComunidadPage implements OnInit {
   
   sendFriendRequest(friendId: string): void {
     this.userService.sendFriendRequest(friendId).subscribe(
-      (response) => {
+      async (response) => {
         console.log('Solicitud de amistad enviada:', response);
+        await this.showAlert('Solicitud de amistad enviada', 'La solicitud de amistad se ha enviado correctamente.');
         this.fetchPendingRequests();
       },
-      (error) => {
+      async (error) => {
         console.error('Error al enviar solicitud de amistad:', error);
+        await this.showAlert('Alerta', 'Ya has enviado una solicitud de amistad a este usuario.');
       }
     );
   }
@@ -120,6 +133,7 @@ export class ComunidadPage implements OnInit {
         console.log('Solicitud de amistad aceptada:', response);
         this.fetchPendingRequests(); 
         this.fetchFriends(); 
+        this.setActiveSection('friendsList');
       },
       (error) => {
         console.error('Error al aceptar la solicitud de amistad:', error);
@@ -154,5 +168,4 @@ export class ComunidadPage implements OnInit {
   goToChat(friendId: string) {
     console.log("Enviando al chat del amigo")
   }
-
 }
