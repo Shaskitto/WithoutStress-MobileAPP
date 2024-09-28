@@ -1,0 +1,28 @@
+.button-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0;
+}
+
+.custom-avatar img {
+    border-radius: 50%;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.custom-name {
+    font-weight: bold;
+}
+
+.empty-message {
+    text-align: center;
+    color: #777;
+    font-style: italic;
+}
+
+.friend-card {
+    margin-bottom: 20px;
+}
+
+.section {
+    padding: 10px;
+}
