@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://nodejs-express-rest-api-a3do.onrender.com'
+  apiUrl: 'https://withoutstress-api.onrender.com'
 };
 
 /*

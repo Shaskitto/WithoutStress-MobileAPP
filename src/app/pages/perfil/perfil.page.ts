@@ -3,8 +3,6 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
-import { environment } from 'src/environments/environment';
-import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-perfil',
@@ -13,7 +11,6 @@ import { AlertController } from '@ionic/angular';
 })
 
 export class PerfilPage implements OnInit {
-  private apiUrl = environment.apiUrl;
   user: any;
   perfilForm!: FormGroup;
   isEditing = false;
@@ -21,12 +18,14 @@ export class PerfilPage implements OnInit {
   selectedFile: File | null = null;
   validationMessage: string = '';
 
-  constructor(private userService: UserService, private authService: AuthService, private fb: FormBuilder, private router: Router, private alertController: AlertController) { }
+  constructor(private userService: UserService, private authService: AuthService, private fb: FormBuilder, private router: Router) { }
 
+  // Cargar los datos del usuario cuando se inicializa el componente
   ngOnInit() { 
     this.loadUserData();
   }
 
+  // Cargar los datos del usuario cada vez que la vista vuelve a ser visible
   ionViewWillEnter() {
     this.loadUserData(); 
   }
@@ -36,12 +35,10 @@ export class PerfilPage implements OnInit {
     this.userService.getUser().subscribe({
       next: (userData) => {
         this.user = userData; 
-        if (this.user.profileImage) {
-          const userId = localStorage.getItem('userId');
-          if (userId) {
-            const timestamp = new Date().getTime();
-            this.user.profileImage = `${this.apiUrl}/api/user/${userId}/profile-image?t=${timestamp}`;
-          }
+        
+        const userId = localStorage.getItem('userId');
+        if (userId && this.user.profileImage) {
+          this.user.profileImage = this.userService.getProfileImageUrl(userId);
         }
         this.initializeForm();  
       }
@@ -106,6 +103,7 @@ export class PerfilPage implements OnInit {
     this.isEditing = !this.isEditing;
   }
 
+  // Actualizar datos el usuario
   updateUser() {
     if (this.perfilForm.valid) {
       const formData = new FormData();
@@ -158,6 +156,7 @@ export class PerfilPage implements OnInit {
     }
   }
 
+  // Cerrar sesión
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);

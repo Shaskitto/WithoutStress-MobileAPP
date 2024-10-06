@@ -13,7 +13,7 @@ export class UserService {
 
   // Método para obtener los usuarios
   getUsers(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/api/users/`);
+    return this.http.get(`${this.apiUrl}/user`);
   }
 
   // Método para obtener datos de un usuario
@@ -23,7 +23,7 @@ export class UserService {
 
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get(`${this.apiUrl}/api/user/${userId}`, { headers });
+      return this.http.get(`${this.apiUrl}/user/${userId}`, { headers });
     } else {
       throw new Error('Token no encontrado');
     }
@@ -36,10 +36,15 @@ export class UserService {
 
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.patch(`${this.apiUrl}/api/user/${userId}`, updateData, { headers });
+      return this.http.patch(`${this.apiUrl}/user/${userId}`, updateData, { headers });
     } else {
       throw new Error('Token no encontrado');
     }
+  }
+
+  // Método para obtener la imagen de perfil
+  getProfileImageUrl(userId: string): string {
+    return `${this.apiUrl}/user/${userId}/profile-image`;
   }
 
   // Método para enviar solicitud de amistad
@@ -49,7 +54,7 @@ export class UserService {
 
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.post(`${this.apiUrl}/api/friend/request/${userId}`, { friendId }, { headers });
+      return this.http.post(`${this.apiUrl}/friend/request/${userId}`, { friendId }, { headers });
     } else {
       throw new Error('Token no encontrado');
     }
@@ -63,7 +68,7 @@ export class UserService {
     
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.post(`${this.apiUrl}/api/friend/request/accept/${userId}`, { friendId }, { headers });
+      return this.http.post(`${this.apiUrl}/friend/request/accept/${userId}`, { friendId }, { headers });
     } else {
       throw new Error('Token no encontrado');
     }
@@ -76,7 +81,7 @@ export class UserService {
     
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.post(`${this.apiUrl}/api/friend/request/decline/${userId}`, { friendId }, { headers });
+      return this.http.post(`${this.apiUrl}/friend/request/decline/${userId}`, { friendId }, { headers });
     } else {
       throw new Error('Token no encontrado');
     }
@@ -89,7 +94,7 @@ export class UserService {
     
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get(`${this.apiUrl}/api/friend/request/pending/${userId}`, { headers });
+      return this.http.get(`${this.apiUrl}/friend/request/pending/${userId}`, { headers });
     } else {
       throw new Error('Token no encontrado');
     }
@@ -102,7 +107,7 @@ export class UserService {
     
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get(`${this.apiUrl}/api/friend/${userId}`, { headers });
+      return this.http.get(`${this.apiUrl}/friend/${userId}`, { headers });
     } else {
       throw new Error('Token no encontrado');
     }
@@ -114,7 +119,7 @@ export class UserService {
     
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.get(`${this.apiUrl}/api/friend/search-friends/${username}`, { headers });
+      return this.http.get(`${this.apiUrl}/friend/search-friends/${username}`, { headers });
     } else {
       throw new Error('Token no encontrado');
     }
@@ -127,7 +132,7 @@ export class UserService {
     
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-      return this.http.post(`${this.apiUrl}/api/friend/${userId}`, { friendId }, { headers });
+      return this.http.post(`${this.apiUrl}/friend/${userId}`, { friendId }, { headers });
     } else {
       throw new Error('Token no encontrado');
     }

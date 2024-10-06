@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { map } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -14,14 +13,17 @@ export class RegistroPage implements OnInit {
   
   constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) { }
 
+  // Cargar el formulario cuando se inicializa el componente
   ngOnInit() {
     this.initializeForm(); 
   }
 
+  // Cargar el formulario cada vez que la vista vuelve a ser visible
   ionViewWillEnter() {
     this.registerForm.reset(); 
   }
 
+  // Inicializa el formulario de registro
   initializeForm() {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required], [this.usernameTakenValidator.bind(this)]],
@@ -48,6 +50,7 @@ export class RegistroPage implements OnInit {
     });
   }
 
+  // Método para registrar un usuario
   register() {
     if (this.registerForm.invalid) {
       return;
@@ -64,6 +67,7 @@ export class RegistroPage implements OnInit {
     );
   }
 
+  // Navegar al login
   navigateLogin(){
     this.router.navigate(['/login'])
   }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router } from  '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,6 +12,7 @@ export class EvaluacionPage{
   mostrarManana: boolean = false;
   mostrarTarde: boolean = false;
   mostrarNoche: boolean = false
+  currentQuestionIndex = 0;
 
   questions = [
     { id: 'carrera', texto: '¿Cuál es tu carrera?' },
@@ -20,7 +21,7 @@ export class EvaluacionPage{
     { id: 'sexo', texto: '¿Cuál es tu sexo?' }, 
     { id: 'tecnicas', texto: '¿Has probado alguna vez técnicas de relajación o meditación para manejar el estrés académico?'},
     { id: 'actividades', texto: '¿Qué tipo de contenido te gustaria ver más?' },
-    { id: 'horario', texto: '¿En qué horario prefieres realizar actividades?', 
+    { id: 'horario', texto: '¿En qué horario prefieres realizar actividades?(Maximo 2 por momentos del día)', 
       opcionesHorarios: {
         manana: ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00'],
         tarde: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
@@ -41,10 +42,9 @@ export class EvaluacionPage{
     }
   };
 
-  currentQuestionIndex = 0;
-
   constructor(private userService: UserService, private router: Router) {}
 
+  // Método para avanzar a la siguiente pregunta
   nextQuestion() {
     if (this.isQuestionAnswered()) {
       if (this.currentQuestionIndex < this.questions.length - 1) {
@@ -53,42 +53,27 @@ export class EvaluacionPage{
     }
   }
   
+  // Método para verificar si la pregunta actual ha sido respondida
   isQuestionAnswered(): boolean {
     const currentQuestion = this.questions[this.currentQuestionIndex];
-  
-    if (currentQuestion.id === 'carrera') {
-      return this.answers['carrera'] !== '';
-    }
-  
-    if (currentQuestion.id === 'semestre') {
-      return this.answers['semestre'] > 0; 
-    }
-  
-    if (currentQuestion.id === 'edad') {
-      return this.answers['edad'] > 0; 
-    }
-  
-    if (currentQuestion.id === 'sexo') {
-      return this.answers['sexo'] !== ''; 
-    }
-  
-    if (currentQuestion.id === 'tecnicas') {
-      return this.answers['tecnicas'] !== ''; 
-    }
-  
-    if (currentQuestion.id === 'actividades') {
-      return this.answers['actividades'].length > 0; 
-    }
-  
-    if (currentQuestion.id === 'horario') {
-      const horarios = this.answers['horario'];
-      return horarios?.manana?.length > 0 || horarios?.tarde?.length > 0 || horarios?.noche?.length > 0;
-    }
-  
-    return false; 
-  }
-  
 
+    const validationMap: { [key: string]: () => boolean } = {
+      'carrera': () => this.answers['carrera'] !== '',
+      'semestre': () => this.answers['semestre'] > 0,
+      'edad': () => this.answers['edad'] > 0,
+      'sexo': () => this.answers['sexo'] !== '',
+      'tecnicas': () => this.answers['tecnicas'] !== '',
+      'actividades': () => this.answers['actividades'].length > 0,
+      'horario': () => {
+        const horarios = this.answers['horario'];
+        return horarios?.manana?.length > 0 || horarios?.tarde?.length > 0 || horarios?.noche?.length > 0;
+      },
+    };
+
+    return validationMap[currentQuestion.id]?.() ?? false;
+  }
+
+  // Método para alternar la visibilidad de las opciones de horarios por periodo del día
   toggleSeleccion(periodo: 'manana' | 'tarde' | 'noche') {
     switch (periodo) {
       case 'manana':
@@ -103,6 +88,7 @@ export class EvaluacionPage{
     }
   }
   
+  // Método para alternar la selección de horarios dentro de un periodo específico
   toggleHorario(opcion: string, periodo: 'manana' | 'tarde' | 'noche') {
     const selectedHorarios = this.answers['horario'][periodo];
     
@@ -115,6 +101,7 @@ export class EvaluacionPage{
     }
   }
 
+  // Método para actualizar los datos del usuarios (Evaluación inicial)
   updateUser() {
     console.log('Datos a enviar:', this.answers);
     this.userService.updateUser(this.answers).subscribe(
@@ -128,6 +115,7 @@ export class EvaluacionPage{
     );
   }
 
+  // Navegar al home
   navigateHome(){
     this.router.navigate(['/tabs/plan']);
   }

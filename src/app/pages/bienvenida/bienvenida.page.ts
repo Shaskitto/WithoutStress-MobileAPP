@@ -13,10 +13,12 @@ export class BienvenidaPage implements OnInit {
   ngOnInit() {
   }
 
+  // Navegar al login
   navigateLogin(){
     this.router.navigate(['/login'])
   }
 
+  // Navegar al registro
   navigateRegister(){
     this.router.navigate(['/registro'])
   }

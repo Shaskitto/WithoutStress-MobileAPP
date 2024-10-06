@@ -14,12 +14,12 @@ export class AuthService {
 
   // Método para registrar un nuevo usuario
   registerUser(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/auth/register`, userData);
+    return this.http.post(`${this.apiUrl}/auth/register`, userData);
   }
 
   // Método para iniciar sesión
   login(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/auth/login`, userData).pipe(
+    return this.http.post(`${this.apiUrl}/auth/login`, userData).pipe(
       tap((response: any) => {
         localStorage.setItem('userId', response.userId);
         localStorage.setItem('token', response.token);
@@ -29,23 +29,23 @@ export class AuthService {
 
   // Método para verificar user al restablecer contraseña 
   forgotPassword(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/auth/forgot-password`, userData);
+    return this.http.post(`${this.apiUrl}/auth/forgot-password`, userData);
   }
   
   // Método para restablecer contraseña 
   resetPassword(userData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}/api/auth/forgot-password/reset`, userData);
+    return this.http.post(`${this.apiUrl}/auth/forgot-password/reset`, userData);
   }
 
   // Método para validar username 
   checkUsernameExists(username: string): Observable<boolean> {
-    return this.http.get<{ exists: boolean }>(`${this.apiUrl}/api/auth/check-username`, { params: { username } })
+    return this.http.get<{ exists: boolean }>(`${this.apiUrl}/auth/check-username`, { params: { username } })
         .pipe(map(response => response.exists)); 
   }
 
   // Método para validar correo
   checkEmailExists(email: string): Observable<any> {
-    return this.http.get<{ exists: boolean }>(`${this.apiUrl}/api/auth/check-email`, { params: { email } })
+    return this.http.get<{ exists: boolean }>(`${this.apiUrl}/auth/check-email`, { params: { email } })
     .pipe(map(response => response.exists)); 
   }
   

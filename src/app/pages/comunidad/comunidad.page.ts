@@ -22,11 +22,13 @@ export class ComunidadPage implements OnInit {
   manageFriends: boolean = false;
 
   constructor(private userService: UserService, private alertController: AlertController) { }
-
+  
+  // Cargar los datos de los usuarios cuando se inicializa el componente
   ngOnInit() {
     this.fetchUsers();
   }
 
+  // Cargar los datos de los usuarios cada vez que la vista vuelve a ser visible
   ionViewWillEnter() {
     this.resetSearchTerm(); 
     this.fetchUsers();
@@ -44,19 +46,23 @@ export class ComunidadPage implements OnInit {
     await alert.present();
   }
 
+  // Método para alternar (activar o desactivar) el modo de gestionar de amigos
   toggleManageFriends() {
     this.manageFriends = !this.manageFriends;
   }
 
+  // Método para establecer la sección activa (Por defecto lista de amigos)
   setActiveSection(section: string) {
     this.activeSection = section;
   }
 
+  // Método para reiniciar el término de búsqueda y mostrar todos los usuarios
   resetSearchTerm() {
     this.searchTerm = ''; 
     this.filteredUsers = [...this.allUsers]; 
   }
 
+  // Método para cargar los datos de los usuarios
   fetchUsers() {
     const loggedInUserId = localStorage.getItem('userId');
   
@@ -65,8 +71,7 @@ export class ComunidadPage implements OnInit {
         const filteredUsers = users
           .filter((user: { _id: string | null; }) => user._id !== loggedInUserId)
           .map((user: { profileImage: string; _id: any; }) => {
-            const timestamp = new Date().getTime();
-            user.profileImage = `${this.apiUrl}/api/user/${user._id}/profile-image?t=${timestamp}`;
+            user.profileImage = this.userService.getProfileImageUrl(user._id);
             return user;
           });
         this.allUsers = filteredUsers; 
@@ -79,7 +84,7 @@ export class ComunidadPage implements OnInit {
     });
   }
   
-
+  // Método para buscar usuarios por username
   searchFriends() {
     const term = this.searchTerm.toLowerCase();
     if (term === '') {
@@ -89,30 +94,31 @@ export class ComunidadPage implements OnInit {
     }
   }
 
+  // Método para carga los datos de los usuarios amigos ('accepted')
   fetchFriends() {
     this.userService.getFriends().subscribe(friends => {
       this.friends = friends.map((friend: { friendId: { _id: any; profileImage: string; }; }) => {
         const userId = friend.friendId._id;
-        const timestamp = new Date().getTime();
-        friend.friendId.profileImage = `${this.apiUrl}/api/user/${userId}/profile-image?t=${timestamp}`;
+        friend.friendId.profileImage = this.userService.getProfileImageUrl(userId);
         return friend;
       });
       console.log('Amigos recibidos:', this.friends);
     });
   }
 
+  // Método para carga los datos de los usuarios en solicitud ('pending')
   fetchPendingRequests() {
     this.userService.getPendingRequests().subscribe(requests => {
       this.pendingRequests = requests.map((request: { friendId: { _id: any; profileImage: string; }; }) => {
         const userId = request.friendId._id;
-        const timestamp = new Date().getTime(); 
-        request.friendId.profileImage = `${this.apiUrl}/api/user/${userId}/profile-image?t=${timestamp}`;
+        request.friendId.profileImage = this.userService.getProfileImageUrl(userId);
         return request;
       });
       console.log('Solicitudes pendientes recibidas:', this.pendingRequests);
     });
   }
   
+  // Método para enviar solicitud a un usuario
   sendFriendRequest(friendId: string): void {
     this.userService.sendFriendRequest(friendId).subscribe(
       async (response) => {
@@ -127,6 +133,7 @@ export class ComunidadPage implements OnInit {
     );
   }
 
+  // Método para aceptar solicitud de un usuario
   acceptFriendRequest(friendId: string): void {
     this.userService.acceptFriendRequest(friendId).subscribe(
       (response) => {
@@ -141,6 +148,7 @@ export class ComunidadPage implements OnInit {
     );
   }
 
+  // Método para rechazar solicitud de un usuario
   declineFriendRequest(friendId: string): void {
     this.userService.declineFriendRequest(friendId).subscribe(
       (response) => {
@@ -153,6 +161,7 @@ export class ComunidadPage implements OnInit {
     );
   }
 
+  // Método para eliminar un amigo del usuario
   deleteFriend(friendId: string) {
     this.userService.deleteFriend(friendId).subscribe(
       response => {

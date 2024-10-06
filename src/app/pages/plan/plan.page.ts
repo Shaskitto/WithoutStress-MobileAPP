@@ -14,14 +14,17 @@ export class PlanPage implements OnInit, ViewWillEnter {
 
   constructor(private userService: UserService) { }
 
+  // Cargar los datos del usuario cuando se inicializa el componente
   ngOnInit() {
     this.loadUserData();
   }
 
+  // Cargar los datos del usuario cada vez que la vista vuelve a ser visible
   ionViewWillEnter() {
     this.loadUserData();
   }
 
+  // Método para cargar los horarios del usuario 
   loadUserData() {
     this.user$ = this.userService.getUser().pipe(
       catchError(error => {

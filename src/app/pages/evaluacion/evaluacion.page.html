@@ -5,6 +5,7 @@
       <ion-card-title>{{ questions[currentQuestionIndex].texto }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
+
       <!-- Carrera -->
       <ion-item *ngIf="questions[currentQuestionIndex].id === 'carrera'">
         <ion-select 
@@ -76,7 +77,8 @@
       </ion-item>
 
       <!-- Horarios -->
-      <div *ngIf="questions[currentQuestionIndex].id === 'horario'">
+      <div *ngIf="questions[currentQuestionIndex].id === 'horario'" class="horarios-container">
+
         <!-- Mañana -->
         <ion-item-divider color="light" (click)="toggleSeleccion('manana')">
           Mañana
@@ -128,6 +130,7 @@
     </ion-card-content>
   </ion-card>
 
+  <!-- botones -->
   <ion-button 
     *ngIf="currentQuestionIndex !== questions.length - 1 || questions[currentQuestionIndex].id !== 'horario'" 
     expand="full" 
@@ -139,8 +142,8 @@
   <ion-button 
     expand="full" 
     (click)="updateUser()" 
-    *ngIf="currentQuestionIndex === questions.length - 1">
-    Guardar Respuestas
+    *ngIf="currentQuestionIndex === questions.length - 1 && isQuestionAnswered()">
+    Terminar y continuar
   </ion-button>
 </ion-grid>
 </ion-content>

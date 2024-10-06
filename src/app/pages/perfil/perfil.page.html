@@ -78,7 +78,7 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Botones de Acción -->
+    <!-- Botones -->
     <ion-button expand="block" color="primary" (click)="toggleEdit()">
       {{ isEditing ? 'Cancelar' : 'Editar' }}
     </ion-button>
@@ -88,6 +88,7 @@
   <!-- Modo de Edición -->
   <ng-template #editMode>
     <form [formGroup]="perfilForm" (ngSubmit)="updateUser()">
+      <!-- Edición de Username -->
       <ion-item>
         <ion-label position="floating">Nombre de Usuario</ion-label>
         <ion-input formControlName="username"></ion-input>
@@ -96,6 +97,7 @@
         El nombre de usuario es obligatorio.
       </ion-note>
       
+      <!-- Edición de Información -->
       <ion-item>
         <ion-label position="floating">Informacion</ion-label>
         <ion-input formControlName="informacion"></ion-input>
@@ -107,14 +109,16 @@
         La Información no puede exceder los 140 caracteres.
       </ion-note>
 
+      <!-- Edición de Foto de perfil -->
       <ion-item>
-        <ion-label position="floating">Imagen de Perfil</ion-label>
+        <ion-label position="floating">Foto de Perfil</ion-label>
         <ion-input formControlName = "profileImage" type="file" (change)="onFileSelected($event)" accept="image/*"></ion-input>
       </ion-item>
       <ion-note *ngIf="!isValidFileType" color="danger">
         {{ validationMessage }}
       </ion-note>
 
+      <!-- Edición de Edad -->
       <ion-item>
         <ion-label position="floating">Edad</ion-label>
         <ion-input formControlName="edad" type="number"></ion-input>
@@ -123,6 +127,7 @@
         La edad es obligatoria.
       </ion-note>  
 
+      <!-- Edición de Sexo -->
       <ion-item>
         <ion-label position="floating">Sexo</ion-label>
         <ion-select formControlName="sexo">
@@ -131,6 +136,7 @@
         </ion-select>
       </ion-item>
 
+      <!-- Edición de Semestre -->
       <ion-item>
         <ion-label position="floating">Semestre</ion-label>
         <ion-select formControlName="semestre">
@@ -138,6 +144,7 @@
         </ion-select>
       </ion-item>
 
+      <!-- Edición de Carrera -->
       <ion-item>
         <ion-label position="floating">Carrera</ion-label>
         <ion-select formControlName="carrera">
@@ -146,6 +153,7 @@
         </ion-select>
       </ion-item>
 
+      <!-- Edición de Actividades -->
       <ion-item>
         <ion-label position="floating">Actividades</ion-label>
         <ion-select formControlName="actividades" multiple="true">
@@ -161,6 +169,7 @@
 
       <!-- Edición de Horarios -->
       <ng-container formGroupName="horario">
+        <!-- Mañana -->
         <ion-item>
           <ion-label position="floating">Horario Mañana</ion-label>
           <ion-select formControlName="manana" multiple="true">
@@ -173,7 +182,8 @@
           Solo puedes seleccionar hasta 2 horarios.
         </ion-note>
 
-        <ion-item>
+        <!-- Tarde -->
+        <ion-item>  
           <ion-label position="floating">Horario Tarde</ion-label>
           <ion-select formControlName="tarde" multiple="true">
             <ion-select-option *ngFor="let hour of ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00']" [value]="hour">{{ hour }}</ion-select-option>
@@ -183,6 +193,7 @@
           Solo puedes seleccionar hasta 2 horarios.
         </ion-note>
 
+        <!-- Noche -->
         <ion-item>
           <ion-label position="floating">Horario Noche</ion-label>
           <ion-select formControlName="noche" multiple="true">
@@ -194,7 +205,7 @@
         </ion-note>
       </ng-container>
 
-      <!-- Botones de Acción -->
+      <!-- Botones -->
       <ion-button expand="block" type="submit" [disabled]="!perfilForm.valid || !isValidFileType">
         Guardar Cambios
       </ion-button>

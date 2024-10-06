@@ -10,6 +10,7 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
+
 export class LoginPage{
   loginForm!: FormGroup;
   forgotPasswordForm!: FormGroup;
@@ -47,6 +48,7 @@ export class LoginPage{
     });
   }
 
+  // Método para iniciar sesión
   login() {
     if (this.loginForm.invalid) {
       return; 
@@ -76,6 +78,7 @@ export class LoginPage{
     );
   }
   
+  // Método para cargar los datos del usuario
   loadUserData() {
     this.userService.getUser().subscribe({
       next: (userData) => {
@@ -116,6 +119,7 @@ export class LoginPage{
     this.successMessage = ''; 
   }
   
+  // Método para solicitar restablecer la contraseña
   submitForgotPassword() {
     this.errorMessage = '';
     this.successMessage = ''; 
@@ -149,6 +153,7 @@ export class LoginPage{
     );
   }
 
+  // Método para restablecer la contraseña
   resetPassword() {
     this.errorMessage = '';
   

@@ -1,4 +1,5 @@
 <ion-content>
+  <!-- Botones -->
   <div class="button-container">
     <ion-button expand="block" (click)="setActiveSection('friendsList')" [color]="activeSection === 'friendsList' ? 'primary' : 'medium'">
       <ion-icon name="people" slot="start"></ion-icon> Lista de Amigos
@@ -11,7 +12,7 @@
     </ion-button>
   </div>
   
-  
+  <!-- Lista de amigos -->
   <div *ngIf="activeSection === 'friendsList'" class="section">
     <ion-card-header>
       <ion-grid>
@@ -49,6 +50,7 @@
     </ion-card>
   </div>
 
+  <!-- Agregar amigos -->
   <div *ngIf="activeSection === 'addFriends'" class="section">
     <ion-card-header>
       <ion-card-title>Agregar Amigos</ion-card-title>
@@ -79,6 +81,7 @@
     </ion-card>
   </div>  
 
+  <!-- Solicitudes -->
   <div *ngIf="activeSection === 'friendRequests'" class="section">
     <ion-card-header>
       <ion-card-title>Solicitudes de Amistad</ion-card-title>
