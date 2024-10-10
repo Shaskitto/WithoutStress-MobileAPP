@@ -7,10 +7,12 @@ import { IonicModule } from '@ionic/angular';
 import { ExplorarPageRoutingModule } from './explorar-routing.module';
 
 import { ExplorarPage } from './explorar.page';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   imports: [
     CommonModule,
+    NgxExtendedPdfViewerModule,
     FormsModule,
     IonicModule,
     ExplorarPageRoutingModule

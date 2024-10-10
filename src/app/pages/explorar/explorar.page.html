@@ -1,13 +1,49 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>explorar</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">explorar</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <div *ngIf="!showCategories && !selectedResource" style="padding: 16px; display: flex; align-items: center;">
+    <ion-icon name="arrow-back" (click)="showCategoryList()" style="cursor: pointer; margin-right: 8px;"></ion-icon>
+    <h2 *ngIf="!selectedResource">{{ currentCategory }}</h2>
+  </div>
+
+  <div *ngIf="!showCategories && selectedResource" style="padding: 16px; display: flex; align-items: center;">
+    <ion-icon name="arrow-back" (click)="volver()" style="cursor: pointer; margin-right: 8px;"></ion-icon>
+  </div>
+
+  <ion-list *ngIf="showCategories">
+    <ion-card *ngFor="let category of categories" (click)="loadResources(category)" style="cursor: pointer;">
+      <ion-card-header>
+        <ion-card-title>{{ category }}</ion-card-title>
+      </ion-card-header>
+    </ion-card>
+  </ion-list>  
+
+  <ion-list *ngIf="!showCategories && !selectedResource">
+    <ion-item *ngFor="let resource of resources">
+      <ion-label>
+        <h2>{{ resource.titulo }}</h2>
+        <p>Autor: {{ resource.autor }}</p>
+        <p>Duración: {{ resource.duracion }} min</p>
+      </ion-label>
+      <ion-button slot="end" (click)="realizar(resource)"><ion-icon name="arrow-forward"></ion-icon></ion-button>
+    </ion-item>
+  </ion-list>
+
+  <ion-card *ngIf="selectedResource">
+    <ion-card-header>
+      <ion-card-title>{{ selectedResource.titulo }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div style="margin-bottom: 16px;">
+        <p><strong>Descripción:</strong> {{ selectedResource.descripcion }}</p>
+        <p><strong>Duración:</strong> {{ selectedResource.duracion }} min</p>
+        <p><strong>Autor:</strong> {{ selectedResource.autor }}</p>
+      </div>
+      <ion-button expand="full" (click)="comenzar(selectedResource)">
+        <ion-icon name="play"></ion-icon>
+      </ion-button>
+
+      <audio #audioPlayer controls *ngIf="audioURL">
+        <source [src]="audioURL" type="audio/mpeg">
+      </audio>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
