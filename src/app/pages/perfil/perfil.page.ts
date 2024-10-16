@@ -38,7 +38,8 @@ export class PerfilPage implements OnInit {
         
         const userId = localStorage.getItem('userId');
         if (userId && this.user.profileImage) {
-          this.user.profileImage = this.userService.getProfileImageUrl(userId);
+          const timestamp = new Date().getTime();
+          this.user.profileImage = this.userService.getProfileImageUrl(userId) + '?t=' + timestamp;
         }
         this.initializeForm();  
       }
@@ -146,8 +147,8 @@ export class PerfilPage implements OnInit {
       this.userService.updateUser(formData).subscribe(
         response => {
           console.log('Usuario actualizado con éxito:', response);
-          this.isEditing = false; 
-          this.loadUserData();
+          this.isEditing = false;
+          this.loadUserData(); 
         },
         error => {
           console.error('Error al actualizar el usuario:', error);
