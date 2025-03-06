@@ -1,64 +1,147 @@
 ion-grid {
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    height: 100%;
-    padding: 20px; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 20px;
 }
 
 .login-header {
-    text-align: center;
-    margin-bottom: 20px; 
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .login-title {
-    font-size: 1.8rem; 
-    color: #007bff; 
+  font-size: 1.8rem;
+  color: #007bff;
 }
 
 .login-item {
-    margin-bottom: 16px; 
-    padding-top: 10px;
+  margin-bottom: 16px;
+  padding-top: 10px;
 }
 
 .login-button {
-    margin-top: 20px;
-    background-color: #007bff; 
-    color: white; 
-    transition: background-color 0.3s ease, transform 0.2s ease; 
-    font-size: 1rem; 
+  margin-top: 20px;
+  background-color: #007bff;
+  color: white;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
 }
 
 .login-button:hover {
-    background-color: #0056b3; 
-    transform: translateY(-2px); 
+  background-color: #0056b3;
+  transform: translateY(-2px);
 }
 
 .login-footer {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
 }
 
 .register-link {
-    display: flex;
-    align-items: center; 
-    margin-bottom: 10px; 
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
 }
 
 .register-link ion-button {
-    margin-left: 5px; 
-    font-weight: bold; 
+  margin-left: 5px;
+  font-weight: bold;
 }
 
 .remember-me-container {
-    display: flex;
-    align-items: center; 
-    justify-content: space-between;
-    width: 100%; 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .remember-me-container ion-checkbox {
-    margin-right: 10px; 
+  margin-right: 10px;
+}
+
+.login-content {
+  --background: linear-gradient(to bottom, #a8dadc, #f1faee);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #457b9d;
+}
+
+.login-subtitle {
+  text-align: center;
+  font-size: 1rem;
+  color: #1d3557;
+}
+
+.input-container {
+  margin-bottom: 15px;
+}
+
+.input-label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #1d3557;
+  margin-bottom: 5px;
+  display: block;
+}
+
+.login-item {
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 5px;
+}
+
+.login-button {
+  background-color: #1d3557;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 10px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.forgot-password-button {
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.back-button {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 10;
+  font-size: 1rem;
+  color: #1D3557;
+}
+
+.custom-checkbox {
+  --border-radius: 50%;
+  --background: #a8dadc;
+  margin-right: 8px;
+}
+
+.remember-me-label {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #1d3557;
 }

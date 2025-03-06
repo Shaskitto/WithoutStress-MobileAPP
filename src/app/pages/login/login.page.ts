@@ -138,11 +138,18 @@ export class LoginPage{
               const userData = { email: normalizedEmail };
 
               this.authService.forgotPassword(userData).subscribe(
-                  (response) => {
+                  async response => {
                       console.log('Correo de recuperación enviado:', response);
                       this.codeSent = true; 
-                      this.successMessage = 'Se ha enviado un código de verificación a tu correo electrónico.';
-                      this.isSubmitting = false; 
+                      this.isSubmitting = false;
+
+                      const alert = await this.alertController.create({
+                        header: 'Correo Encontrado',
+                        message: 'Se ha enviado un código de verificación.',
+                        buttons: ['OK']
+                      });
+                
+                      await alert.present();
                   }
               );
           } else {
