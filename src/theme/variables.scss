@@ -1,2 +1,6 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+ion-content {
+    --padding-bottom: 70px; /* Asegura que el contenido no quede debajo de la tab-bar */
+}
+  

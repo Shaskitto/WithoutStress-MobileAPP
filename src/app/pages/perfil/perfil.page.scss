@@ -1,57 +1,90 @@
-.perfil-card {
-    margin: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
-    border-radius: 15px;
-}
-
-.perfil-card-header {
+.perfil-content {
+    --background: linear-gradient(to bottom, #a8dadc, #f1faee);
     padding: 16px;
-    margin-bottom: 10px;
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-}
-
-.perfil-card-title {
-    font-size: 1.6rem; 
+  }
+  
+  .perfil-card {
+    border-radius: 16px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    background: transparent;
+  }
+  
+  .perfil-card-header {
+    font-size: 2rem;
     font-weight: bold;
-    color: white; 
-    text-align: center; 
-    margin: 0; 
-}
-
-ion-note{
-    padding-top: 10px;
-    padding-left: 15px;
-}
-   
-.perfil-img-container {
-    display: flex;
-    align-items: center;
+    color: #1d3557;
+    text-align: center;
     margin-bottom: 15px;
-}
-
-.perfil-img {
-    width: 150px; 
-    height: auto; 
-    object-fit: contain; 
-    margin: auto;
-}
-
-ion-item {
-    --background: transparent;
-    margin: 10px 0;
-}
-
-ion-button {
-    margin-top: 20px;
-    --border-radius: 10px;
-}
-
-ion-card-title {
+  }
+  
+  .perfil-card-title {
     font-size: 1.4rem;
     font-weight: bold;
+    color: #1d3557;
+  }
+  
+  .perfil-img-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin-bottom: 16px;
+  }
+  
+  .perfil-img {
+    width: 120px;
+    height: 120px;
+    border: 3px solid #d4af37;
+    object-fit: cover;
+    object-position: center;
+  }
+  
+  ion-item {
+    --background: transparent;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    color: #1d3557;
+  }
+  
+  ion-label {
+    font-weight: 600;
     color: #333;
-    text-align: center;
-}
+  }
+  
+  ion-text {
+    font-size: 1rem;
+    color: #1d3557;
+  }
+  
+  .perfil-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  ion-button {
+    border-radius: 8px;
+    font-weight: bold;
+  }
+  
+  ion-chip {
+    margin: 4px;
+    --color: #1d3557;
+    font-weight: bold;
+  }
+  
+  ion-icon {
+    font-size: 1.2rem;
+    margin-right: 5px;
+  }
+
+  ion-list{
+    background: transparent;
+  }
+
+  .icon{
+    color: #d4af37;
+  }
   

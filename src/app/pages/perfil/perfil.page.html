@@ -2,217 +2,259 @@
   <ng-container *ngIf="!isEditing; else editMode">
     <ion-card class="perfil-card">
       <ion-card-header class="perfil-card-header">
-        <ion-card-title class="perfil-card-title">Información del Usuario</ion-card-title>
-      </ion-card-header>      
+        <ion-card-title class="perfil-card-title"
+          >Perfil del Usuario</ion-card-title
+        >
+      </ion-card-header>
 
       <ion-card-content>
-        <!-- Información Personal -->
+        <!-- Imagen de Perfil -->
         <div class="perfil-img-container">
-          <ion-img [src]="user?.profileImage" *ngIf="user?.profileImage" class="perfil-img"></ion-img>
+          <ion-img
+            [src]="user?.profileImage"
+            *ngIf="user?.profileImage"
+            class="perfil-img"
+          ></ion-img>
         </div>
 
-        <!-- Username -->
-        <ion-item>
-          <ion-label>Nombre de Usuario:</ion-label>
-          <ion-text>{{ user?.username }}</ion-text>
-        </ion-item>
+        <!-- Datos Personales -->
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label position="stacked">Nombre de Usuario:</ion-label>
+              <ion-item>
+                <ion-text>{{ user?.username }}</ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
 
-        <!-- Información -->
-        <ion-item>
-          <ion-label>Información</ion-label>
-          <ion-text>{{ user?.informacion }}</ion-text>
-        </ion-item>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label position="stacked">Edad:</ion-label>
+              <ion-item>
+                <ion-text>{{ user?.edad }}</ion-text>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label position="stacked">Sexo:</ion-label>
+              <ion-item>
+                <ion-text>{{ user?.sexo }}</ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
 
-        <!-- correo -->
-        <ion-item>
-          <ion-label>Correo Electrónico:</ion-label>
-          <ion-text>{{ user?.email }}</ion-text>
-        </ion-item>
+          <ion-row>
+            <ion-col size="12">
+              <ion-label position="stacked">Correo Electrónico:</ion-label>
+              <ion-item>
+                <ion-text>{{ user?.email }}</ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
 
-        <!-- Edad -->
-        <ion-item>
-          <ion-label>Edad:</ion-label>
-          <ion-text>{{ user?.edad }}</ion-text>
-        </ion-item>
+          <ion-row>
+            <ion-col size="6">
+              <ion-label position="stacked">Semestre:</ion-label>
+              <ion-item>
+                <ion-text>{{ user?.semestre }}</ion-text>
+              </ion-item>
+            </ion-col>
+            <ion-col size="6">
+              <ion-label position="stacked">Carrera:</ion-label>
+              <ion-item>
+                <ion-text>{{ user?.carrera }}</ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
 
-        <!-- Sexo -->
-        <ion-item>
-          <ion-label>Sexo:</ion-label>
-          <ion-text>{{ user?.sexo }}</ion-text>
-        </ion-item>
+          <!-- Información Adicional -->
+          <ion-row>
+            <ion-col size="12">
+              <ion-label position="stacked">Información:</ion-label>
+              <ion-item>
+                <ion-text>{{ user?.informacion }}</ion-text>
+              </ion-item>
+            </ion-col>
+          </ion-row>
 
-        <!-- Semestre -->
-        <ion-item>
-          <ion-label>Semestre:</ion-label>
-          <ion-text>{{ user?.semestre }}</ion-text>
-        </ion-item>
+          <!-- Actividades -->
+          <ion-row>
+            <ion-col size="12">
+              <ion-label position="stacked">Actividades:</ion-label>
+              <ion-item>
+                <ion-list>
+                  <ion-chip *ngFor="let actividad of user?.actividades">
+                    <ion-icon
+                      name="checkmark-circle"
+                      color="success"
+                    ></ion-icon>
+                    <ion-label>{{ actividad }}</ion-label>
+                  </ion-chip>
+                </ion-list>
+              </ion-item>
+            </ion-col>
+          </ion-row>
 
-        <!-- Carrera -->
-        <ion-item>
-          <ion-label>Carrera:</ion-label>
-          <ion-text>{{ user?.carrera }}</ion-text>
-        </ion-item>
-
-        <!-- Actividades -->
-        <ion-item>
-          <ion-label>Actividades:</ion-label>
-          <ion-text>{{ user?.actividades.join(', ') }}</ion-text>
-        </ion-item>
-
-        <!-- Horarios -->
-        <ion-item *ngIf="user?.horario">
-          <ion-label>Horario:</ion-label>
-          <ion-text>
-            <div *ngIf="user?.horario?.manana?.length > 0">
-              Mañana: {{ user?.horario?.manana.join(', ') }}<br>
-            </div>
-            <div *ngIf="user?.horario?.tarde?.length > 0">
-              Tarde: {{ user?.horario?.tarde.join(', ') }}<br>
-            </div>
-            <div *ngIf="user?.horario?.noche?.length > 0">
-              Noche: {{ user?.horario?.noche.join(', ') }}
-            </div>
-          </ion-text>
-        </ion-item>
-        
+          <!-- Horarios -->
+          <ion-row *ngIf="user?.horario">
+            <ion-col size="12">
+              <ion-label position="stacked">Horario:</ion-label>
+              <ion-item>
+                <ion-list>
+                  <ion-item *ngIf="user?.horario?.manana?.length > 0">
+                    <ion-icon class="icon" slot="start" name="sunny-outline"></ion-icon>
+                    <ion-label
+                      ><strong>Mañana:</strong> {{ user?.horario?.manana.join('
+                      ') }}</ion-label
+                    >
+                  </ion-item>
+                  <ion-item *ngIf="user?.horario?.tarde?.length > 0">
+                    <ion-icon class="icon" slot="start" name="partly-sunny-outline"
+                    ></ion-icon>
+                    <ion-label
+                      ><strong>Tarde:</strong> {{ user?.horario?.tarde.join(' ')
+                      }}</ion-label
+                    >
+                  </ion-item>
+                  <ion-item *ngIf="user?.horario?.noche?.length > 0">
+                    <ion-icon class="icon" slot="start" name="moon-outline"></ion-icon>
+                    <ion-label
+                      ><strong>Noche:</strong> {{ user?.horario?.noche.join(' ')
+                      }}</ion-label
+                    >
+                  </ion-item>
+                </ion-list>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
       </ion-card-content>
     </ion-card>
 
     <!-- Botones -->
-    <ion-button expand="block" color="primary" (click)="toggleEdit()">
-      {{ isEditing ? 'Cancelar' : 'Editar' }}
-    </ion-button>
-    <ion-button expand="block" color="danger" (click)="logout()">Cerrar sesión</ion-button>
+    <div class="perfil-buttons">
+      <ion-button expand="block" color="primary" (click)="toggleEdit()">
+        <ion-icon name="create-outline"></ion-icon> Editar
+      </ion-button>
+      <ion-button expand="block" color="danger" (click)="logout()">
+        <ion-icon name="log-out-outline"></ion-icon> Cerrar sesión
+      </ion-button>
+    </div>
   </ng-container>
 
   <!-- Modo de Edición -->
   <ng-template #editMode>
-    <form [formGroup]="perfilForm" (ngSubmit)="updateUser()">
-      <!-- Edición de Username -->
-      <ion-item>
-        <ion-label position="floating">Nombre de Usuario</ion-label>
-        <ion-input formControlName="username"></ion-input>
-      </ion-item>
-      <ion-note color="danger" *ngIf="perfilForm.controls['username'].invalid && perfilForm.controls['username'].touched">
-        El nombre de usuario es obligatorio.
-      </ion-note>
-      
-      <!-- Edición de Información -->
-      <ion-item>
-        <ion-label position="floating">Informacion</ion-label>
-        <ion-input formControlName="informacion"></ion-input>
-      </ion-item>
-      <ion-note color="danger" *ngIf="perfilForm.controls['informacion'].hasError('required') && !perfilForm.controls['informacion'].hasError('maxlength') && perfilForm.controls['informacion'].touched">
-        La Información es obligatoria.
-      </ion-note>
-      <ion-note color="danger" *ngIf="perfilForm.controls['informacion'].hasError('maxlength') && perfilForm.controls['informacion'].touched">
-        La Información no puede exceder los 140 caracteres.
-      </ion-note>
+    <ion-card class="perfil-card">
+      <ion-card-header>
+        <ion-card-title class="perfil-card-title">Editar Perfil</ion-card-title>
+      </ion-card-header>
 
-      <!-- Edición de Foto de perfil -->
-      <ion-item>
-        <ion-label position="floating">Foto de Perfil</ion-label>
-        <ion-input formControlName = "profileImage" type="file" (change)="onFileSelected($event)" accept="image/*"></ion-input>
-      </ion-item>
-      <ion-note *ngIf="!isValidFileType" color="danger">
-        {{ validationMessage }}
-      </ion-note>
+      <ion-card-content>
+        <form [formGroup]="perfilForm" (ngSubmit)="updateUser()">
+          <ion-list>
+            <!-- Nombre de usuario -->
+            <ion-item>
+              <ion-label position="floating">Nombre de Usuario</ion-label>
+              <ion-input formControlName="username"></ion-input>
+            </ion-item>
 
-      <!-- Edición de Edad -->
-      <ion-item>
-        <ion-label position="floating">Edad</ion-label>
-        <ion-input formControlName="edad" type="number"></ion-input>
-      </ion-item>
-      <ion-note color="danger" *ngIf="perfilForm.controls['edad'].invalid && perfilForm.controls['edad'].touched">
-        La edad es obligatoria.
-      </ion-note>  
+            <!-- Información -->
+            <ion-item>
+              <ion-label position="floating">Información</ion-label>
+              <ion-textarea
+                formControlName="informacion"
+                maxlength="140"
+              ></ion-textarea>
+            </ion-item>
 
-      <!-- Edición de Sexo -->
-      <ion-item>
-        <ion-label position="floating">Sexo</ion-label>
-        <ion-select formControlName="sexo">
-          <ion-select-option value="Masculino">Masculino</ion-select-option>
-          <ion-select-option value="Femenino">Femenino</ion-select-option>
-        </ion-select>
-      </ion-item>
+            <!-- Foto de perfil -->
+            <ion-item>
+              <ion-label position="stacked">Foto de perfil</ion-label>
+              <input
+                type="file"
+                (change)="onFileSelected($event)"
+                accept="image/*"
+              />
+            </ion-item>
+            <ion-note *ngIf="!isValidFileType" color="danger">
+              {{ validationMessage }}
+            </ion-note>
 
-      <!-- Edición de Semestre -->
-      <ion-item>
-        <ion-label position="floating">Semestre</ion-label>
-        <ion-select formControlName="semestre">
-          <ion-select-option *ngFor="let i of [1, 2, 3, 4]" [value]="i">{{ i }}</ion-select-option>
-        </ion-select>
-      </ion-item>
+            <!-- Edad -->
+            <ion-item>
+              <ion-label position="floating">Edad</ion-label>
+              <ion-input formControlName="edad" type="number"></ion-input>
+            </ion-item>
 
-      <!-- Edición de Carrera -->
-      <ion-item>
-        <ion-label position="floating">Carrera</ion-label>
-        <ion-select formControlName="carrera">
-          <ion-select-option value="Ingeniería de Sistemas">Ingeniería de Sistemas</ion-select-option>
-          <ion-select-option value="Ingeniería Multimedia">Ingeniería Multimedia</ion-select-option>
-        </ion-select>
-      </ion-item>
+            <!-- Sexo -->
+            <ion-item>
+              <ion-label position="floating">Sexo</ion-label>
+              <ion-select formControlName="sexo">
+                <ion-select-option value="Masculino"
+                  >Masculino</ion-select-option
+                >
+                <ion-select-option value="Femenino">Femenino</ion-select-option>
+              </ion-select>
+            </ion-item>
 
-      <!-- Edición de Actividades -->
-      <ion-item>
-        <ion-label position="floating">Actividades</ion-label>
-        <ion-select formControlName="actividades" multiple="true">
-          <ion-select-option value="Meditación">Meditación</ion-select-option>
-          <ion-select-option value="Sonidos Relajantes">Sonidos Relajantes</ion-select-option>
-          <ion-select-option value="Ejercicios de respiración">Ejercicios de respiración</ion-select-option>
-          <ion-select-option value="Prácticas para Dormir">Prácticas para Dormir</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-note color="danger" *ngIf="perfilForm.controls['actividades'].invalid && perfilForm.controls['actividades'].touched">
-        Selecciona al menos 1 actividad.
-      </ion-note> 
+            <!-- Semestre -->
+            <ion-item>
+              <ion-label position="floating">Semestre</ion-label>
+              <ion-select formControlName="semestre">
+                <ion-select-option *ngFor="let i of [1, 2, 3, 4]" [value]="i"
+                  >{{ i }}</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
 
-      <!-- Edición de Horarios -->
-      <ng-container formGroupName="horario">
-        <!-- Mañana -->
-        <ion-item>
-          <ion-label position="floating">Horario Mañana</ion-label>
-          <ion-select formControlName="manana" multiple="true">
-            <ion-select-option *ngFor="let hour of ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00']" [value]="hour">
-              {{ hour }}
-            </ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-note *ngIf="perfilForm.get('horario.manana')?.hasError('maxLengthArray')" color="danger">
-          Solo puedes seleccionar hasta 2 horarios.
-        </ion-note>
+            <!-- Carrera -->
+            <ion-item>
+              <ion-label position="floating">Carrera</ion-label>
+              <ion-select formControlName="carrera">
+                <ion-select-option value="Ingeniería de Sistemas"
+                  >Ingeniería de Sistemas</ion-select-option
+                >
+                <ion-select-option value="Ingeniería Multimedia"
+                  >Ingeniería Multimedia</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
 
-        <!-- Tarde -->
-        <ion-item>  
-          <ion-label position="floating">Horario Tarde</ion-label>
-          <ion-select formControlName="tarde" multiple="true">
-            <ion-select-option *ngFor="let hour of ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00']" [value]="hour">{{ hour }}</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-note *ngIf="perfilForm.get('horario.tarde')?.hasError('maxLengthArray')" color="danger">
-          Solo puedes seleccionar hasta 2 horarios.
-        </ion-note>
+            <!-- Actividades -->
+            <ion-item>
+              <ion-label position="floating">Actividades</ion-label>
+              <ion-select formControlName="actividades" multiple="true">
+                <ion-select-option value="Meditación"
+                  >Meditación</ion-select-option
+                >
+                <ion-select-option value="Sonidos Relajantes"
+                  >Sonidos Relajantes</ion-select-option
+                >
+                <ion-select-option value="Ejercicios de respiración"
+                  >Ejercicios de respiración</ion-select-option
+                >
+                <ion-select-option value="Prácticas para Dormir"
+                  >Prácticas para Dormir</ion-select-option
+                >
+              </ion-select>
+            </ion-item>
+          </ion-list>
 
-        <!-- Noche -->
-        <ion-item>
-          <ion-label position="floating">Horario Noche</ion-label>
-          <ion-select formControlName="noche" multiple="true">
-            <ion-select-option *ngFor="let hour of ['18:00', '19:00', '20:00', '21:00', '22:00', '23:00']" [value]="hour">{{ hour }}</ion-select-option>
-          </ion-select>
-        </ion-item>
-        <ion-note *ngIf="perfilForm.get('horario.noche')?.hasError('maxLengthArray')" color="danger">
-          Solo puedes seleccionar hasta 2 horarios.
-        </ion-note>
-      </ng-container>
-
-      <!-- Botones -->
-      <ion-button expand="block" type="submit" [disabled]="!perfilForm.valid || !isValidFileType">
-        Guardar Cambios
-      </ion-button>
-
-      <ion-button expand="block" color="medium" (click)="toggleEdit()">
-        Cancelar
-      </ion-button>
-    </form>
+          <!-- Botones -->
+          <div class="perfil-buttons">
+            <ion-button
+              expand="block"
+              type="submit"
+              [disabled]="!perfilForm.valid || !isValidFileType"
+            >
+              <ion-icon name="save-outline"></ion-icon> Guardar Cambios
+            </ion-button>
+            <ion-button expand="block" color="danger" (click)="toggleEdit()">
+              <ion-icon name="close-circle-outline"></ion-icon> Cancelar
+            </ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
   </ng-template>
 </ion-content>
