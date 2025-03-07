@@ -1,6 +1,6 @@
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="register-content">
   <ion-grid>
-    <ion-row>
+    <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-md="8" offset-md="2">
         <div class="register-header">
           <h1 class="register-title">Crear Cuenta</h1> 
@@ -8,37 +8,47 @@
 
         <!-- Formulario de Registro -->
         <form [formGroup]="registerForm" (ngSubmit)="register()">
-          <ion-item class="register-item">
-            <ion-label position="floating">Nombre de Usuario</ion-label>
-            <ion-input formControlName="username"></ion-input>
-          </ion-item>
-          <ion-note color="danger" *ngIf="registerForm.controls['username'].errors?.['usernameTaken']">
-            El nombre de usuario ya está en uso.
-          </ion-note>
-          <ion-note color="danger" *ngIf="registerForm.controls['username'].invalid && registerForm.controls['username'].touched && !registerForm.controls['username'].errors?.['usernameTaken']">
-            El nombre de usuario es obligatorio.
-          </ion-note>          
+          <div class="input-container">
+            <ion-label class="input-label">Nombre de Usuario</ion-label>
+            <ion-item class="register-item">
+              <ion-icon name="person-outline" slot="start"></ion-icon>
+              <ion-input formControlName="username"></ion-input>
+            </ion-item>
+            <ion-note color="danger" *ngIf="registerForm.controls['username'].errors?.['usernameTaken']">
+              El nombre de usuario ya está en uso.
+            </ion-note>
+            <ion-note color="danger" *ngIf="registerForm.controls['username'].invalid && registerForm.controls['username'].touched && !registerForm.controls['username'].errors?.['usernameTaken']">
+              El nombre de usuario es obligatorio.
+            </ion-note>          
+          </div>
 
-          <ion-item class="register-item">
-            <ion-label position="floating">Correo Electrónico</ion-label>
-            <ion-input formControlName="email" type="email"></ion-input>
-          </ion-item>
-          <ion-note color="danger" *ngIf="registerForm.controls['email'].errors?.['emailTaken']">
-            El correo ya está en uso.
-          </ion-note>
-          <ion-note color="danger" *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched && !registerForm.controls['email'].errors?.['emailTaken']">
-            Email es obligatorio
-          </ion-note>
+          <div class="input-container">
+            <ion-label class="input-label">Correo Electrónico</ion-label>
+            <ion-item class="register-item">
+              <ion-icon name="mail-outline" slot="start"></ion-icon>
+              <ion-input formControlName="email" type="email"></ion-input>
+            </ion-item>
+            <ion-note color="danger" *ngIf="registerForm.controls['email'].errors?.['emailTaken']">
+              El correo ya está en uso.
+            </ion-note>
+            <ion-note color="danger" *ngIf="registerForm.controls['email'].invalid && registerForm.controls['email'].touched && !registerForm.controls['email'].errors?.['emailTaken']">
+              Email es obligatorio
+            </ion-note>
+          </div>
 
-          <ion-item class="register-item">
-            <ion-label position="floating">Contraseña</ion-label>
-            <ion-input formControlName="password" type="password"></ion-input>
-          </ion-item>
-          <ion-note color="danger" *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched">
-            La contraseña debe tener al menos 8 caracteres.
-          </ion-note>
+          <div class="input-container">
+            <ion-label class="input-label">Contraseña</ion-label>
+            <ion-item class="register-item">
+              <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+              <ion-input formControlName="password" type="password"></ion-input>
+            </ion-item>
+            <ion-note color="danger" *ngIf="registerForm.controls['password'].invalid && registerForm.controls['password'].touched">
+              La contraseña debe tener al menos 8 caracteres.
+            </ion-note>
+          </div>
 
-          <ion-button expand="full" type="submit" [disabled]="registerForm.invalid" class="register-button">
+          <ion-button expand="full" type="submit" [disabled]="registerForm.invalid || registerForm.pending" class="register-button">
+            <ion-icon name="person-add-outline" slot="start"></ion-icon>
             Registrar
           </ion-button>
         </form>
