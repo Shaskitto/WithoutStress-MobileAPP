@@ -102,14 +102,21 @@
               <ion-item>
                 <ion-list>
                   <ion-item *ngIf="user?.horario?.manana?.length > 0">
-                    <ion-icon class="icon" slot="start" name="sunny-outline"></ion-icon>
+                    <ion-icon
+                      class="icon"
+                      slot="start"
+                      name="sunny-outline"
+                    ></ion-icon>
                     <ion-label
                       ><strong>Mañana:</strong> {{ user?.horario?.manana.join('
                       ') }}</ion-label
                     >
                   </ion-item>
                   <ion-item *ngIf="user?.horario?.tarde?.length > 0">
-                    <ion-icon class="icon" slot="start" name="partly-sunny-outline"
+                    <ion-icon
+                      class="icon"
+                      slot="start"
+                      name="partly-sunny-outline"
                     ></ion-icon>
                     <ion-label
                       ><strong>Tarde:</strong> {{ user?.horario?.tarde.join(' ')
@@ -117,7 +124,11 @@
                     >
                   </ion-item>
                   <ion-item *ngIf="user?.horario?.noche?.length > 0">
-                    <ion-icon class="icon" slot="start" name="moon-outline"></ion-icon>
+                    <ion-icon
+                      class="icon"
+                      slot="start"
+                      name="moon-outline"
+                    ></ion-icon>
                     <ion-label
                       ><strong>Noche:</strong> {{ user?.horario?.noche.join(' ')
                       }}</ion-label
@@ -238,6 +249,64 @@
                 >
               </ion-select>
             </ion-item>
+
+            <!-- Edición de Horarios -->
+            <ng-container formGroupName="horario">
+              <!-- Mañana -->
+              <ion-item>
+                <ion-label position="floating">Horario Mañana</ion-label>
+                <ion-select formControlName="manana" multiple="true">
+                  <ion-select-option
+                    *ngFor="let hour of ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00']"
+                    [value]="hour"
+                  >
+                    {{ hour }}
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+              <ion-note
+                *ngIf="perfilForm.get('horario.manana')?.hasError('maxLengthArray')"
+                color="danger"
+              >
+                Solo puedes seleccionar hasta 2 horarios.
+              </ion-note>
+
+              <!-- Tarde -->
+              <ion-item>
+                <ion-label position="floating">Horario Tarde</ion-label>
+                <ion-select formControlName="tarde" multiple="true">
+                  <ion-select-option
+                    *ngFor="let hour of ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00']"
+                    [value]="hour"
+                    >{{ hour }}</ion-select-option
+                  >
+                </ion-select>
+              </ion-item>
+              <ion-note
+                *ngIf="perfilForm.get('horario.tarde')?.hasError('maxLengthArray')"
+                color="danger"
+              >
+                Solo puedes seleccionar hasta 2 horarios.
+              </ion-note>
+
+              <!-- Noche -->
+              <ion-item>
+                <ion-label position="floating">Horario Noche</ion-label>
+                <ion-select formControlName="noche" multiple="true">
+                  <ion-select-option
+                    *ngFor="let hour of ['18:00', '19:00', '20:00', '21:00', '22:00', '23:00']"
+                    [value]="hour"
+                    >{{ hour }}</ion-select-option
+                  >
+                </ion-select>
+              </ion-item>
+              <ion-note
+                *ngIf="perfilForm.get('horario.noche')?.hasError('maxLengthArray')"
+                color="danger"
+              >
+                Solo puedes seleccionar hasta 2 horarios.
+              </ion-note>
+            </ng-container>
           </ion-list>
 
           <!-- Botones -->

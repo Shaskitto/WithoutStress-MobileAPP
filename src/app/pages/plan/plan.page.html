@@ -1,4 +1,6 @@
-<ion-content [fullscreen]="true" class="plan-content">
+<ion-content *ngIf="horarios && (horarios.manana?.length || horarios.tarde?.length || horarios.noche?.length)" 
+  [fullscreen]="true" class="plan-content">
+  
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-md="8" offset-md="2">
@@ -6,12 +8,12 @@
           <h1 class="plan-title">Tu Plan Diario</h1>
         </div>
 
-        <ion-list *ngIf="horarios" class="plan-list">
+        <ion-list class="plan-list">
           <!-- Horario Mañana -->
-          <ion-item-divider class="plan-divider">
+          <ion-item-divider *ngIf="horarios.manana?.length" class="plan-divider">
             <ion-label>Horario Mañana</ion-label>
           </ion-item-divider>
-          <ion-item *ngFor="let tarea of horarios?.manana" class="plan-item">
+          <ion-item *ngFor="let tarea of horarios.manana" class="plan-item">
             <div class="task-card">
               <ion-checkbox slot="start" class="custom-checkbox"></ion-checkbox>
               <div class="task-text">{{ tarea }}</div>
@@ -19,10 +21,10 @@
           </ion-item>
 
           <!-- Horario Tarde -->
-          <ion-item-divider class="plan-divider">
+          <ion-item-divider *ngIf="horarios.tarde?.length" class="plan-divider">
             <ion-label>Horario Tarde</ion-label>
           </ion-item-divider>
-          <ion-item *ngFor="let tarea of horarios?.tarde" class="plan-item">
+          <ion-item *ngFor="let tarea of horarios.tarde" class="plan-item">
             <div class="task-card">
               <ion-checkbox slot="start" class="custom-checkbox"></ion-checkbox>
               <div class="task-text">{{ tarea }}</div>
@@ -30,10 +32,10 @@
           </ion-item>
 
           <!-- Horario Noche -->
-          <ion-item-divider class="plan-divider">
+          <ion-item-divider *ngIf="horarios.noche?.length" class="plan-divider">
             <ion-label>Horario Noche</ion-label>
           </ion-item-divider>
-          <ion-item *ngFor="let tarea of horarios?.noche" class="plan-item">
+          <ion-item *ngFor="let tarea of horarios.noche" class="plan-item">
             <div class="task-card">
               <ion-checkbox slot="start" class="custom-checkbox"></ion-checkbox>
               <div class="task-text">{{ tarea }}</div>
