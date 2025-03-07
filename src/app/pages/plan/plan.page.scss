@@ -32,16 +32,17 @@
 
 /* Títulos de horarios (Mañana, Tarde, Noche) */
 .plan-divider {
-  background-color: #a8dadc;
+  background-color: transparent;
   font-size: 1.1rem;
   font-weight: bold;
   color: #1d3557;
   padding: 10px;
   border-radius: 10px;
   margin-top: 15px;
-  display: flex; /* Agrega flexbox */
-  justify-content: center; /* Centra el texto horizontalmente */
-  align-items: center; /* Centra el texto verticalmente */
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  border: none
 }
 
 /* Estilo de las tareas */
