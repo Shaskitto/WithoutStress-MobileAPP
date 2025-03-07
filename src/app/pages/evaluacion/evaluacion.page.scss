@@ -1,56 +1,109 @@
-.horarios-container {
-  max-height: 300px; 
-  overflow-y: auto;  
+ion-content {
+  --background: linear-gradient(to bottom, #a8dadc, #f1faee);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Centrado vertical */
 }
 
-ion-content {
-    ion-grid{
-        display: flex; 
-        flex-direction: column; 
-        justify-content: center; 
-        height: 100%;
-        padding: 20px; 
-    }
-  
-    ion-card {
-      width: 100%;
-      max-width: 400px; /* Tamaño máximo del ion-card */
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-      border-radius: 12px;
-      margin: 0 auto; /* Centra horizontalmente el ion-card */
-    }
-  
-    ion-card-header {
-      text-align: center;
-      font-size: 1.4rem;
-      background-color: #007bff;
-      padding: 16px;
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-      color: white;
-    }
-  
-    ion-card-content {
-      padding: 16px;
-      font-size: 1.1rem;
-      color: #555;
-  
-      ion-item {
-        margin-bottom: 12px;
-      }
-    }
-  
-    ion-button {
-        display: flex; 
-        flex-direction: column; 
-        justify-content: center; 
-        padding: auto; 
-        margin-top: 16px;
-        --background: #007bff;
-        --color: white;
-        --border-radius: 8px;
-        font-size: 1rem;
-        --box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
-    }
+ion-grid {
+  max-width: 500px;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrar contenido dentro del grid */
+  justify-content: center;
+  margin: auto; /* Asegura el centrado */
+}
+
+ion-card {
+  width: 100%;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  text-align: center; /* Asegura centrado del texto */
+}
+
+ion-card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #1d3557;
+}
+
+ion-item {
+  --background: transparent;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+  width: 100%;
+}
+
+ion-select,
+ion-input {
+  --padding-start: 10px;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  color: #1d3557;
+}
+
+/* Centrar el selector y mejorar visibilidad */
+ion-select::part(icon) {
+  color: #4CAF50;
+}
+
+ion-select::part(placeholder),
+ion-select::part(text) {
+  font-weight: bold;
+  color: #1d3557;
+  text-align: center;
+}
+
+/* Mejorar el diseño al seleccionar */
+ion-select:focus {
+  border: 2px solid #4CAF50;
+  background-color: #e8f5e9;
+}
+
+ion-button {
+  --background: #4CAF50; 
+  --border-radius: 8px;
+  --box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  font-size: 1rem;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.horarios-container {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 10px;
+  background: white;
+}
+
+ion-item-divider {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #4CAF50;
+  background: #e8f5e9;
+  cursor: pointer;
+}
+
+ion-list {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
   }
-  
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
