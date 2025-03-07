@@ -1,90 +1,80 @@
-/* Fondo degradado */
 ion-content {
-    --background: linear-gradient(to bottom, #a8dadc, #f1faee);
-  }
-  
-  /* Tarjetas más nítidas y con un ligero efecto glass sin blur */
-  ion-card {
-    background: rgba(255, 255, 255, 0.6); /* Más opaco para mejor visibilidad */
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
-    transition: all 0.3s ease-in-out;
-  }
-  
-  /* Mejorar visibilidad del título */
-  ion-card-title {
-    color: #1d3557 !important;
-    font-weight: bold;
-    font-size: 1.4rem;
-    text-align: center;
-  }
+  --background: linear-gradient(to bottom, #a8dadc, #f1faee);
+}
 
-  /* Lista sin fondo negro */
-  ion-list {
-    background: transparent !important;
-  }
-  
-  ion-item {
-    --background: transparent !important;
-    --color: #1d3557;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Mejorar nombres y textos */
-  .custom-name {
-    font-weight: bold;
-    color: #1d3557;
-  }
-  
-  /* Avatar con borde sutil */
-  .custom-avatar img {
-    border-radius: 50%;
-    border: 2px solid rgba(0, 0, 0, 0.2);
-  }
+ion-card {
+  background: rgba(255, 255, 255, 0.6); 
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
+  transition: all 0.3s ease-in-out;
+}
 
-  ion-icon, span{
-    color: black;
-  }
-  
-  /* Botones con animaciones */
-  ion-button {
-    font-weight: bold;
-    border-radius: 10px;
-    text-transform: uppercase;
-    transition: all 0.3s ease-in-out;
-  }
-  
-  /* Efecto de escala al pasar el mouse */
-  ion-button:hover {
-    transform: scale(1.05);
-  }
-  
-  /* Estilos específicos para cada botón */
-  .chat-button {
-    background-color: #1d3557;
-    color: white;
-  }
-  
-  .add-button {
-    background-color: #007bff;
-  }
-  
-  .accept-button {
-    background-color: #28a745;
-  }
-  
-  .decline-button {
-    background-color: #dc3545;
-  }
-  
-  .remove-button {
-    background-color: #ff4500;
-  }
-  
-  /* Mensaje de "No hay amigos" */
-  .empty-message {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #1d3557;
-  }
-  
+ion-card-title {
+  color: #1d3557 !important;
+  font-weight: bold;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+ion-list {
+  background: transparent !important;
+}
+
+ion-item {
+  --background: transparent !important;
+  --color: #1d3557;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.custom-name {
+  font-weight: bold;
+  color: #1d3557;
+}
+
+.custom-avatar img {
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
+ion-icon,
+span {
+  color: black;
+}
+
+ion-button {
+  font-weight: bold;
+  border-radius: 10px;
+  text-transform: uppercase;
+  transition: all 0.3s ease-in-out;
+}
+
+ion-button:hover {
+  transform: scale(1.05);
+}
+
+.chat-button {
+  background-color: #1d3557;
+  color: white;
+}
+
+.add-button {
+  background-color: #007bff;
+}
+
+.accept-button {
+  background-color: #28a745;
+}
+
+.decline-button {
+  background-color: #dc3545;
+}
+
+.remove-button {
+  background-color: #ff4500;
+}
+
+.empty-message {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #1d3557;
+}

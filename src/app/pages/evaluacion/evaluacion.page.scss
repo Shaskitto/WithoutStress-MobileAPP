@@ -3,7 +3,7 @@ ion-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Centrado vertical */
+  height: 100vh; 
 }
 
 ion-grid {
@@ -12,9 +12,9 @@ ion-grid {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centrar contenido dentro del grid */
+  align-items: center; 
   justify-content: center;
-  margin: auto; /* Asegura el centrado */
+  margin: auto; 
 }
 
 ion-card {
@@ -23,7 +23,7 @@ ion-card {
   border-radius: 12px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   background-color: white;
-  text-align: center; /* Asegura centrado del texto */
+  text-align: center; 
 }
 
 ion-card-title {
@@ -51,7 +51,6 @@ ion-input {
   color: #1d3557;
 }
 
-/* Centrar el selector y mejorar visibilidad */
 ion-select::part(icon) {
   color: #4CAF50;
 }
@@ -63,7 +62,6 @@ ion-select::part(text) {
   text-align: center;
 }
 
-/* Mejorar el diseño al seleccionar */
 ion-select:focus {
   border: 2px solid #4CAF50;
   background-color: #e8f5e9;

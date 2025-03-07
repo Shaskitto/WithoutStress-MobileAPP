@@ -1,104 +1,117 @@
-/* Estilo general del encabezado */
-.plan-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-/* Título principal */
-.plan-title {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #1d3557;
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-/* Contenedor principal con fondo en gradiente */
 .plan-content {
   --background: linear-gradient(to bottom, #a8dadc, #f1faee);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  padding: 20px;
+  min-height: 100vh;
 }
 
-/* Lista de horarios */
-.plan-list {
-  margin-top: 20px;
-  padding: 0 20px;
-  width: 100%;
-  max-width: 600px;
+.plan-header {
+  text-align: center;
+  margin-bottom: 25px;
 }
 
-/* Títulos de horarios (Mañana, Tarde, Noche) */
-.plan-divider {
-  background-color: transparent;
-  font-size: 1.1rem;
+.plan-title {
   font-weight: bold;
   color: #1d3557;
-  padding: 10px;
-  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.plan-list {
   margin-top: 15px;
-  display: flex; 
-  justify-content: center; 
-  align-items: center; 
-  border: none
+  padding: 0 20px;
+  width: 100%;
+  max-width: 650px;
 }
 
-/* Estilo de las tareas */
+.plan-divider {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #457b9d;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.6);
+  border-left: 5px solid #1d3557;
+}
+
 .plan-item {
-  padding: 8px 0;
+  padding: 10px 0;
+  transition: transform 0.2s ease-in-out;
 }
 
-/* Tarjeta de cada tarea */
+.plan-item:hover {
+  transform: translateY(-3px);
+}
+
 .task-card {
   display: flex;
   align-items: center;
   background: white;
-  border-radius: 12px;
-  padding: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  transition: all 0.3s ease-in-out;
+  border-left: 6px solid #1d3557;
 }
 
-/* Contenedor de la tarea */
+.task-card:hover {
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  background: #f1faee;
+}
+
 .task-container {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* Elementos alineados a la izquierda */
+  justify-content: flex-start;
   width: 100%;
 }
 
-/* Estilo del horario */
 .task-time {
   font-size: 1rem;
   font-weight: bold;
   color: #1d3557;
-  margin-right: 10px; /* Espacio entre el horario y la tarea */
+  margin-right: 12px;
+  padding: 6px 10px;
+  background: #f1faee;
+  border-radius: 5px;
 }
 
-/* Estilo del texto de la tarea */
 .task-text {
   font-size: 1.1rem;
   font-weight: 500;
   color: #1d3557;
+  flex-grow: 1;
 }
 
-/* Estilo del checkbox */
 .custom-checkbox {
   --background: #a8dadc;
   --border-radius: 50%;
   margin-right: 10px;
+  transform: scale(1.2);
 }
 
-/* Fondo transparente en ion-list */
 ion-list {
   background: transparent;
 }
 
-/* Fondo blanco en ion-item */
 ion-item {
   --background: transparent;
   --color: #1d3557;
+  border-bottom: 1px solid rgba(29, 53, 87, 0.15);
+  transition: background 0.3s ease-in-out;
+}
+
+ion-item:hover {
+  background: rgba(29, 53, 87, 0.05);
 }
