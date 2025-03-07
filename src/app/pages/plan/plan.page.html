@@ -1,15 +1,9 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Plan Diario</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="plan-content">
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-md="8" offset-md="2">
         <div class="plan-header">
-          <h1 class="plan-title">Plan Diario</h1>
+          <h1 class="plan-title">Tu Plan Diario</h1>
         </div>
 
         <ion-list *ngIf="horarios" class="plan-list">
@@ -18,11 +12,9 @@
             <ion-label>Horario Mañana</ion-label>
           </ion-item-divider>
           <ion-item *ngFor="let tarea of horarios?.manana" class="plan-item">
-            <div class="task-container">
-              <div class="task-time">{{ tarea }}</div> 
-              <div class="task-info">
-                <ion-checkbox slot="start"></ion-checkbox>
-              </div>
+            <div class="task-card">
+              <ion-checkbox slot="start" class="custom-checkbox"></ion-checkbox>
+              <div class="task-text">{{ tarea }}</div>
             </div>
           </ion-item>
 
@@ -31,11 +23,9 @@
             <ion-label>Horario Tarde</ion-label>
           </ion-item-divider>
           <ion-item *ngFor="let tarea of horarios?.tarde" class="plan-item">
-            <div class="task-container">
-              <div class="task-time">{{ tarea }}</div> 
-              <div class="task-info">
-                <ion-checkbox slot="start"></ion-checkbox>
-              </div>
+            <div class="task-card">
+              <ion-checkbox slot="start" class="custom-checkbox"></ion-checkbox>
+              <div class="task-text">{{ tarea }}</div>
             </div>
           </ion-item>
 
@@ -44,11 +34,9 @@
             <ion-label>Horario Noche</ion-label>
           </ion-item-divider>
           <ion-item *ngFor="let tarea of horarios?.noche" class="plan-item">
-            <div class="task-container">
-              <div class="task-time">{{ tarea }}</div> 
-              <div class="task-info">
-                <ion-checkbox slot="start"></ion-checkbox>
-              </div>
+            <div class="task-card">
+              <ion-checkbox slot="start" class="custom-checkbox"></ion-checkbox>
+              <div class="task-text">{{ tarea }}</div>
             </div>
           </ion-item>
         </ion-list>

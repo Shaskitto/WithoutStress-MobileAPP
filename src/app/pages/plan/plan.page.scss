@@ -1,57 +1,103 @@
+/* Estilo general del encabezado */
 .plan-header {
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
+/* Título principal */
 .plan-title {
-    font-size: 1.8rem;
-    color: #007bff;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1d3557;
+  text-align: center;
+  margin-bottom: 15px;
 }
 
+/* Contenedor principal con fondo en gradiente */
+.plan-content {
+  --background: linear-gradient(to bottom, #d8f3dc, #ffffff);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* Lista de horarios */
 .plan-list {
-    margin-top: 20px;
-    padding: 0 20px;
+  margin-top: 20px;
+  padding: 0 20px;
+  width: 100%;
+  max-width: 600px;
 }
 
+/* Títulos de horarios (Mañana, Tarde, Noche) */
 .plan-divider {
-    text-align: center; 
-    background-color: transparent; 
-    color: white; 
-    font-weight: bold;
-    padding: 10px 0;
-    font-size: 1.1rem;
+  background-color: #a8dadc;
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #1d3557;
+  padding: 10px;
+  border-radius: 10px;
+  margin-top: 15px;
+  display: flex; /* Agrega flexbox */
+  justify-content: center; /* Centra el texto horizontalmente */
+  align-items: center; /* Centra el texto verticalmente */
 }
 
-
+/* Estilo de las tareas */
 .plan-item {
-    padding: 12px 0;
+  padding: 8px 0;
 }
 
+/* Tarjeta de cada tarea */
+.task-card {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+/* Contenedor de la tarea */
 .task-container {
-    display: flex;
-    flex-direction: column; 
-    width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Elementos alineados a la izquierda */
+  width: 100%;
 }
 
+/* Estilo del horario */
 .task-time {
-    font-size: 0.9rem;
-    color: white;
-    margin-bottom: 15px; 
+  font-size: 1rem;
+  font-weight: bold;
+  color: #1d3557;
+  margin-right: 10px; /* Espacio entre el horario y la tarea */
 }
 
-.task-info {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
+/* Estilo del texto de la tarea */
+.task-text {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #1d3557;
 }
 
-.task-info ion-checkbox {
-    --background: #007bff;
-    --border-radius: 50%;
-    margin-right: 10px; 
+/* Estilo del checkbox */
+.custom-checkbox {
+  --background: #a8dadc;
+  --border-radius: 50%;
+  margin-right: 10px;
 }
 
-.task-info ion-label {
-    font-size: 1rem;
-    color: #333;
+/* Fondo transparente en ion-list */
+ion-list {
+  background: transparent;
+}
+
+/* Fondo blanco en ion-item */
+ion-item {
+  --background: transparent;
+  --color: #1d3557;
 }
