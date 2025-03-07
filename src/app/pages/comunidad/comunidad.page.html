@@ -1,17 +1,20 @@
 <ion-content>
   <!-- Botones -->
-  <div class="button-container">
-    <ion-button expand="block" (click)="setActiveSection('friendsList')" [color]="activeSection === 'friendsList' ? 'primary' : 'medium'">
-      <ion-icon name="people" slot="start"></ion-icon> Lista de Amigos
-    </ion-button>
-    <ion-button expand="block" (click)="setActiveSection('addFriends')" [color]="activeSection === 'addFriends' ? 'primary' : 'medium'">
-      <ion-icon name="person-add" slot="start"></ion-icon> Agregar Amigos
-    </ion-button>
-    <ion-button expand="block" (click)="setActiveSection('friendRequests')" [color]="activeSection === 'friendRequests' ? 'primary' : 'medium'">
-      <ion-icon name="mail" slot="start"></ion-icon> Solicitudes
-    </ion-button>
-  </div>
-  
+  <ion-segment [(ngModel)]="activeSection" class="custom-segment">
+    <ion-segment-button value="friendsList">
+      <ion-icon name="people"></ion-icon>
+      <span>Amigos</span>
+    </ion-segment-button>
+    <ion-segment-button value="addFriends">
+      <ion-icon name="person-add"></ion-icon>
+      <span>Agregar</span>
+    </ion-segment-button>
+    <ion-segment-button value="friendRequests">
+      <ion-icon name="mail"></ion-icon>
+      <span>Solicitudes</span>
+    </ion-segment-button>
+  </ion-segment>
+
   <!-- Lista de amigos -->
   <div *ngIf="activeSection === 'friendsList'" class="section">
     <ion-card-header>
@@ -21,30 +24,43 @@
             <ion-card-title>Lista de Amigos</ion-card-title>
           </ion-col>
           <ion-col size="auto">
-            <ion-button (click)="toggleManageFriends()" size="small">{{ manageFriends ? 'Cancelar Gestión' : 'Gestionar Amigos' }}</ion-button>
+            <ion-button (click)="toggleManageFriends()" size="small"
+              >{{ manageFriends ? 'Cancelar Gestión' : 'Gestionar Amigos'
+              }}</ion-button
+            >
           </ion-col>
         </ion-row>
       </ion-grid>
     </ion-card-header>
-    
+
     <ion-card class="friend-card">
       <ion-card-content>
         <ion-list *ngIf="friends.length > 0; else noFriends">
           <ion-item *ngFor="let friend of friends" lines="full">
             <ion-avatar slot="start" class="custom-avatar">
-              <img [src]="friend.friendId.profileImage" alt="{{ friend.friendId.username }}" />
+              <img
+                [src]="friend.friendId.profileImage"
+                alt="{{ friend.friendId.username }}"
+              />
             </ion-avatar>
             <ion-label>
               <h2 class="custom-name">{{ friend.friendId.username }}</h2>
               <p>{{ friend.friendId.informacion }}</p>
             </ion-label>
-            <ion-button slot="end" (click)="manageFriends ? deleteFriend(friend.friendId._id) : goToChat(friend.friendId._id)" [color]="manageFriends ? 'danger' : 'primary'" shape="round">
+            <ion-button
+              slot="end"
+              (click)="manageFriends ? deleteFriend(friend.friendId._id) : goToChat(friend.friendId._id)"
+              [color]="manageFriends ? 'danger' : 'primary'"
+              shape="round"
+            >
               {{ manageFriends ? 'Eliminar' : 'Ir al Chat' }}
             </ion-button>
           </ion-item>
         </ion-list>
         <ng-template #noFriends>
-          <p class="empty-message">No tienes amigos aún. ¡Empieza a agregar amigos!</p>
+          <p class="empty-message">
+            No tienes amigos aún. ¡Empieza a agregar amigos!
+          </p>
         </ng-template>
       </ion-card-content>
     </ion-card>
@@ -59,11 +75,16 @@
       <ion-card-header>
         <ion-item>
           <ion-icon name="search" slot="start"></ion-icon>
-          <ion-input type="text" placeholder="Buscar amigos por Username" [(ngModel)]="searchTerm" (ionInput)="searchFriends()"></ion-input>
-        </ion-item>        
+          <ion-input
+            type="text"
+            placeholder="Buscar amigos por Username"
+            [(ngModel)]="searchTerm"
+            (ionInput)="searchFriends()"
+          ></ion-input>
+        </ion-item>
       </ion-card-header>
       <ion-card-content>
-        <ion-list>
+        <ion-list >
           <ion-item *ngFor="let user of filteredUsers" lines="full">
             <ion-avatar slot="start" class="custom-avatar">
               <img [src]="user.profileImage" alt="{{ user.username }}" />
@@ -72,14 +93,19 @@
               <h2 class="custom-name">{{ user.username }}</h2>
               <p>{{ user.informacion }}</p>
             </ion-label>
-            <ion-button slot="end" (click)="sendFriendRequest(user._id)" shape="round" color="success">
+            <ion-button
+              slot="end"
+              (click)="sendFriendRequest(user._id)"
+              shape="round"
+              color="success"
+            >
               Agregar
             </ion-button>
           </ion-item>
         </ion-list>
       </ion-card-content>
     </ion-card>
-  </div>  
+  </div>
 
   <!-- Solicitudes -->
   <div *ngIf="activeSection === 'friendRequests'" class="section">
@@ -91,21 +117,36 @@
         <ion-list *ngIf="pendingRequests.length > 0; else noRequests">
           <ion-item *ngFor="let request of pendingRequests" lines="full">
             <ion-avatar slot="start" class="custom-avatar">
-              <img [src]="request.friendId.profileImage" alt="{{ request.friendId.username }}" />
+              <img
+                [src]="request.friendId.profileImage"
+                alt="{{ request.friendId.username }}"
+              />
             </ion-avatar>
             <ion-label>
               <h2 class="custom-name">{{ request.friendId.username }}</h2>
             </ion-label>
-            <ion-button slot="end" (click)="acceptFriendRequest(request.friendId._id)" shape="round" color="success">
+            <ion-button
+              slot="end"
+              (click)="acceptFriendRequest(request.friendId._id)"
+              shape="round"
+              color="success"
+            >
               Aceptar
             </ion-button>
-            <ion-button slot="end" color="danger" shape="round" (click)="declineFriendRequest(request.friendId._id)">
+            <ion-button
+              slot="end"
+              color="danger"
+              shape="round"
+              (click)="declineFriendRequest(request.friendId._id)"
+            >
               Eliminar
             </ion-button>
           </ion-item>
         </ion-list>
         <ng-template #noRequests>
-          <p class="empty-message">No tienes solicitudes de amistad pendientes.</p>
+          <p class="empty-message">
+            No tienes solicitudes de amistad pendientes.
+          </p>
         </ng-template>
       </ion-card-content>
     </ion-card>
