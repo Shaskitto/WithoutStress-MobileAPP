@@ -1,46 +1,64 @@
-.welcome-grid {
-    display: flex; 
-    flex-direction: column; 
-    justify-content: center; 
-    height: 100%;
+.welcome-content {
+  --background: linear-gradient(
+    to bottom,
+    #a8dadc,
+    #f1faee
+  ); /* Degradado en tonos suaves */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.welcome-content {
-    background-size: cover;
-    color: white;
+.welcome-grid {
+  text-align: center;
+  padding: 20px;
 }
 
 .welcome-title {
-    text-align: center;
-    font-size: 2rem; 
-    margin-bottom: 16px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #1d3557; /* Color más oscuro para mejorar la visibilidad */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .welcome-description {
-    text-align: center;
-    font-size: 1.2rem; 
-    line-height: 1.5; 
-    margin-bottom: 20px; 
+  font-size: 1.2rem;
+  color: #1d3557; /* Mejor contraste */
+  padding: 15px;
+  background: rgba(
+    255,
+    255,
+    255,
+    0.4
+  ); /* Un poco más sólido para mejorar la legibilidad */
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .welcome-button {
-    background-color: #007bff; 
-    color: white; 
-    margin-top: 16px;
-    transition: background-color 0.3s ease, transform 0.2s ease; 
-    border: none;
-    border-radius: 8px; 
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 25px;
+  margin-top: 10px;
+  padding: 12px;
+  transition: 0.3s;
 }
 
-.welcome-button:hover {
-    background-color: #0056b3; 
-    transform: translateY(-2px); 
+.welcome-button.primary {
+  background: #ffffff;
+  color: #457b9d; /* Un azul más elegante y en armonía con el fondo */
+}
+
+.welcome-button.primary:hover {
+  background: #e3e3e3;
 }
 
 .welcome-button.secondary {
-    background-color: #6c757d; 
+  background: transparent;
+  border: 2px solid #457b9d;
+  color: #1d3557; /* Color más oscuro para mejor lectura */
 }
 
 .welcome-button.secondary:hover {
-    background-color: #5a6268; 
+  background: rgba(69, 123, 157, 0.2);
 }
