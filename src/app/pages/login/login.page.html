@@ -80,12 +80,12 @@
             <ion-item class="login-item verification-input">
               <ion-input type="text" [(ngModel)]="otp" name="otp" required></ion-input>
             </ion-item> 
+            
 
             <ion-label class="input-label">Nueva Contraseña</ion-label>
             <ion-item class="login-item">
               <ion-input type="password" [(ngModel)]="newPassword" name="newPassword" required></ion-input>
             </ion-item>
-
             <ion-note color="danger" *ngIf="errorMessage && codeSent">{{ errorMessage }}</ion-note>
 
             <ion-button expand="full" (click)="resetPassword()">Restablecer Contraseña</ion-button>

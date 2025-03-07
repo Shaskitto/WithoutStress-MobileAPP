@@ -168,7 +168,7 @@ export class LoginPage{
       this.errorMessage = 'Por favor, completa todos los campos.';
       return;
     }
-  
+    
     if (this.newPassword.length < 8) {
       this.errorMessage = 'La contraseña debe tener al menos 8 caracteres.';
       return;
@@ -197,6 +197,10 @@ export class LoginPage{
       },
       error => {
         console.error('Error al restablecer la contraseña:', error);
+
+        if (error.status === 400) {
+          this.errorMessage = 'El código OTP es incorrecto';
+        }
       }
     );
   }  
