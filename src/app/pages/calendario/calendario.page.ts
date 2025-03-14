@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AlertController } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -12,13 +13,38 @@ export class CalendarioPage implements OnInit {
   selectedDate: string = '';  
   isEditing = false;
   editingNoteId: string | null = null;
-  userNotes: any[] = []; // Lista de notas del usuario
+  userNotes: any[] = []; 
 
-  constructor(private fb: FormBuilder, private userService: UserService) {}
+  constructor(private fb: FormBuilder, private userService: UserService, private alertController: AlertController) {}
 
   ngOnInit() {
     this.initializeForm();
-    this.loadUserNotes(); // Cargar notas al iniciar
+    this.loadUserNotes(); 
+  }
+
+  // Método modificado para mostrar una alerta antes de eliminar la nota
+  async confirmDeleteNote(noteId: string) {
+    const alert = await this.alertController.create({
+      header: 'Eliminar Nota',
+      message: '¿Estás seguro de que quieres eliminar esta nota?',
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          handler: () => {
+            console.log('Eliminación cancelada');
+          }
+        },
+        {
+          text: 'Eliminar',
+          handler: () => {
+            this.deleteNote(noteId);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
   }
 
   // Inicializa el formulario
@@ -33,7 +59,8 @@ export class CalendarioPage implements OnInit {
 
   // Maneja la selección de la fecha
   onDateChange(event: any) {
-    this.selectedDate = event.detail.value;
+    const fullDate = event.detail.value;
+    this.selectedDate = fullDate.slice(0, 10);
     this.calendarioForm.patchValue({ fecha: this.selectedDate });
 
     // Buscar si hay una nota existente para la fecha seleccionada
@@ -47,17 +74,23 @@ export class CalendarioPage implements OnInit {
     }
   }
 
+  getFormattedDate(isoDate: string): string {
+    const date = new Date(isoDate);
+    return date.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
+  }
+  
+
   // Cargar todas las notas del usuario
   loadUserNotes() {
     this.userService.getNotes().subscribe({
       next: (response) => {
-        const notes = response?.notas; // Acceder a la propiedad "notas"
+        const notes = response?.notas; 
         
         if (Array.isArray(notes)) {
           this.userNotes = notes;
         } else {
           console.error("Error: La respuesta no es un array", response);
-          this.userNotes = []; // Evitar errores en el *ngFor
+          this.userNotes = []; 
         }
       },
       error: (err) => console.error('Error al cargar notas:', err)
@@ -71,8 +104,9 @@ export class CalendarioPage implements OnInit {
 
       this.userService.createNote(noteData).subscribe({
         next: (newNote) => {
-          this.userNotes.push(newNote); // Agregar la nueva nota a la lista
+          this.userNotes.push(newNote); 
           this.calendarioForm.reset();
+          this.loadUserNotes();
         },
         error: (err) => console.error('Error al crear nota:', err)
       });
@@ -94,7 +128,7 @@ export class CalendarioPage implements OnInit {
       this.userService.updateNote(this.editingNoteId, noteData).subscribe({
         next: () => {
           const index = this.userNotes.findIndex(n => n._id === this.editingNoteId);
-          if (index !== -1) this.userNotes[index] = { ...noteData, _id: this.editingNoteId }; // Actualizar lista
+          if (index !== -1) this.userNotes[index] = { ...noteData, _id: this.editingNoteId }; 
           this.cancelEdit();
         },
         error: (err) => console.error('Error al actualizar nota:', err)
@@ -102,8 +136,8 @@ export class CalendarioPage implements OnInit {
     }
   }
 
-  // Eliminar una nota
-  deleteNote(noteId: string) {
+  // Método para eliminar la nota (se ejecuta solo si el usuario confirma)
+  private deleteNote(noteId: string) {
     this.userService.deleteNote(noteId).subscribe({
       next: () => {
         this.userNotes = this.userNotes.filter(n => n._id !== noteId);

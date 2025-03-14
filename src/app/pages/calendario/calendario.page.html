@@ -1,66 +1,62 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Calendario</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="plan-content">
+  <div class="plan-header">
+    <h1 class="plan-title">📅 Calendario de Notas</h1>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Calendario</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-list>
-    <!-- Calendario -->
-    <ion-item>
-      <ion-label>Selecciona una fecha</ion-label>
-      <ion-datetime
-        [value]="selectedDate"
-        (ionChange)="onDateChange($event)"
-        display-format="DD/MM/YYYY"
-      ></ion-datetime>
-    </ion-item>
-
-    <!-- Formulario para agregar o editar notas -->
+  <!-- Formulario para agregar o editar notas -->
+  <div class="form-container">
     <form [formGroup]="calendarioForm" (ngSubmit)="isEditing ? updateNote() : createNote()">
-      <ion-item *ngIf="selectedDate">
-        <ion-label position="floating">Fecha seleccionada</ion-label>
+      
+      <ion-item class="custom-item">
+        <ion-datetime
+          [value]="selectedDate"
+          (ionChange)="onDateChange($event)"
+          presentation="date"
+          display-format="DD/MM/YYYY">
+        </ion-datetime>
+      </ion-item>
+
+      <ion-label position="floating" *ngIf="selectedDate">📅 Fecha seleccionada</ion-label>
+      <ion-item class="custom-item" *ngIf="selectedDate">
         <ion-input formControlName="fecha" readonly></ion-input>
       </ion-item>
-      
-      <ion-item>
-        <ion-label position="floating">Hora</ion-label>
+
+      <ion-label position="floating">⏰ Hora</ion-label>
+      <ion-item class="custom-item">
         <ion-input formControlName="hora" type="time"></ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Título</ion-label>
+      <ion-label position="floating">📝 Título</ion-label>
+      <ion-item class="custom-item">
         <ion-input formControlName="titulo" type="text"></ion-input>
       </ion-item>
 
-      <ion-item>
-        <ion-label position="floating">Contenido</ion-label>
+      <ion-label position="floating">📌 Contenido</ion-label>
+      <ion-item class="custom-item">
         <ion-textarea formControlName="contenido"></ion-textarea>
       </ion-item>
 
-      <ion-button expand="full" type="submit" [disabled]="!calendarioForm.valid">
-        {{ isEditing ? 'Actualizar Nota' : 'Guardar Nota' }}
+      <ion-button expand="full" class="custom-button" type="submit" [disabled]="!calendarioForm.valid">
+        {{ isEditing ? '🔄 Actualizar Nota' : '💾 Guardar Nota' }}
       </ion-button>
-      <ion-button *ngIf="isEditing" expand="full" color="medium" (click)="cancelEdit()">Cancelar</ion-button>
+      <ion-button *ngIf="isEditing" expand="full" color="danger" class="cancel-button" (click)="cancelEdit()">Cancelar</ion-button>
     </form>
+  </div>
 
-    <!-- Lista de Notas -->
-    <ion-list>
-      <ion-item *ngFor="let note of userNotes" (click)="editNote(note)">
-        <ion-label>
-          <h2>{{ note.fecha }} - {{ note.hora }}</h2>
-          <p>{{ note.titulo }}</p>
-        </ion-label>
-        <ion-button color="danger" fill="clear" (click)="deleteNote(note._id)">
-          <ion-icon name="trash"></ion-icon>
-        </ion-button>
-      </ion-item>
-    </ion-list>
-  </ion-list>
+  <!-- Lista de Notas -->
+  <ion-list class="plan-list" *ngIf="(userNotes ?? []).length > 0">
+    <div class="plan-divider">📌 Notas Guardadas</div>
+    <ion-card class="note-card" *ngFor="let note of userNotes" (click)="editNote(note)">
+      <ion-card-header>
+        <ion-card-title>{{ note.titulo }}</ion-card-title>
+        <ion-card-subtitle>{{ getFormattedDate(note.fecha)}} - {{ note.hora }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{ note.contenido }}
+      </ion-card-content>
+      <ion-button class="delete-button" fill="clear" (click)="confirmDeleteNote(note._id)">
+        <ion-icon name="trash"></ion-icon>
+      </ion-button>
+    </ion-card>
+  </ion-list>  
 </ion-content>
