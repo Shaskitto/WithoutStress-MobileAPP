@@ -37,7 +37,11 @@ const routes: Routes = [
   {
     path: 'evaluacion',
     loadChildren: () => import('./pages/evaluacion/evaluacion.module').then( m => m.EvaluacionPageModule)
+  },  {
+    path: 'calendario',
+    loadChildren: () => import('./pages/calendario/calendario.module').then( m => m.CalendarioPageModule)
   }
+
 ];
 @NgModule({
   imports: [

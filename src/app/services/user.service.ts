@@ -137,4 +137,57 @@ export class UserService {
       throw new Error('Token no encontrado');
     }
   }
+
+  // Método para crear notas
+  createNote(noteData: { titulo: string; contenido: string; fecha: string; hora: string }): Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.post(`${this.apiUrl}/user/notes/${userId}`, noteData, { headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
+  
+  // Método para actulizar notas
+  updateNote(noteId: string, noteData: { titulo?: string; contenido?: string; fecha?: string; hora?: string }): Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.patch(`${this.apiUrl}/user/notes/${userId}/${noteId}`, noteData, { headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
+  
+  // Método para obtener las notas de un usuario
+  getNotes(): Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.get(`${this.apiUrl}/user/notes/${userId}`, { headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
+  
+  // Método para elminar notas
+  deleteNote(noteId: string): Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+  
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.delete(`${this.apiUrl}/user/notes/${userId}/${noteId}`, { headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
+  
 }
