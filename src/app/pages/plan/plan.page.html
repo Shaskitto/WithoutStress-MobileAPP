@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true" class="plan-content">
+<ion-content *ngIf="!isLoading" [fullscreen]="true" class="plan-content">
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-md="8" offset-md="2">
