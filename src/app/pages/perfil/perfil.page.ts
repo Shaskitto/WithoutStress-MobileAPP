@@ -35,7 +35,7 @@ export class PerfilPage implements OnInit {
     this.userService.getUser().subscribe({
       next: (userData) => {
         this.user = userData; 
-        
+
         const userId = localStorage.getItem('userId');
         if (userId && this.user.profileImage) {
           const timestamp = new Date().getTime();
@@ -161,5 +161,52 @@ export class PerfilPage implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
+  }  
+
+  getMoodColor(estado: string): string {
+    const moods = {
+      Feliz: 'success',
+      Bien: 'primary',
+      Neutral: 'warning',
+      Triste: 'tertiary',
+      Enojado: 'danger'
+    } as const;
+  
+    return moods[estado as keyof typeof moods] || 'medium';
+  }
+  
+  getMoodIcon(estado: string): string {
+    const icons = {
+      Feliz: 'happy-outline',
+      Bien: 'thumbs-up-outline',
+      Neutral: 'remove-circle-outline',
+      Triste: 'sad-outline',
+      Enojado: 'alert-circle-outline'
+    } as const;
+  
+    return icons[estado as keyof typeof icons] || 'help-circle-outline';
+  }
+
+  getMoodStatistics() {
+    const counts: { [key: string]: number } = {};
+  
+    if (!this.user || !this.user.estadoDeAnimo) return [];
+  
+    this.user.estadoDeAnimo.forEach((mood: any) => {
+      counts[mood.estado] = (counts[mood.estado] || 0) + 1;
+    });
+  
+    return Object.entries(counts).map(([estado, cantidad]) => ({ estado, cantidad }));
+  }  
+  
+  formatDate(fecha: string): string {
+    const date = new Date(fecha);
+    return date.toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   }
 }

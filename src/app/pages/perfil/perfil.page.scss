@@ -5,12 +5,7 @@
 
 .perfil-card {
   border-radius: 16px;
-  background: rgba(
-    255,
-    255,
-    255,
-    0.6
-  ); 
+  background: linear-gradient(135deg, #ffffff, #f7f7f7);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease-in-out;
 }
@@ -96,4 +91,93 @@ ion-button {
 
 ion-button:hover {
   transform: scale(1.05);
+}
+
+.chart-container {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 10px;
+  height: 200px;
+  padding: 20px;
+  
+}
+
+.bar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50px;
+}
+
+.bar {
+  width: 100%;
+  background-color: #4CAF50;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  transition: height 0.3s ease-in-out;
+}
+
+.label {
+  margin-top: 5px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.mood-history-card {
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  --background: transparent !important;
+}
+
+.title {
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  color: #4a4a4a;
+}
+
+.title-icon {
+  font-size: 1.6rem;
+  margin-right: 8px;
+  color: #ffcc00;
+}
+
+.mood-list {
+  padding: 10px;
+}
+
+.mood-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding: 8px 0;
+}
+
+.mood-chip {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+}
+
+.mood-icon {
+  font-size: 1.5rem;
+  margin-right: 8px;
+}
+
+.mood-label {
+  display: flex;
+  flex-direction: column;
+}
+
+.date {
+  font-size: 0.8rem;
+  color: #555;
+  font-style: italic;
 }
