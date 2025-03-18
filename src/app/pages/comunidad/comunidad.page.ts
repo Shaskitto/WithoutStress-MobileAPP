@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { map, Observable } from 'rxjs';
+import { FriendsService } from 'src/app/services/friends.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
@@ -21,7 +22,7 @@ export class ComunidadPage implements OnInit {
   allUsers: any[] = [];
   manageFriends: boolean = false;
 
-  constructor(private userService: UserService, private alertController: AlertController) { }
+  constructor(private userService: UserService, private friendsService: FriendsService,private alertController: AlertController) { }
   
   // Cargar los datos de los usuarios cuando se inicializa el componente
   ngOnInit() {
@@ -96,7 +97,7 @@ export class ComunidadPage implements OnInit {
 
   // Método para carga los datos de los usuarios amigos ('accepted')
   fetchFriends() {
-    this.userService.getFriends().subscribe(friends => {
+    this.friendsService.getFriends().subscribe(friends => {
       this.friends = friends.map((friend: { friendId: { _id: any; profileImage: string; }; }) => {
         const userId = friend.friendId._id;
         friend.friendId.profileImage = this.userService.getProfileImageUrl(userId);
@@ -108,7 +109,7 @@ export class ComunidadPage implements OnInit {
 
   // Método para carga los datos de los usuarios en solicitud ('pending')
   fetchPendingRequests() {
-    this.userService.getPendingRequests().subscribe(requests => {
+    this.friendsService.getPendingRequests().subscribe(requests => {
       this.pendingRequests = requests.map((request: { friendId: { _id: any; profileImage: string; }; }) => {
         const userId = request.friendId._id;
         request.friendId.profileImage = this.userService.getProfileImageUrl(userId);
@@ -120,7 +121,7 @@ export class ComunidadPage implements OnInit {
   
   // Método para enviar solicitud a un usuario
   sendFriendRequest(friendId: string): void {
-    this.userService.sendFriendRequest(friendId).subscribe(
+    this.friendsService.sendFriendRequest(friendId).subscribe(
       async (response) => {
         console.log('Solicitud de amistad enviada:', response);
         await this.showAlert('Solicitud de amistad enviada', 'La solicitud de amistad se ha enviado correctamente.');
@@ -135,7 +136,7 @@ export class ComunidadPage implements OnInit {
 
   // Método para aceptar solicitud de un usuario
   acceptFriendRequest(friendId: string): void {
-    this.userService.acceptFriendRequest(friendId).subscribe(
+    this.friendsService.acceptFriendRequest(friendId).subscribe(
       (response) => {
         console.log('Solicitud de amistad aceptada:', response);
         this.fetchPendingRequests(); 
@@ -150,7 +151,7 @@ export class ComunidadPage implements OnInit {
 
   // Método para rechazar solicitud de un usuario
   declineFriendRequest(friendId: string): void {
-    this.userService.declineFriendRequest(friendId).subscribe(
+    this.friendsService.declineFriendRequest(friendId).subscribe(
       (response) => {
         console.log('Solicitud de amistad rechazada:', response);
         this.fetchPendingRequests(); 
@@ -163,7 +164,7 @@ export class ComunidadPage implements OnInit {
 
   // Método para eliminar un amigo del usuario
   deleteFriend(friendId: string) {
-    this.userService.deleteFriend(friendId).subscribe(
+    this.friendsService.deleteFriend(friendId).subscribe(
       response => {
         console.log('Amigo eliminado:', response);
         this.fetchFriends(); 
