@@ -1,14 +1,54 @@
-<ion-content *ngIf="horarios && (horarios.manana?.length || horarios.tarde?.length || horarios.noche?.length)" 
-  [fullscreen]="true" class="plan-content">
-  
+<ion-content [fullscreen]="true" class="plan-content">
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-md="8" offset-md="2">
         <div class="plan-header">
-          <h1 class="plan-title">Tu Plan Diario</h1>
+          <h1 class="plan-title">{{ moodRegisteredToday ? 'Tu Plan Diario' : 'Registra tu Estado de Ánimo' }}</h1>
         </div>
 
-        <ion-list class="plan-list">
+        <!-- Estado de ánimo -->
+        <div class="mood-container" *ngIf="!moodRegisteredToday">
+          <div class="mood-section">
+            <p class="mood-registered-msg">¿Cómo te sientes hoy?</p>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col size="6">
+                  <ion-button class="mood-button happy" expand="full" (click)="setMood('Muy bien')">
+                    <ion-icon slot="start" name="happy-outline"></ion-icon> Muy bien
+                  </ion-button>
+                </ion-col>
+
+                <ion-col size="6">
+                  <ion-button class="mood-button good" expand="full" (click)="setMood('Bien')">
+                    <ion-icon slot="start" name="thumbs-up-outline"></ion-icon> Bien
+                  </ion-button>
+                </ion-col>
+
+                <ion-col size="6">
+                  <ion-button class="mood-button neutral" expand="full" (click)="setMood('Neutro')">
+                    <ion-icon slot="start" name="remove-outline"></ion-icon> Neutro
+                  </ion-button>
+                </ion-col>
+
+                <ion-col size="6">
+                  <ion-button class="mood-button bad" expand="full" (click)="setMood('Mal')">
+                    <ion-icon slot="start" name="thumbs-down-outline"></ion-icon> Mal
+                  </ion-button>
+                </ion-col>
+
+                <ion-col size="12">
+                  <ion-button class="mood-button very-bad" expand="full" (click)="setMood('Muy mal')">
+                    <ion-icon slot="start" name="sad-outline"></ion-icon> Muy mal
+                  </ion-button>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </div>  
+
+        <ion-list *ngIf="moodRegisteredToday && horarios && (horarios.manana?.length || horarios.tarde?.length || horarios.noche?.length)" 
+          class="plan-list">
           <!-- Horario Mañana -->
           <ion-item-divider *ngIf="horarios.manana?.length" class="plan-divider">
             <ion-label>Horario Mañana</ion-label>

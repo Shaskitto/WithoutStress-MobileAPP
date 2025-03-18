@@ -98,5 +98,17 @@ export class UserService {
       throw new Error('Token no encontrado');
     }
   }
-  
+
+  // Método para registrar el estado de ánimo
+  registerMood(mood: string): Observable<any> {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+
+    if (token) {
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      return this.http.post(`${this.apiUrl}/user/mood/${userId}`, { estado: mood }, { headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
 }

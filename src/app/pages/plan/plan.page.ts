@@ -11,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 export class PlanPage implements OnInit, ViewWillEnter {
   user$: Observable<any> | undefined;
   horarios: any;
+  moodRegisteredToday = false;
 
   constructor(private userService: UserService) { }
 
@@ -35,7 +36,38 @@ export class PlanPage implements OnInit, ViewWillEnter {
 
     this.user$.subscribe(data => {
       this.horarios = data.horario; 
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      this.moodRegisteredToday = data.estadoDeAnimo?.some((entry: any) => {
+        const entryDate = new Date(entry.fecha);
+        entryDate.setHours(0, 0, 0, 0);
+        return entryDate.getTime() === today.getTime();
+      });
     });
   }
 
+  // Método para registrar el estado de ánimo
+  setMood(mood: string) {
+    if (this.moodRegisteredToday) {
+      alert('Ya registraste tu estado de ánimo hoy.');
+      return;
+    }
+
+    this.userService.registerMood(mood).subscribe(
+      response => {
+        console.log('Estado de ánimo registrado:', response);
+        this.moodRegisteredToday = true;
+      },
+      error => {
+        if (error.status === 400) {
+          alert('Ya registraste tu estado de ánimo hoy.');
+          this.moodRegisteredToday = true;
+        } else {
+          alert('Error al registrar estado de ánimo.');
+        }
+      }
+    );
+  }
 }
