@@ -1,3 +1,9 @@
+@media (min-width: 1024px) {
+  ion-list {
+    margin-left: 280px;
+  }
+}
+
 .plan-content {
   --background: linear-gradient(to bottom, #a8dadc, #f1faee);
   display: flex;
