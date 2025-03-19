@@ -44,19 +44,23 @@
   </div>
 
   <!-- Lista de Notas -->
-  <ion-list class="plan-list" *ngIf="(userNotes ?? []).length > 0">
-    <div class="plan-divider">📌 Notas Guardadas</div>
-    <ion-card class="note-card" *ngFor="let note of userNotes" (click)="editNote(note)">
-      <ion-card-header>
-        <ion-card-title>{{ note.titulo }}</ion-card-title>
-        <ion-card-subtitle>{{ getFormattedDate(note.fecha)}} - {{ note.hora }}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        {{ note.contenido }}
-      </ion-card-content>
-      <ion-button class="delete-button" fill="clear" (click)="confirmDeleteNote(note._id)">
-        <ion-icon name="trash"></ion-icon>
-      </ion-button>
-    </ion-card>
-  </ion-list>  
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let note of userNotes">
+        <ion-card class="note-card" (click)="editNote(note)">
+          <ion-card-header>
+            <ion-card-title>{{ note.titulo }}</ion-card-title>
+            <ion-card-subtitle>{{ getFormattedDate(note.fecha) }} - {{ note.hora }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            {{ note.contenido }}
+          </ion-card-content>
+          <ion-button class="delete-button" fill="clear" (click)="confirmDeleteNote(note._id)">
+            <ion-icon name="trash"></ion-icon>
+          </ion-button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  
 </ion-content>

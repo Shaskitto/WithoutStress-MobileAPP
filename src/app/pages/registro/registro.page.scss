@@ -2,8 +2,27 @@ ion-grid {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  height: 100%;
+  align-items: center; /* Centrar en ambas direcciones */
+  height: 100vh; /* Ocupa toda la pantalla */
   padding: 20px;
+}
+
+ion-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+ion-col {
+  max-width: 500px; /* Limita el ancho en pantallas grandes */
+  width: 100%;
+}
+
+.register-content {
+  --background: linear-gradient(to bottom, #a8dadc, #f1faee);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .register-header {
@@ -12,26 +31,17 @@ ion-grid {
 }
 
 .register-title {
-  font-size: 1.8rem;
-  color: #007bff;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #457b9d;
 }
 
 .register-item {
-  margin-bottom: 16px;
-  padding-top: 10px;
-}
-
-.register-button {
-  margin-top: 20px;
-  background-color: #007bff;
-  color: white;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  font-size: 1rem;
-}
-
-.register-button:hover {
-  background-color: #0056b3;
-  transform: translateY(-2px);
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  padding: 5px;
 }
 
 .register-footer {
@@ -52,19 +62,6 @@ ion-grid {
   font-weight: bold;
 }
 
-.register-content {
-  --background: linear-gradient(to bottom, #a8dadc, #f1faee);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.register-title {
-  text-align: center;
-  font-size: 2.2rem;
-  font-weight: bold;
-  color: #1d3557;
-}
 
 .register-label {
   font-size: 1rem;
@@ -74,30 +71,18 @@ ion-grid {
   display: block;
 }
 
-.register-item {
-  border-radius: 12px;
-  background: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  margin-bottom: 12px;
-  padding: 10px;
-}
 
 .register-button {
   background-color: #1d3557;
   color: white;
   font-size: 1.2rem;
   font-weight: bold;
-  border-radius: 12px;
+  border-radius: 10px;
   text-transform: uppercase;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-}
-
-.register-footer {
-  text-align: center;
-  margin-top: 20px;
 }
 
 .login-button {

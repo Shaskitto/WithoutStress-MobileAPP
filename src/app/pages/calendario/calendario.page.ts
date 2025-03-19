@@ -10,7 +10,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class CalendarioPage implements OnInit {
   calendarioForm!: FormGroup;
-  selectedDate: string = '';  
+  selectedDate: string = new Date().toISOString();
   isEditing = false;
   editingNoteId: string | null = null;
   userNotes: any[] = []; 

@@ -1,3 +1,33 @@
+/* 📱 Para pantallas pequeñas */
+@media (max-width: 400px) {
+  ion-tab-bar {
+    height: 50px; 
+  }
+
+  ion-tab-button {
+    font-size: 12px; 
+  }
+
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+/* 🖥️ Para pantallas más grandes */
+@media (min-width: 768px) {
+  ion-tab-bar {
+    height: 70px; 
+  }
+
+  ion-tab-button {
+    font-size: 16px;
+  }
+
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
 ion-tab-bar {
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
@@ -7,12 +37,16 @@ ion-tab-bar {
   bottom: 0;
   width: 100%;
   z-index: 10;
+  display: flex;
+  justify-content: space-around;
+  background: linear-gradient(to bottom, #a8dadc, #f1faee);
 }
 
 ion-tab-button {
   color: black;
   transition: all 0.3s ease-in-out;
   background: linear-gradient(to bottom, #a8dadc, #f1faee);
+  flex: 1; 
 }
 
 ion-tab-button.tab-selected {

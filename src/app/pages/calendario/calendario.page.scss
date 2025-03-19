@@ -17,16 +17,16 @@
   letter-spacing: 1px;
 }
 
-.form-container {
+.form-container, .plan-list {
   width: 90%;
   max-width: 500px;
   background: white;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 50px; 
-  margin-left: 20px;
+  margin: 20px auto; /* Centrado automático */
 }
+
 
 .custom-item {
   border-radius: 8px;
@@ -86,13 +86,7 @@ ion-datetime:focus {
   color: white;
 }
 
-.plan-list {
-  margin-top: 15px;
-  padding: 0 20px;
-  width: 100%;
-  max-width: 650px;
-  background: none;
-}
+
 
 .plan-divider {
   font-size: 1.2rem;

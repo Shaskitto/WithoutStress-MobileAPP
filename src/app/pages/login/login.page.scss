@@ -1,3 +1,63 @@
+/* Dispositivos móviles (menos de 768px) */
+@media (max-width: 768px) {
+  .login-title {
+    font-size: 1.5rem;
+  }
+
+  .login-subtitle {
+    font-size: 0.9rem;
+  }
+
+  .login-button {
+    font-size: 1rem;
+  }
+
+  .remember-me-container ion-button {
+    margin-left: 40px;
+    font-weight: bold;
+  }
+}
+
+/* Tablets (entre 768px y 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .login-title {
+    font-size: 1.8rem;
+  }
+
+  .login-subtitle {
+    font-size: 1rem;
+  }
+
+  .login-button {
+    font-size: 1.1rem;
+  }
+
+  .remember-me-container ion-button {
+    margin-left: 135px;
+    font-weight: bold;
+  }
+}
+
+/* Pantallas grandes (más de 1024px) */
+@media (min-width: 1024px) {
+  .login-title {
+    font-size: 2rem;
+  }
+
+  .login-subtitle {
+    font-size: 1.2rem;
+  }
+
+  .login-button {
+    font-size: 1.2rem;
+  }
+
+  .remember-me-container ion-button {
+    margin-left: 850px;
+    font-weight: bold;
+  }
+}
+
 ion-grid {
   display: flex;
   flex-direction: column;
@@ -9,29 +69,6 @@ ion-grid {
 .login-header {
   text-align: center;
   margin-bottom: 20px;
-}
-
-.login-title {
-  font-size: 1.8rem;
-  color: #007bff;
-}
-
-.login-item {
-  margin-bottom: 16px;
-  padding-top: 10px;
-}
-
-.login-button {
-  margin-top: 20px;
-  background-color: #007bff;
-  color: white;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  font-size: 1rem;
-}
-
-.login-button:hover {
-  background-color: #0056b3;
-  transform: translateY(-2px);
 }
 
 .login-footer {
@@ -55,7 +92,6 @@ ion-grid {
 .remember-me-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   width: 100%;
 }
 
@@ -118,11 +154,6 @@ ion-grid {
 .forgot-password-button {
   font-size: 0.9rem;
   text-decoration: underline;
-}
-
-.login-footer {
-  text-align: center;
-  margin-top: 15px;
 }
 
 .back-button {

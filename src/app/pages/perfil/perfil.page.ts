@@ -165,11 +165,11 @@ export class PerfilPage implements OnInit {
 
   getMoodColor(estado: string): string {
     const moods = {
-      Feliz: 'success',
-      Bien: 'primary',
-      Neutral: 'warning',
-      Triste: 'tertiary',
-      Enojado: 'danger'
+      'Muy bien': 'success',
+      'Bien': 'primary',
+      'Neutro': 'warning',
+      'Mal': 'tertiary',
+      'Muy mal': 'danger'
     } as const;
   
     return moods[estado as keyof typeof moods] || 'medium';
@@ -177,11 +177,11 @@ export class PerfilPage implements OnInit {
   
   getMoodIcon(estado: string): string {
     const icons = {
-      Feliz: 'happy-outline',
-      Bien: 'thumbs-up-outline',
-      Neutral: 'remove-circle-outline',
-      Triste: 'sad-outline',
-      Enojado: 'alert-circle-outline'
+      'Muy bien': 'happy-outline',
+      'Bien': 'thumbs-up-outline',
+      'Neutro': 'remove-circle-outline',
+      'Mal': 'sad-outline',
+      'Muy mal': 'alert-circle-outline'
     } as const;
   
     return icons[estado as keyof typeof icons] || 'help-circle-outline';
