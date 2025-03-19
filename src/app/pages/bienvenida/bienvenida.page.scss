@@ -3,7 +3,7 @@
     to bottom,
     #a8dadc,
     #f1faee
-  ); /* Degradado en tonos suaves */
+  ); 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,20 +17,20 @@
 .welcome-title {
   font-size: 2rem;
   font-weight: bold;
-  color: #1d3557; /* Color más oscuro para mejorar la visibilidad */
+  color: #1d3557; 
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .welcome-description {
   font-size: 1.2rem;
-  color: #1d3557; /* Mejor contraste */
+  color: #1d3557; 
   padding: 15px;
   background: rgba(
     255,
     255,
     255,
     0.4
-  ); /* Un poco más sólido para mejorar la legibilidad */
+  );
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
@@ -46,7 +46,7 @@
 
 .welcome-button.primary {
   background: #ffffff;
-  color: #457b9d; /* Un azul más elegante y en armonía con el fondo */
+  color: #457b9d; 
 }
 
 .welcome-button.primary:hover {
@@ -56,7 +56,7 @@
 .welcome-button.secondary {
   background: transparent;
   border: 2px solid #457b9d;
-  color: #1d3557; /* Color más oscuro para mejor lectura */
+  color: #1d3557; 
 }
 
 .welcome-button.secondary:hover {

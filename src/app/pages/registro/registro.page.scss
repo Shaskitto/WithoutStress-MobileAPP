@@ -2,8 +2,8 @@ ion-grid {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; /* Centrar en ambas direcciones */
-  height: 100vh; /* Ocupa toda la pantalla */
+  align-items: center; 
+  height: 100vh; 
   padding: 20px;
 }
 
@@ -14,7 +14,7 @@ ion-row {
 }
 
 ion-col {
-  max-width: 500px; /* Limita el ancho en pantallas grandes */
+  max-width: 500px; 
   width: 100%;
 }
 
@@ -62,7 +62,6 @@ ion-col {
   font-weight: bold;
 }
 
-
 .register-label {
   font-size: 1rem;
   font-weight: bold;
@@ -70,7 +69,6 @@ ion-col {
   margin-bottom: 5px;
   display: block;
 }
-
 
 .register-button {
   background-color: #1d3557;
