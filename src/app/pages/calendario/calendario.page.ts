@@ -80,14 +80,29 @@ export class CalendarioPage implements OnInit {
   }
   
 
-  // Cargar todas las notas del usuario
+  // Cargar todas las notas del usuario y eliminar las expiradas
   loadUserNotes() {
     this.userService.getNotes().subscribe({
       next: (response) => {
         const notes = response?.notas; 
         
         if (Array.isArray(notes)) {
-          this.userNotes = notes;
+          const now = new Date(); 
+
+          notes.forEach(note => {
+            const noteDate = new Date(note.fecha);
+            const timeDiff = now.getTime() - noteDate.getTime();
+            const hoursDiff = timeDiff / (1000 * 60 * 60); 
+
+            if (hoursDiff > 24) {
+              this.deleteNote(note._id); 
+            }
+          });
+
+          this.userNotes = notes.filter(note => {
+            const noteDate = new Date(note.fecha);
+            return (now.getTime() - noteDate.getTime()) <= (24 * 60 * 60 * 1000);
+          });
         } else {
           console.error("Error: La respuesta no es un array", response);
           this.userNotes = []; 
@@ -96,7 +111,7 @@ export class CalendarioPage implements OnInit {
       error: (err) => console.error('Error al cargar notas:', err)
     });
   }
-  
+
   // Crear nueva nota
   createNote() {
     if (this.calendarioForm.valid) {
