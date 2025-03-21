@@ -1,0 +1,17 @@
+<!-- Menú lateral -->
+<ion-menu side="start" contentId="main-content">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Menú</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <ion-item routerLink="/calendario" (click)="closeMenu()">Calendario</ion-item>
+      <ion-item routerLink="/comunidad" (click)="closeMenu()">Comunidad</ion-item>
+      <ion-item routerLink="/estadistica" (click)="closeMenu()">Estadisticas</ion-item>
+      <ion-item expand="block" color="danger" (click)="logout(); closeMenu()"><ion-icon name="log-out-outline"></ion-icon> Cerrar sesión</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>

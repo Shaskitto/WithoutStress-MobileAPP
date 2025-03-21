@@ -1,12 +1,19 @@
 <ion-content [fullscreen]="true" class="perfil-content">
   <ng-container *ngIf="!isEditing; else editMode">
+    
+    <div class="header">
+      <ion-buttons>
+        <ion-menu-button style="font-size: 22px; color: black;"></ion-menu-button>
+      </ion-buttons>
+    </div>
+
     <ion-card class="perfil-card">
       <ion-card-header class="perfil-card-header">
         <ion-card-title class="perfil-card-title"
-          >Perfil del Usuario</ion-card-title
+        >Perfil del Usuario</ion-card-title
         >
       </ion-card-header>
-
+      
       <ion-card-content>
         <!-- Imagen de Perfil -->
         <div class="perfil-img-container">
@@ -137,40 +144,7 @@
                 </ion-list>
               </ion-item>
             </ion-col>
-          </ion-row>
-
-          <ion-card *ngIf="user?.estadoDeAnimo?.length > 0" class="mood-history-card">
-            <ion-card-header>
-              <ion-card-title class="title">
-                <ion-icon name="happy-outline" class="title-icon"></ion-icon>
-                Historial de Estados de Ánimo
-              </ion-card-title>
-            </ion-card-header>
-          
-            <ion-card-content>
-              <ion-list class="mood-list">
-                <ion-item *ngFor="let mood of user.estadoDeAnimo" class="mood-item">
-                  <ion-chip [color]="getMoodColor(mood.estado)" class="mood-chip">
-                    <ion-icon [name]="getMoodIcon(mood.estado)" class="mood-icon"></ion-icon>
-                    <ion-label class="mood-label">
-                      <strong>{{ mood.estado }}</strong>  
-                      <span class="date">{{ formatDate(mood.fecha) }}</span>
-                    </ion-label>
-                  </ion-chip>
-                </ion-item>
-              </ion-list>
-            </ion-card-content>
-          </ion-card>
-          
-
-          <div class="chart-container">
-            <div *ngFor="let mood of getMoodStatistics()" class="bar-container">
-              <div class="bar" [style.height]="mood.cantidad * 10 + 'px'">
-                {{ mood.cantidad }}
-              </div>
-              <span class="label">{{ mood.estado }}</span>
-            </div>
-          </div>          
+          </ion-row>          
         </ion-grid>
       </ion-card-content>
     </ion-card>

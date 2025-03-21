@@ -1,4 +1,10 @@
 <ion-content [fullscreen]="true">
+  <div class="header">
+    <ion-buttons>
+      <ion-menu-button style="font-size: 22px; color: black;"></ion-menu-button>
+    </ion-buttons>
+  </div>
+
   <div *ngIf="!showCategories && !selectedResource" style="padding: 16px; display: flex; align-items: center;">
     <ion-icon name="arrow-back" (click)="showCategoryList()" style="cursor: pointer; margin-right: 8px;"></ion-icon>
     <h2 *ngIf="!selectedResource">{{ currentCategory }}</h2>

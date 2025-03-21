@@ -16,16 +16,8 @@ const routes: Routes = [
         loadChildren: () => import('../explorar/explorar.module').then(m => m.ExplorarPageModule)
       },
       {
-        path: 'comunidad',
-        loadChildren: () => import('../comunidad/comunidad.module').then(m => m.ComunidadPageModule)
-      },
-      {
         path: 'perfil',
         loadChildren: () => import('../perfil/perfil.module').then(m => m.PerfilPageModule)
-      },
-      {
-        path: 'calendario',
-        loadChildren: () => import('../calendario/calendario.module').then(m => m.CalendarioPageModule)
       }
     ]
   },
