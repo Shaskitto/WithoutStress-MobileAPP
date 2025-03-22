@@ -1,0 +1,151 @@
+ion-menu {
+  --width: 270px;
+  border-right: 2px solid rgba(0, 0, 0, 0.1);
+}
+
+ion-content {
+  --background: linear-gradient(to top, #a8dadc, #f1faee);
+  --overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+ion-list {
+  padding-bottom: 200px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+ion-item {
+  --background: transparent;
+  --color: #1d3557;
+  --border-radius: 10px 10px 0 0;
+  margin: 5px 10px;
+  padding: 12px;
+  transition: all 0.3s ease-in-out;
+  font-weight: 500;
+  position: relative;
+  text-align: center;
+  border-bottom: 3px solid transparent;
+}
+
+ion-item.activated {
+  background: rgba(255, 255, 255, 0.3);
+  border-bottom: 3px solid #1d3557;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+ion-item:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+ion-icon {
+  color: black;
+  font-size: 1.4rem;
+  margin-right: 10px;
+}
+
+/* Estilo de la sección del perfil */
+.user-profile {
+    display: flex;
+    align-items: center;
+    padding: 0;
+    background: transparent;
+    border-radius: 10px;
+    margin: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Ion-item para evitar espacios extra */
+  .user-profile ion-item {
+    background: transparent;
+    --padding-start: 0;
+    --inner-padding-end: 0;
+    --min-height: 70px; /* Ajusta la altura mínima */
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  /* Avatar más grande */
+  .user-profile ion-avatar {
+    width: 70px;
+    height: 70px;
+    margin-right: 15px;
+    flex-shrink: 0;
+  }
+  
+  /* Imagen dentro del avatar */
+  .user-profile ion-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+  
+  /* Ajuste del nombre de usuario */
+  .user-profile ion-label {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    white-space: normal;
+  }
+  
+  /* Nombre de usuario sin cortes */
+  .user-profile ion-label h2 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #1d3557;
+    margin: 0;
+    text-align: left;
+    word-break: break-word;
+  }
+  
+  
+
+ion-footer {
+  background: linear-gradient(to bottom, #a8dadc, #f1faee);
+  padding: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 50px;
+}
+
+ion-footer ion-list {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  width: 100%;
+}
+
+ion-footer ion-item {
+  --color: white;
+  background: red;
+  border-radius: 6px;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin: 3px 10px;
+  border-bottom: none;
+  --border-width: 0;
+  --border-color: transparent;
+  --border-style: none;
+  border: none;
+  box-shadow: none;
+}
+
+ion-footer ion-item:hover {
+  background: #d62839;
+  transform: scale(1.01);
+}

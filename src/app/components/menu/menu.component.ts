@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MenuController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserService } from 'src/app/services/user.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-menu',
@@ -9,15 +10,34 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent  implements OnInit {
+  user: any
   currentRoute: string = '';
+  isDarkMode = false;
+  apiUrl = environment.apiUrl;
 
-  constructor(private authService: AuthService, private router: Router, private menuCtrl: MenuController) { 
+  constructor(private authService: AuthService, private userService: UserService,private router: Router) { 
     this.router.events.subscribe(() => {
       this.currentRoute = this.router.url;
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.loadUserData();
+  }
+
+  loadUserData() {
+    this.userService.getUser().subscribe({
+      next: (userData) => {
+        this.user = userData; 
+
+        const userId = localStorage.getItem('userId');
+        if (userId && this.user.profileImage) {
+          const timestamp = new Date().getTime();
+          this.user.profileImage = this.userService.getProfileImageUrl(userId) + '?t=' + timestamp;
+        }
+      }
+    });
+  }
 
   // Cerrar Sidebar automáticamente
   closeMenu() {
