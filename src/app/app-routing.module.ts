@@ -44,6 +44,10 @@ const routes: Routes = [
   {
     path: 'estadistica',
     loadChildren: () => import('./pages/estadistica/estadistica.module').then( m => m.EstadisticaPageModule)
+  },
+  {
+    path: 'estado-de-animo',
+    loadChildren: () => import('./pages/estado-de-animo/estado-de-animo.module').then( m => m.EstadoDeAnimoPageModule)
   }
 
 ];

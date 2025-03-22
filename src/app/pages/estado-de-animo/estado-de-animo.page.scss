@@ -1,0 +1,81 @@
+@media (min-width: 1024px) {
+  ion-list {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
+  }
+}
+
+.plan-content {
+  --background: linear-gradient(to bottom, #8ecae6, #f1faee);
+}
+.plan-header {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 25px;
+}
+
+.plan-title {
+  font-weight: bold;
+  color: #1d3557;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.mood-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  padding: 20px;
+}
+
+.mood-section {
+  text-align: center;
+  background: var(--ion-color-light);
+  border-radius: 15px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  width: 100%;
+}
+
+.mood-registered-msg {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: var(--ion-color-dark);
+}
+
+.mood-button {
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 10px;
+}
+
+.happy {
+  --background: #2dd36f;
+  --color: white;
+}
+
+.good {
+  --background: #3880ff;
+  --color: white;
+}
+
+.neutral {
+  --background: #ffc409;
+  --color: black;
+}
+
+.bad {
+  --background: #eb445a;
+  --color: white;
+}
+
+.very-bad {
+  --background: #222428;
+  --color: white;
+}

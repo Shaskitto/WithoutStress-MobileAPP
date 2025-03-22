@@ -6,37 +6,14 @@
   }
 }
 
-.loading-container,
-.spinner-container {
-  position: relative;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: opacity 0.5s ease-in-out;
-}
-
-ion-spinner {
-  --color: var(--ion-color-primary, #3880ff);
-  width: 40px;
-  height: 40px;
-}
-
-.loading-text {
-  font-size: 18px;
-  margin-top: 10px;
-  color: #555;
-}
-
 .plan-content {
   --background: linear-gradient(to bottom, #8ecae6, #f1faee);
 }
 
 .plan-header {
-  text-align: center;
+  margin-left: 10px;
+  margin-top: 10px;
   margin-bottom: 25px;
-  margin-top: 32px;
 }
 
 .plan-title {
@@ -47,7 +24,6 @@ ion-spinner {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-
 
 .plan-list {
   margin-top: 15px;
@@ -142,62 +118,6 @@ ion-item {
 
 ion-item:hover {
   background: rgba(29, 53, 87, 0.05);
-}
-
-.mood-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 70vh;
-  padding: 20px;
-}
-
-.mood-section {
-  text-align: center;
-  background: var(--ion-color-light);
-  border-radius: 15px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  padding: 20px;
-  max-width: 400px;
-  width: 100%;
-}
-
-.mood-registered-msg {
-  font-size: 1.3rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  color: var(--ion-color-dark);
-}
-
-.mood-button {
-  font-size: 1rem;
-  font-weight: bold;
-  border-radius: 10px;
-}
-
-.happy {
-  --background: #2dd36f;
-  --color: white;
-}
-
-.good {
-  --background: #3880ff;
-  --color: white;
-}
-
-.neutral {
-  --background: #ffc409;
-  --color: black;
-}
-
-.bad {
-  --background: #eb445a;
-  --color: white;
-}
-
-.very-bad {
-  --background: #222428;
-  --color: white;
 }
 
 /* Distribución de las tarjetas */

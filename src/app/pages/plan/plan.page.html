@@ -1,178 +1,91 @@
-<ion-content
-  [fullscreen]="true"
-  [class.loading]="isLoading"
-  class="plan-content"
->
-  <!-- Spinner de carga -->
-  <div class="spinner-container" *ngIf="isLoading">
-    <ion-spinner name="crescent"></ion-spinner>
-    <p class="loading-text">Cargando...</p>
-  </div>
-
-  <!-- Encabezado -->
+<ion-content *ngIf="horarios && (horarios.manana?.length || horarios.tarde?.length || horarios.noche?.length)" 
+  [fullscreen]="true" class="plan-content">
+  
   <div class="plan-header">
-    <ion-buttons slot="start" *ngIf="moodRegisteredToday">
+    <ion-buttons slot="start">
       <ion-menu-button style="font-size: 22px; color: black"></ion-menu-button>
     </ion-buttons>
-    <h1 class="plan-title">
-      {{ moodRegisteredToday ? 'Tu Plan Diario' : 'Registra tu Estado de Ánimo'
-      }}
-    </h1>
+    <h1 class="plan-title">Tu Plan Diario</h1>
   </div>
+  
+  <ion-grid>
+    <ion-row class="horarios-row">
+      <!-- Horario Mañana -->
+      <ion-col *ngIf="horarios.manana?.length > 0" size="12" size-md="4">
+        <ion-card class="horario-card morning">
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon
+                name="sunny-outline"
+                class="horario-icon morning-icon"
+              ></ion-icon>
+              Horario Mañana
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let tarea of horarios.manana">
+                <ion-checkbox
+                  slot="start"
+                  class="custom-checkbox"
+                ></ion-checkbox>
+                <ion-label>{{ tarea }}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
 
-  <!-- Contenido principal -->
-  <ion-grid *ngIf="!isLoading">
-    <ion-row>
-      <ion-col size="12" size-md="8">
-        <!-- Registro de estado de ánimo -->
-        <div class="mood-container" *ngIf="!moodRegisteredToday">
-          <div class="mood-section">
-            <p class="mood-registered-msg">¿Cómo te sientes hoy?</p>
+      <!-- Horario Tarde -->
+      <ion-col *ngIf="horarios.tarde?.length > 0" size="12" size-md="4">
+        <ion-card class="horario-card afternoon">
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon
+                name="partly-sunny-outline"
+                class="horario-icon afternoon-icon"
+              ></ion-icon>
+              Horario Tarde
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let tarea of horarios.tarde">
+                <ion-checkbox
+                  slot="start"
+                  class="custom-checkbox"
+                ></ion-checkbox>
+                <ion-label>{{ tarea }}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
 
-            <ion-grid>
-              <ion-row>
-                <ion-col size="6"
-                  ><ion-button
-                    class="mood-button happy"
-                    expand="full"
-                    (click)="setMood('Muy bien')"
-                  >
-                    <ion-icon slot="start" name="happy-outline"></ion-icon> Muy
-                    bien
-                  </ion-button>
-                </ion-col>
-                <ion-col size="6"
-                  ><ion-button
-                    class="mood-button good"
-                    expand="full"
-                    (click)="setMood('Bien')"
-                  >
-                    <ion-icon slot="start" name="thumbs-up-outline"></ion-icon>
-                    Bien
-                  </ion-button>
-                </ion-col>
-                <ion-col size="6"
-                  ><ion-button
-                    class="mood-button neutral"
-                    expand="full"
-                    (click)="setMood('Neutro')"
-                  >
-                    <ion-icon slot="start" name="remove-outline"></ion-icon>
-                    Neutro
-                  </ion-button>
-                </ion-col>
-                <ion-col size="6"
-                  ><ion-button
-                    class="mood-button bad"
-                    expand="full"
-                    (click)="setMood('Mal')"
-                  >
-                    <ion-icon
-                      slot="start"
-                      name="thumbs-down-outline"
-                    ></ion-icon>
-                    Mal
-                  </ion-button>
-                </ion-col>
-                <ion-col size="12"
-                  ><ion-button
-                    class="mood-button very-bad"
-                    expand="full"
-                    (click)="setMood('Muy mal')"
-                  >
-                    <ion-icon slot="start" name="sad-outline"></ion-icon> Muy
-                    mal
-                  </ion-button>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
-        </div>
-
-        <!-- Plan Diario -->
-        <ion-grid
-          *ngIf="moodRegisteredToday && (horarios.manana?.length || horarios.tarde?.length || horarios.noche?.length)"
-        >
-          <ion-row class="horarios-row">
-            <!-- Horario Mañana -->
-            <ion-col *ngIf="horarios.manana?.length > 0" size="12" size-md="4">
-              <ion-card class="horario-card morning">
-                <ion-card-header>
-                  <ion-card-title>
-                    <ion-icon
-                      name="sunny-outline"
-                      class="horario-icon morning-icon"
-                    ></ion-icon>
-                    Horario Mañana
-                  </ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                  <ion-list>
-                    <ion-item *ngFor="let tarea of horarios.manana">
-                      <ion-checkbox
-                        slot="start"
-                        class="custom-checkbox"
-                      ></ion-checkbox>
-                      <ion-label>{{ tarea }}</ion-label>
-                    </ion-item>
-                  </ion-list>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-
-            <!-- Horario Tarde -->
-            <ion-col *ngIf="horarios.tarde?.length > 0" size="12" size-md="4">
-              <ion-card class="horario-card afternoon">
-                <ion-card-header>
-                  <ion-card-title>
-                    <ion-icon
-                      name="partly-sunny-outline"
-                      class="horario-icon afternoon-icon"
-                    ></ion-icon>
-                    Horario Tarde
-                  </ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                  <ion-list>
-                    <ion-item *ngFor="let tarea of horarios.tarde">
-                      <ion-checkbox
-                        slot="start"
-                        class="custom-checkbox"
-                      ></ion-checkbox>
-                      <ion-label>{{ tarea }}</ion-label>
-                    </ion-item>
-                  </ion-list>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-
-            <!-- Horario Noche -->
-            <ion-col *ngIf="horarios.noche?.length > 0" size="12" size-md="4">
-              <ion-card class="horario-card night">
-                <ion-card-header>
-                  <ion-card-title>
-                    <ion-icon
-                      name="moon-outline"
-                      class="horario-icon night-icon"
-                    ></ion-icon>
-                    Horario Noche
-                  </ion-card-title>
-                </ion-card-header>
-                <ion-card-content>
-                  <ion-list>
-                    <ion-item *ngFor="let tarea of horarios.noche">
-                      <ion-checkbox
-                        slot="start"
-                        class="custom-checkbox"
-                      ></ion-checkbox>
-                      <ion-label>{{ tarea }}</ion-label>
-                    </ion-item>
-                  </ion-list>
-                </ion-card-content>
-              </ion-card>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
+      <!-- Horario Noche -->
+      <ion-col *ngIf="horarios.noche?.length > 0" size="12" size-md="4">
+        <ion-card class="horario-card night">
+          <ion-card-header>
+            <ion-card-title>
+              <ion-icon
+                name="moon-outline"
+                class="horario-icon night-icon"
+              ></ion-icon>
+              Horario Noche
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item *ngFor="let tarea of horarios.noche">
+                <ion-checkbox
+                  slot="start"
+                  class="custom-checkbox"
+                ></ion-checkbox>
+                <ion-label>{{ tarea }}</ion-label>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
   </ion-grid>

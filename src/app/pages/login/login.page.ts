@@ -25,6 +25,7 @@ export class LoginPage{
   forgotPasswordEmail: string | undefined; 
   otp: string | undefined; 
   newPassword: string | undefined;
+  moodRegisteredToday: boolean = false;
 
   constructor(private fb: FormBuilder, private authService: AuthService, private userService: UserService, private router: Router, private alertController: AlertController) { 
     this.initializeForms();
@@ -78,14 +79,34 @@ export class LoginPage{
     );
   }
   
-  // Método para cargar los datos del usuario
+  // Método para cargar datos del usuario y verificar estado de ánimo
   loadUserData() {
-    this.userService.getUser().subscribe({
-      next: (userData) => {
-        this.user = userData; 
-        this.navigate();
+    this.userService.getUser().subscribe(
+      data => {
+        this.user = data; 
+
+        if (!this.user || !this.user.semestre) {
+          this.router.navigate(['/evaluacion']);
+          return; 
+        }
+        
+        const today = new Date().toISOString().split('T')[0];
+
+        this.moodRegisteredToday = data.estadoDeAnimo?.some((entry: any) => {
+          const entryDate = new Date(entry.fecha).toISOString().split('T')[0];
+          return entryDate === today;
+        });
+
+        if (!this.moodRegisteredToday) {
+          this.router.navigate(['/estado-de-animo']); 
+        } else {
+          this.navigate(); 
+        }
+      },
+      error => {
+        console.error('Error al cargar datos del usuario:', error);
       }
-    });
+    );
   }
 
   // Método para redirigir al home o evaluación inicial

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router, NavigationEnd  } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor() {}
+  showSidebar = true;
+  private pagesWithoutSidebar = ['/login', '/register', '/bienvenida', '/estado-de-animo'];
+
+  constructor(private router: Router) {this.router.events.subscribe(event => {
+    if (event instanceof NavigationEnd) {
+      this.showSidebar = !this.pagesWithoutSidebar.includes(this.router.url);
+    }
+  });
+}
 }

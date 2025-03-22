@@ -107,7 +107,7 @@ export class EvaluacionPage{
     this.userService.updateUser(this.answers).subscribe(
       response => {
         console.log('Usuario actualizado con éxito:', response);
-        this.navigateHome();
+        this.navigate();
       },
       error => {
         console.error('Error al actualizar el usuario:', error);
@@ -115,8 +115,8 @@ export class EvaluacionPage{
     );
   }
 
-  // Navegar al home
-  navigateHome(){
-    this.router.navigate(['/tabs/plan']);
+  // Navegar 
+  navigate(){
+    this.router.navigate(['/estado-de-animo']);
   }
 }
