@@ -12,10 +12,9 @@ import { environment } from 'src/environments/environment';
 export class MenuComponent  implements OnInit {
   user: any
   currentRoute: string = '';
-  isDarkMode = false;
   apiUrl = environment.apiUrl;
 
-  constructor(private authService: AuthService, private userService: UserService,private router: Router) { 
+  constructor(private authService: AuthService, private userService: UserService, private router: Router) { 
     this.router.events.subscribe(() => {
       this.currentRoute = this.router.url;
     });
@@ -51,5 +50,5 @@ export class MenuComponent  implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(['/login']);
-  }  
+  }
 }
