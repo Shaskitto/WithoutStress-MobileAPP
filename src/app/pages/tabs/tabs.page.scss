@@ -39,13 +39,13 @@ ion-tab-bar {
   z-index: 10;
   display: flex;
   justify-content: space-around;
-  background: linear-gradient(to bottom, #a8dadc, #f1faee);
+  background: linear-gradient(to top, #8ecae6, #f1faee);
 }
 
 ion-tab-button {
   color: black;
   transition: all 0.3s ease-in-out;
-  background: linear-gradient(to bottom, #a8dadc, #f1faee);
+  background: linear-gradient(to top, #8ecae6, #f1faee);
   flex: 1; 
 }
 

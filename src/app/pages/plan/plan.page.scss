@@ -1,21 +1,19 @@
 @media (min-width: 1024px) {
   ion-list {
-    margin-left: 280px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px;
   }
 }
 
-.loading-container {
+.loading-container,
+.spinner-container {
   position: relative;
   width: 100%;
   height: 100vh;
-}
-
-.spinner-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Ocupa toda la pantalla */
-  width: 100%;
   transition: opacity 0.5s ease-in-out;
 }
 
@@ -31,33 +29,14 @@ ion-spinner {
   color: #555;
 }
 
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-in-out forwards;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
 .plan-content {
-  --background: linear-gradient(to bottom, #a8dadc, #f1faee);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  min-height: 100vh;
+  --background: linear-gradient(to bottom, #8ecae6, #f1faee);
 }
 
 .plan-header {
   text-align: center;
   margin-bottom: 25px;
+  margin-top: 32px;
 }
 
 .plan-title {
@@ -68,6 +47,7 @@ ion-spinner {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
+
 
 .plan-list {
   margin-top: 15px;
@@ -91,8 +71,11 @@ ion-spinner {
 }
 
 .plan-item {
-  padding: 10px 0;
-  transition: transform 0.2s ease-in-out;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  --background: white;
+  --color: #1d3557;
+  border: 1px solid rgba(29, 53, 87, 0.2);
 }
 
 .plan-item:hover {
@@ -120,7 +103,6 @@ ion-spinner {
 .task-container {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
 }
 
 .task-time {
@@ -166,7 +148,7 @@ ion-item:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 70vh; 
+  height: 70vh;
   padding: 20px;
 }
 
@@ -176,7 +158,7 @@ ion-item:hover {
   border-radius: 15px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  max-width: 400px; 
+  max-width: 400px;
   width: 100%;
 }
 
@@ -216,4 +198,106 @@ ion-item:hover {
 .very-bad {
   --background: #222428;
   --color: white;
+}
+
+/* Distribución de las tarjetas */
+.horarios-row {
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Estilos base para las tarjetas */
+.horario-card {
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
+  border-radius: 15px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.horario-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos específicos por horario */
+.morning .custom-checkbox {
+  --border-color: white;
+  --checkmark-color: white;
+}
+
+.afternoon .custom-checkbox {
+  --border-color: white;
+  --checkmark-color: white;
+}
+
+.night .custom-checkbox {
+  --border-color: white;
+  --checkmark-color: white;
+}
+
+.morning {
+  background: linear-gradient(135deg, #ffdd94, #ff9f1a);
+}
+
+.afternoon {
+  background: linear-gradient(135deg, #8ecae6, #219ebc);
+}
+
+.night {
+  background: linear-gradient(135deg, #4a4e69, #22223b);
+}
+
+/* Iconos dentro de los títulos */
+.horario-icon {
+  font-size: 1.5rem;
+  margin-right: 8px;
+}
+
+.morning-icon {
+  color: #f4a261;
+}
+
+.afternoon-icon {
+  color: #023047;
+}
+
+.night-icon {
+  color: #e0e1dd;
+}
+
+/* Títulos de las tarjetas */
+ion-card-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Checkbox personalizado */
+.custom-checkbox {
+  --size: 22px;
+  --border-radius: 50%;
+  --background: white;
+  --border-color: var(--ion-color-primary);
+  --checkmark-color: var(--ion-color-primary);
+  margin-right: 12px;
+}
+
+/* Lista de elementos */
+ion-list {
+  padding: 0;
+}
+
+ion-item {
+  --background: transparent;
+  --color: white;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  transition: background 0.3s ease-in-out;
+}
+
+ion-item:hover {
+  background: rgba(255, 255, 255, 0.1);
 }

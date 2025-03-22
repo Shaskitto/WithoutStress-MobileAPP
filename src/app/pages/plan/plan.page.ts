@@ -12,7 +12,7 @@ export class PlanPage implements OnInit, ViewWillEnter {
   user$: Observable<any> | undefined;
   horarios: any;
   isLoading = true;
-  moodRegisteredToday: boolean | null = null;
+  moodRegisteredToday = false;
 
   constructor(private userService: UserService) { }
 

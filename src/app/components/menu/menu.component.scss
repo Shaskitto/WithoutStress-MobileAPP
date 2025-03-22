@@ -4,7 +4,7 @@ ion-menu {
 }
 
 ion-content {
-  --background: linear-gradient(to top, #a8dadc, #f1faee);
+  --background: linear-gradient(to top, #8ecae6, #f1faee);
   --overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -16,7 +16,7 @@ ion-list {
   padding-bottom: 200px;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
 }
@@ -27,22 +27,18 @@ ion-item {
   --border-radius: 10px 10px 0 0;
   margin: 5px 10px;
   padding: 12px;
-  transition: all 0.3s ease-in-out;
   font-weight: 500;
-  position: relative;
   text-align: center;
   border-bottom: 3px solid transparent;
+  transition: transform 0.3s ease-in-out;
+  position: relative;
 }
 
-ion-item.activated {
+ion-item.activated,
+ion-item:hover {
   background: rgba(255, 255, 255, 0.3);
   border-bottom: 3px solid #1d3557;
   box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
-  transform: translateY(-2px);
-}
-
-ion-item:hover {
-  background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
 }
 
@@ -58,18 +54,17 @@ ion-icon {
   padding: 0;
   background: transparent;
   border-radius: 10px;
-  margin: 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .user-profile ion-item {
-  background: transparent;
   --padding-start: 0;
   --inner-padding-end: 0;
-  --min-height: 70px; 
+  --min-height: 70px;
   width: 100%;
   display: flex;
   align-items: center;
+  background: inherit;
 }
 
 .user-profile ion-avatar {
@@ -103,7 +98,7 @@ ion-icon {
 }
 
 ion-footer {
-  background: linear-gradient(to bottom, #a8dadc, #f1faee);
+  background: linear-gradient(to bottom, #8ecae6, #f1faee);
   padding: 8px;
   border-top: 1px solid rgba(0, 0, 0, 0.05);
   display: flex;
@@ -129,12 +124,9 @@ ion-footer ion-item {
   text-transform: uppercase;
   letter-spacing: 1px;
   margin: 3px 10px;
-  border-bottom: none;
-  --border-width: 0;
-  --border-color: transparent;
   --border-style: none;
-  border: none;
   box-shadow: none;
+  transition: background 0.3s ease-in-out;
 }
 
 ion-footer ion-item:hover {
