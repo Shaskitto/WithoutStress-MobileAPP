@@ -86,5 +86,4 @@ export class ExplorarPage implements OnInit {
       console.error('Error al reproducir audio:', error);
     });
   }
-  
 }

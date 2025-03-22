@@ -22,5 +22,4 @@ export class BienvenidaPage implements OnInit {
   navigateRegister(){
     this.router.navigate(['/registro'])
   }
-
 }

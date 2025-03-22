@@ -79,7 +79,6 @@ export class CalendarioPage implements OnInit {
     return date.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: '2-digit', day: '2-digit' });
   }
   
-
   // Cargar todas las notas del usuario y eliminar las expiradas
   loadUserNotes() {
     this.userService.getNotes().subscribe({
