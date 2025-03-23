@@ -6,9 +6,48 @@
   }
 }
 
-.plan-content {
+ion-content {
   --background: linear-gradient(to bottom, #8ecae6, #f1faee);
 }
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background: linear-gradient(135deg, #f0f4ff, #d9e2ff);
+  animation: fadeIn 0.8s ease-in-out;
+
+  ion-spinner {
+    width: 60px;
+    height: 60px;
+    color: var(--ion-color-primary);
+    animation: pulse 1.5s infinite alternate ease-in-out;
+  }
+
+  p {
+    margin-top: 15px;
+    font-size: 1.3em;
+    font-weight: 500;
+    color: #444;
+    opacity: 0.8;
+    animation: fadeText 1.5s infinite alternate ease-in-out;
+  }
+}
+
+.content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.content.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 
 .plan-header {
   margin-left: 10px;

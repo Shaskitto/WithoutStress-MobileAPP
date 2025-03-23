@@ -11,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
 export class PlanPage implements OnInit, ViewWillEnter {
   user$: Observable<any> | undefined;
   horarios: any;
+  isLoading = true;
 
   constructor(private userService: UserService) { }
 
@@ -21,6 +22,7 @@ export class PlanPage implements OnInit, ViewWillEnter {
 
   // Cargar los datos del usuario cada vez que la vista vuelve a ser visible
   ionViewWillEnter() {
+    this.isLoading = true;
     this.loadUserData();
   }
 
@@ -29,12 +31,13 @@ export class PlanPage implements OnInit, ViewWillEnter {
     this.user$ = this.userService.getUser().pipe(
       catchError(error => {
         console.error('Error al obtener los datos del usuario', error);
-        return [];
+        return of([]);
       })
     );
 
     this.user$.subscribe(data => {
       this.horarios = data.horario; 
+      this.isLoading = false; 
     });
   }
 }

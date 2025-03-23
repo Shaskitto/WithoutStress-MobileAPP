@@ -8,7 +8,8 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class EstadisticaPage implements OnInit {
   user: any;
-  
+  isLoading = true;
+
   constructor(private userService: UserService) { }
 
   ngOnInit() {
@@ -20,6 +21,10 @@ export class EstadisticaPage implements OnInit {
     this.userService.getUser().subscribe({
       next: (userData) => {
         this.user = userData; 
+        this.isLoading = false; 
+      },
+      error: () => {
+        this.isLoading = false; 
       }
     });
   }

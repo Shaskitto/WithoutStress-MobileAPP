@@ -1,92 +1,103 @@
-<ion-content *ngIf="horarios && (horarios.manana?.length || horarios.tarde?.length || horarios.noche?.length)" 
-  [fullscreen]="true" class="plan-content">
-  
-  <div class="plan-header">
-    <ion-buttons slot="start">
-      <ion-menu-button style="font-size: 22px; color: black"></ion-menu-button>
-    </ion-buttons>
-    <h1 class="plan-title">Tu Plan Diario</h1>
+<ion-content [fullscreen]="true">
+  <!-- Spinner de Carga -->
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando Tu Plan Diario...</p>
   </div>
-  
-  <ion-grid>
-    <ion-row class="horarios-row">
-      <!-- Horario Mañana -->
-      <ion-col *ngIf="horarios.manana?.length > 0" size="12" size-md="4">
-        <ion-card class="horario-card morning">
-          <ion-card-header>
-            <ion-card-title>
-              <ion-icon
-                name="sunny-outline"
-                class="horario-icon morning-icon"
-              ></ion-icon>
-              Horario Mañana
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-list>
-              <ion-item *ngFor="let tarea of horarios.manana">
-                <ion-checkbox
-                  slot="start"
-                  class="custom-checkbox"
-                ></ion-checkbox>
-                <ion-label>{{ tarea }}</ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
 
-      <!-- Horario Tarde -->
-      <ion-col *ngIf="horarios.tarde?.length > 0" size="12" size-md="4">
-        <ion-card class="horario-card afternoon">
-          <ion-card-header>
-            <ion-card-title>
-              <ion-icon
-                name="partly-sunny-outline"
-                class="horario-icon afternoon-icon"
-              ></ion-icon>
-              Horario Tarde
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-list>
-              <ion-item *ngFor="let tarea of horarios.tarde">
-                <ion-checkbox
-                  slot="start"
-                  class="custom-checkbox"
-                ></ion-checkbox>
-                <ion-label>{{ tarea }}</ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
+  <!-- Horarios -->
+  <div class="container content" [class.loaded]="!isLoading">
+    <div *ngIf="!isLoading && horarios">
+      <div class="plan-header">
+        <ion-buttons slot="start">
+          <ion-menu-button
+            style="font-size: 22px; color: black"
+          ></ion-menu-button>
+        </ion-buttons>
+        <h1 class="plan-title">Tu Plan Diario</h1>
+      </div>
 
-      <!-- Horario Noche -->
-      <ion-col *ngIf="horarios.noche?.length > 0" size="12" size-md="4">
-        <ion-card class="horario-card night">
-          <ion-card-header>
-            <ion-card-title>
-              <ion-icon
-                name="moon-outline"
-                class="horario-icon night-icon"
-              ></ion-icon>
-              Horario Noche
-            </ion-card-title>
-          </ion-card-header>
-          <ion-card-content>
-            <ion-list>
-              <ion-item *ngFor="let tarea of horarios.noche">
-                <ion-checkbox
-                  slot="start"
-                  class="custom-checkbox"
-                ></ion-checkbox>
-                <ion-label>{{ tarea }}</ion-label>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
+      <ion-grid>
+        <ion-row class="horarios-row">
+          <!-- Horario Mañana -->
+          <ion-col *ngIf="horarios.manana?.length > 0" size="12" size-md="4">
+            <ion-card class="horario-card morning">
+              <ion-card-header>
+                <ion-card-title>
+                  <ion-icon
+                    name="sunny-outline"
+                    class="horario-icon morning-icon"
+                  ></ion-icon>
+                  Horario Mañana
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-list>
+                  <ion-item *ngFor="let tarea of horarios.manana">
+                    <ion-checkbox
+                      slot="start"
+                      class="custom-checkbox"
+                    ></ion-checkbox>
+                    <ion-label>{{ tarea }}</ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <!-- Horario Tarde -->
+          <ion-col *ngIf="horarios.tarde?.length > 0" size="12" size-md="4">
+            <ion-card class="horario-card afternoon">
+              <ion-card-header>
+                <ion-card-title>
+                  <ion-icon
+                    name="partly-sunny-outline"
+                    class="horario-icon afternoon-icon"
+                  ></ion-icon>
+                  Horario Tarde
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-list>
+                  <ion-item *ngFor="let tarea of horarios.tarde">
+                    <ion-checkbox
+                      slot="start"
+                      class="custom-checkbox"
+                    ></ion-checkbox>
+                    <ion-label>{{ tarea }}</ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+
+          <!-- Horario Noche -->
+          <ion-col *ngIf="horarios.noche?.length > 0" size="12" size-md="4">
+            <ion-card class="horario-card night">
+              <ion-card-header>
+                <ion-card-title>
+                  <ion-icon
+                    name="moon-outline"
+                    class="horario-icon night-icon"
+                  ></ion-icon>
+                  Horario Noche
+                </ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-list>
+                  <ion-item *ngFor="let tarea of horarios.noche">
+                    <ion-checkbox
+                      slot="start"
+                      class="custom-checkbox"
+                    ></ion-checkbox>
+                    <ion-label>{{ tarea }}</ion-label>
+                  </ion-item>
+                </ion-list>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
 </ion-content>

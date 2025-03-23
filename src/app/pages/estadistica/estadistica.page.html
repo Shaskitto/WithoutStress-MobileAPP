@@ -1,7 +1,13 @@
 <ion-content [fullscreen]="true">
-  <div class="container">
-    
-    <!-- 📌 Estadísticas del Usuario -->
+
+  <!-- Spinner de Carga -->
+  <div *ngIf="isLoading" class="loading-container">
+    <ion-spinner name="crescent"></ion-spinner>
+    <p>Cargando Estadisticas...</p>
+  </div>
+
+  <div class="container content" [class.loaded]="!isLoading">
+    <!-- Estadísticas del Usuario -->
     <ion-card class="user-stats-card">
       <ion-card-header>
         <ion-card-title class="title">
@@ -26,7 +32,7 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- 📌 Historial de Estados de Ánimo -->
+    <!-- Historial de Estados de Ánimo -->
     <ion-card *ngIf="user?.estadoDeAnimo?.length > 0" class="mood-history-card">
       <ion-card-header>
         <ion-card-title class="title">
@@ -49,7 +55,7 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- 📌 Gráfico de Estados de Ánimo -->
+    <!-- Gráfico de Estados de Ánimo -->
     <ion-card class="chart-card">
       <ion-card-header>
         <ion-card-title class="title">
