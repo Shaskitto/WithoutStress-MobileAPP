@@ -12,6 +12,7 @@ import { UserService } from 'src/app/services/user.service';
 
 export class PerfilPage implements OnInit {
   user: any;
+  isLoading = true;
   perfilForm!: FormGroup;
   isEditing = false;
   isValidFileType = true;
@@ -35,6 +36,7 @@ export class PerfilPage implements OnInit {
     this.userService.getUser().subscribe({
       next: (userData) => {
         this.user = userData; 
+        this.isLoading = false;
 
         const userId = localStorage.getItem('userId');
         if (userId && this.user.profileImage) {
