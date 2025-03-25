@@ -1,56 +1,66 @@
-/* 📱 Para pantallas pequeñas */
-@media (max-width: 400px) {
-  ion-tab-bar {
-    height: 50px; 
-  }
-
-  ion-tab-button {
-    font-size: 12px; 
-  }
-
-  ion-icon {
-    font-size: 18px;
-  }
-}
-
-/* 🖥️ Para pantallas más grandes */
-@media (min-width: 768px) {
-  ion-tab-bar {
-    height: 70px; 
-  }
-
-  ion-tab-button {
-    font-size: 16px;
-  }
-
-  ion-icon {
-    font-size: 24px;
-  }
-}
-
 ion-tab-bar {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
-  height: 60px;
+  border-top-left-radius: var(--border-radius-lg);
+  border-top-right-radius: var(--border-radius-lg);
+  box-shadow: var(--box-shadow-tab);
+  height: var(--tab-bar-height-md);
   position: fixed;
   bottom: 0;
   width: 100%;
   z-index: 10;
   display: flex;
   justify-content: space-around;
-  background: linear-gradient(to top, #8ecae6, #f1faee);
+  background: var(--tab-bg-gradient);
+  transition: height var(--transition-fast);
 }
 
+/* 🖲️ Botones de pestañas */
 ion-tab-button {
-  color: black;
-  transition: all 0.3s ease-in-out;
-  background: linear-gradient(to top, #8ecae6, #f1faee);
+  color: var(--tab-text-color);
+  transition: var(--transition-fast);
+  background: var(--tab-bg-gradient);
   flex: 1; 
+  font-size: var(--tab-font-size-md);
 }
 
+/* 🔥 Efecto al estar seleccionada */
 ion-tab-button.tab-selected {
-  color: #d4af37;
+  color: var(--tab-text-selected);
   font-weight: bold;
   transform: scale(1.1);
+}
+
+/* 🔍 Íconos */
+ion-icon {
+  font-size: var(--icon-size-md);
+  transition: var(--transition-fast);
+}
+
+/* 📱 Para pantallas pequeñas */
+@media (max-width: 400px) {
+  ion-tab-bar {
+    height: var(--tab-bar-height-sm);
+  }
+
+  ion-tab-button {
+    font-size: var(--tab-font-size-sm);
+  }
+
+  ion-icon {
+    font-size: var(--icon-size-sm);
+  }
+}
+
+/* 🖥️ Para pantallas grandes */
+@media (min-width: 768px) {
+  ion-tab-bar {
+    height: var(--tab-bar-height-lg);
+  }
+
+  ion-tab-button {
+    font-size: var(--tab-font-size-lg);
+  }
+
+  ion-icon {
+    font-size: var(--icon-size-lg);
+  }
 }

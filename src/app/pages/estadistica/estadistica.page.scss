@@ -1,5 +1,5 @@
 ion-content {
-  --background: linear-gradient(to bottom, #8ecae6, #f1faee);
+  --background: var(--bg-gradient-primary);
 }
 
 .loading-container {
@@ -9,30 +9,30 @@ ion-content {
   align-items: center;
   height: 100vh;
   text-align: center;
-  background: linear-gradient(135deg, #f0f4ff, #d9e2ff);
+  background: var(--bg-gradient-secondary);
   animation: fadeIn 0.8s ease-in-out;
+}
 
-  ion-spinner {
-    width: 60px;
-    height: 60px;
-    color: var(--ion-color-primary);
-    animation: pulse 1.5s infinite alternate ease-in-out;
-  }
+.loading-container ion-spinner {
+  width: 60px;
+  height: 60px;
+  color: var(--ion-color-primary);
+  animation: pulse 1.5s infinite alternate ease-in-out;
+}
 
-  p {
-    margin-top: 15px;
-    font-size: 1.3em;
-    font-weight: 500;
-    color: #444;
-    opacity: 0.8;
-    animation: fadeText 1.5s infinite alternate ease-in-out;
-  }
+.loading-container p {
+  margin-top: 15px;
+  font-size: 1.3em;
+  font-weight: 500;
+  color: var(--text-color-primary);
+  opacity: 0.8;
+  animation: fadeText 1.5s infinite alternate ease-in-out;
 }
 
 .content {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  transition: opacity var(--transition-medium), transform var(--transition-medium);
 }
 
 .content.loaded {
@@ -49,18 +49,17 @@ ion-content {
   font-weight: bold;
   display: flex;
   align-items: center;
-  color: #333;
+  color: var(--text-color-title);
 }
 
 .title-icon {
   font-size: 1.8rem;
   margin-right: 10px;
-  color: #ffcc00;
+  color: var(--highlight-color);
 }
 
 .mood-list {
   padding: 10px;
-  background: none;
 }
 
 .mood-item {
@@ -68,8 +67,8 @@ ion-content {
   align-items: center;
   border-bottom: 1px solid #e0e0e0;
   padding: 8px 0;
-  transition: background 0.3s ease;
-  --background: none;
+  transition: background var(--transition-fast);
+  background: var(--bg-white);
 }
 
 .mood-item:hover {
@@ -83,7 +82,7 @@ ion-content {
   font-size: 1rem;
   font-weight: bold;
   border-radius: 10px;
-  background: none;
+  background: var(--bg-light);
 }
 
 .mood-icon {
@@ -98,31 +97,33 @@ ion-content {
 
 .date {
   font-size: 0.85rem;
-  color: #666;
+  color: var(--text-color-secondary);
   font-style: italic;
 }
 
+/* Sección de tarjetas */
 .chart-card,
 .user-stats-card,
 .mood-history-card {
-  background: #ffffff;
-  border-radius: 12px;
+  background: var(--bg-white);
+  border-radius: var(--card-radius);
   padding: 16px;
   margin-bottom: 16px;
 }
 
+/* Sección de gráficos */
 .chart-section {
   margin-top: 20px;
-  background: #f8f9fa;
+  background: var(--bg-light);
   padding: 16px;
-  border-radius: 12px;
+  border-radius: var(--card-radius);
   text-align: center;
 }
 
 .chart-title {
   font-size: 1.2rem;
   font-weight: bold;
-  color: #444;
+  color: var(--text-color-primary);
   margin-bottom: 10px;
 }
 
@@ -148,23 +149,19 @@ ion-content {
   color: white;
   font-weight: bold;
   border-radius: 5px;
-  transition: height 0.3s ease-in-out;
-}
-
-.mood-icon {
-  font-size: 24px;
-  margin-top: 5px;
+  transition: height var(--transition-fast);
+  background: var(--highlight-color);
 }
 
 .label {
   font-weight: bold;
   text-align: center;
-  color: #444;
+  color: var(--text-color-primary);
 }
 
 ion-list,
 ion-item {
-  background: white !important;
-  --background: white !important;
+  background: var(--bg-white) !important;
+  --background: var(--bg-white) !important;
   color: black !important;
 }

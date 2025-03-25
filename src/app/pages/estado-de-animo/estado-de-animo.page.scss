@@ -1,23 +1,21 @@
 @media (min-width: 1024px) {
   ion-list {
-    margin-left: auto;
-    margin-right: auto;
+    margin: 0 auto;
     max-width: 600px;
   }
 }
 
 .plan-content {
-  --background: linear-gradient(to bottom, #8ecae6, #f1faee);
+  --background: var(--bg-gradient-primary);
 }
+
 .plan-header {
-  margin-left: 10px;
-  margin-top: 10px;
-  margin-bottom: 25px;
+  margin: 10px 0 25px 10px;
 }
 
 .plan-title {
   font-weight: bold;
-  color: #1d3557;
+  color: var(--text-color-title);
   text-align: center;
   margin-bottom: 20px;
   text-transform: uppercase;
@@ -34,8 +32,8 @@
 
 .mood-section {
   text-align: center;
-  background: var(--ion-color-light);
-  border-radius: 15px;
+  background: black;
+  border-radius: var(--card-radius);
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   max-width: 400px;
@@ -46,7 +44,7 @@
   font-size: 1.3rem;
   font-weight: bold;
   margin-bottom: 20px;
-  color: var(--ion-color-dark);
+  color: var(--bg-white);
 }
 
 .mood-button {
@@ -55,27 +53,16 @@
   border-radius: 10px;
 }
 
-.happy {
-  --background: #2dd36f;
-  --color: white;
-}
-
-.good {
-  --background: #3880ff;
-  --color: white;
-}
-
-.neutral {
-  --background: #ffc409;
-  --color: black;
-}
-
-.bad {
-  --background: #eb445a;
-  --color: white;
-}
-
+.happy,
+.good,
+.neutral,
+.bad,
 .very-bad {
-  --background: #222428;
   --color: white;
 }
+
+.happy { --background: #2dd36f; }
+.good { --background: #3880ff; }
+.neutral { --background: #ffc409; --color: black; }
+.bad { --background: #eb445a; }
+.very-bad { --background: #222428; }

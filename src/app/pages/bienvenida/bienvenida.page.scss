@@ -1,5 +1,5 @@
 .welcome-content {
-  --background: linear-gradient(to top, #8ecae6, #f1faee);
+  --background: var(--bg-gradient-primary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,22 +13,17 @@
 .welcome-title {
   font-size: 2rem;
   font-weight: bold;
-  color: #1d3557; 
+  color: var(--text-color-title);
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .welcome-description {
   font-size: 1.2rem;
-  color: #1d3557; 
+  color: var(--text-color-primary);
   padding: 15px;
-  background: rgba(
-    255,
-    255,
-    255,
-    0.4
-  );
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: var(--card-radius);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .welcome-button {
@@ -37,22 +32,26 @@
   border-radius: 25px;
   margin-top: 10px;
   padding: 12px;
-  transition: 0.3s;
+  transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.welcome-button:hover {
+  transform: scale(1.05);
 }
 
 .welcome-button.primary {
-  background: #ffffff;
-  color: #457b9d; 
+  background: var(--bg-white);
+  color: var(--text-color-secondary);
 }
 
 .welcome-button.primary:hover {
-  background: #e3e3e3;
+  background: var(--bg-light);
 }
 
 .welcome-button.secondary {
   background: transparent;
-  border: 2px solid #457b9d;
-  color: #1d3557; 
+  border: 2px solid var(--text-color-secondary);
+  color: var(--text-color-title);
 }
 
 .welcome-button.secondary:hover {

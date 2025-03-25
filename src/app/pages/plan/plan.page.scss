@@ -19,22 +19,22 @@ ion-content {
   text-align: center;
   background: linear-gradient(135deg, #f0f4ff, #d9e2ff);
   animation: fadeIn 0.8s ease-in-out;
+}
 
-  ion-spinner {
-    width: 60px;
-    height: 60px;
-    color: var(--ion-color-primary);
-    animation: pulse 1.5s infinite alternate ease-in-out;
-  }
+.loading-container ion-spinner {
+  width: 60px;
+  height: 60px;
+  color: var(--ion-color-primary);
+  animation: pulse 1.5s infinite alternate ease-in-out;
+}
 
-  p {
-    margin-top: 15px;
-    font-size: 1.3em;
-    font-weight: 500;
-    color: #444;
-    opacity: 0.8;
-    animation: fadeText 1.5s infinite alternate ease-in-out;
-  }
+.loading-container p {
+  margin-top: 15px;
+  font-size: 1.3em;
+  font-weight: 500;
+  color: #444;
+  opacity: 0.8;
+  animation: fadeText 1.5s infinite alternate ease-in-out;
 }
 
 .content {
@@ -48,11 +48,8 @@ ion-content {
   transform: translateY(0);
 }
 
-
 .plan-header {
-  margin-left: 10px;
-  margin-top: 10px;
-  margin-bottom: 25px;
+  margin: 10px 0 25px 10px;
 }
 
 .plan-title {
@@ -91,6 +88,7 @@ ion-content {
   --background: white;
   --color: #1d3557;
   border: 1px solid rgba(29, 53, 87, 0.2);
+  transition: transform 0.3s ease-in-out;
 }
 
 .plan-item:hover {
@@ -138,14 +136,18 @@ ion-content {
 }
 
 .custom-checkbox {
-  --background: #a8dadc;
+  --size: 22px;
   --border-radius: 50%;
-  margin-right: 10px;
+  --background: white;
+  --border-color: var(--ion-color-primary);
+  --checkmark-color: var(--ion-color-primary);
+  margin-right: 12px;
   transform: scale(1.2);
 }
 
 ion-list {
   background: transparent;
+  padding: 0;
 }
 
 ion-item {
@@ -159,13 +161,11 @@ ion-item:hover {
   background: rgba(29, 53, 87, 0.05);
 }
 
-/* Distribución de las tarjetas */
 .horarios-row {
   justify-content: center;
   gap: 20px;
 }
 
-/* Estilos base para las tarjetas */
 .horario-card {
   box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.15);
   border-radius: 15px;
@@ -176,22 +176,6 @@ ion-item:hover {
 .horario-card:hover {
   transform: translateY(-5px);
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Estilos específicos por horario */
-.morning .custom-checkbox {
-  --border-color: white;
-  --checkmark-color: white;
-}
-
-.afternoon .custom-checkbox {
-  --border-color: white;
-  --checkmark-color: white;
-}
-
-.night .custom-checkbox {
-  --border-color: white;
-  --checkmark-color: white;
 }
 
 .morning {
@@ -206,7 +190,6 @@ ion-item:hover {
   background: linear-gradient(135deg, #4a4e69, #22223b);
 }
 
-/* Iconos dentro de los títulos */
 .horario-icon {
   font-size: 1.5rem;
   margin-right: 8px;
@@ -224,7 +207,6 @@ ion-item:hover {
   color: #e0e1dd;
 }
 
-/* Títulos de las tarjetas */
 ion-card-title {
   display: flex;
   align-items: center;
@@ -235,26 +217,10 @@ ion-card-title {
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
 }
 
-/* Checkbox personalizado */
-.custom-checkbox {
-  --size: 22px;
-  --border-radius: 50%;
-  --background: white;
-  --border-color: var(--ion-color-primary);
-  --checkmark-color: var(--ion-color-primary);
-  margin-right: 12px;
-}
-
-/* Lista de elementos */
-ion-list {
-  padding: 0;
-}
-
 ion-item {
   --background: transparent;
   --color: white;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  transition: background 0.3s ease-in-out;
 }
 
 ion-item:hover {

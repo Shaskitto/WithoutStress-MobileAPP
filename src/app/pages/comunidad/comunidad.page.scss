@@ -1,16 +1,16 @@
 ion-content {
-  --background: linear-gradient(to bottom, #8ecae6, #f1faee);
+  --background: var(--bg-gradient-primary);
 }
 
 ion-card {
-  background: rgba(255, 255, 255, 0.6); 
-  border-radius: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); 
-  transition: all 0.3s ease-in-out;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--card-radius);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: var(--transition-fast);
 }
 
 ion-card-title {
-  color: #1d3557 !important;
+  color: var(--text-color-title);
   font-weight: bold;
   font-size: 1.4rem;
   text-align: center;
@@ -22,13 +22,13 @@ ion-list {
 
 ion-item {
   --background: transparent !important;
-  --color: #1d3557;
+  --color: var(--text-color-primary);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .custom-name {
   font-weight: bold;
-  color: #1d3557;
+  color: var(--text-color-primary);
 }
 
 .custom-avatar img {
@@ -45,33 +45,18 @@ ion-button {
   font-weight: bold;
   border-radius: 10px;
   text-transform: uppercase;
-  transition: all 0.3s ease-in-out;
+  transition: var(--transition-fast);
 }
 
 ion-button:hover {
   transform: scale(1.05);
 }
 
-.chat-button {
-  background-color: #1d3557;
-  color: white;
-}
-
-.add-button {
-  background-color: #007bff;
-}
-
-.accept-button {
-  background-color: #28a745;
-}
-
-.decline-button {
-  background-color: #dc3545;
-}
-
-.remove-button {
-  background-color: #ff4500;
-}
+.chat-button { background-color: #1d3557; color: white; }
+.add-button { background-color: #007bff; }
+.accept-button { background-color: #28a745; }
+.decline-button { background-color: #dc3545; }
+.remove-button { background-color: #ff4500; }
 
 .empty-message {
   text-align: center;
