@@ -1,65 +1,44 @@
-<ion-content [fullscreen]="true" class="plan-content">
+<ion-content [fullscreen]="true" [scrollY]="false">
   <div class="plan-header">
-    <h1 class="plan-title">📅 Calendario de Notas</h1>
+    <ion-toolbar>
+      <h1 class="plan-title">Calendario de Notas</h1>
+      <ion-buttons slot="end">
+        <ion-button expand="block" (click)="setToday()"> Hoy </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
   </div>
 
-  <!-- Formulario para agregar o editar notas -->
-  <div class="form-container">
-    <form [formGroup]="calendarioForm" (ngSubmit)="isEditing ? updateNote() : createNote()">
-      
-      <ion-item class="custom-item">
-        <ion-datetime
-          [value]="selectedDate"
-          (ionChange)="onDateChange($event)"
-          presentation="date"
-          display-format="DD/MM/YYYY">
-        </ion-datetime>
-      </ion-item>
+  <ion-segment [(ngModel)]="calendar.mode">
+    <ion-segment-button value="month"> Mes </ion-segment-button>
+    <ion-segment-button value="week"> Semana </ion-segment-button>
+    <ion-segment-button value="day"> Día </ion-segment-button>
+  </ion-segment>
 
-      <ion-label position="floating" *ngIf="selectedDate">📅 Fecha seleccionada</ion-label>
-      <ion-item class="custom-item" *ngIf="selectedDate">
-        <ion-input formControlName="fecha" readonly></ion-input>
-      </ion-item>
-
-      <ion-label position="floating">⏰ Hora</ion-label>
-      <ion-item class="custom-item">
-        <ion-input formControlName="hora" type="time"></ion-input>
-      </ion-item>
-
-      <ion-label position="floating">📝 Título</ion-label>
-      <ion-item class="custom-item">
-        <ion-input formControlName="titulo" type="text"></ion-input>
-      </ion-item>
-
-      <ion-label position="floating">📌 Contenido</ion-label>
-      <ion-item class="custom-item">
-        <ion-textarea formControlName="contenido"></ion-textarea>
-      </ion-item>
-
-      <ion-button expand="full" class="custom-button" type="submit" [disabled]="!calendarioForm.valid">
-        {{ isEditing ? '🔄 Actualizar Nota' : '💾 Guardar Nota' }}
-      </ion-button>
-      <ion-button *ngIf="isEditing" expand="full" color="danger" class="cancel-button" (click)="cancelEdit()">Cancelar</ion-button>
-    </form>
-  </div>
-
-  <!-- Lista de Notas -->
   <ion-grid>
-    <ion-row>
-      <ion-col size="12" size-md="6" size-lg="4" *ngFor="let note of userNotes">
-        <ion-card class="note-card" (click)="editNote(note)">
-          <ion-card-header>
-            <ion-card-title>{{ note.titulo }}</ion-card-title>
-            <ion-card-subtitle>{{ getFormattedDate(note.fecha) }} - {{ note.hora }}</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content>
-            {{ note.contenido }}
-          </ion-card-content>
-          <ion-button class="delete-button" fill="clear" (click)="confirmDeleteNote(note._id)">
-            <ion-icon name="trash"></ion-icon>
-          </ion-button>
-        </ion-card>
+    <ion-row class="ion-align-items-center">
+      <ion-col size="3" class="ion-text-left">
+        <ion-button fill="clear" (click)="calendarBack()">
+          <ion-icon name="arrow-back" slot="icon-only"></ion-icon>
+        </ion-button>
+      </ion-col>
+      
+      <ion-col size="6" class="ion-text-center">
+        <h2>{{ viewTitle }}</h2>
+      </ion-col>
+      
+      <ion-col size="3" class="ion-text-right">
+        <ion-button fill="clear" (click)="calendarForward()">
+          <ion-icon name="arrow-forward" slot="icon-only"></ion-icon>
+        </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
+  
+  <calendar 
+    [calendarMode]="calendar.mode" 
+    (onTitleChanged)="viewTitle = $event" 
+    [startingDayWeek]="1"
+    [startHour]="6"
+    [endHour]="24"
+  ></calendar>
 </ion-content>

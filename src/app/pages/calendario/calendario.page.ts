@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { CalendarComponent, CalendarMode } from 'ionic6-calendar';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -15,11 +16,31 @@ export class CalendarioPage implements OnInit {
   editingNoteId: string | null = null;
   userNotes: any[] = []; 
 
+  calendar = { 
+    mode: 'month' as CalendarMode, 
+    currentDate: new Date(),
+  };
+  viewTitle = '';
+
+  @ViewChild(CalendarComponent) myCal!: CalendarComponent;
+
   constructor(private fb: FormBuilder, private userService: UserService, private alertController: AlertController) {}
 
   ngOnInit() {
     this.initializeForm();
     this.loadUserNotes(); 
+  }
+
+  setToday(){ 
+    this.myCal.currentDate = new Date();
+  }
+
+  calendarBack(){
+    this.myCal.slidePrev();
+  }
+
+  calendarForward(){
+    this.myCal.slideNext();
   }
 
   // Método modificado para mostrar una alerta antes de eliminar la nota
