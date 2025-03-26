@@ -1,0 +1,21 @@
+.modal{
+    --background: var(--bg-gradient-primary);
+}
+
+.group{
+    background: #fff;
+    border-radius: 10px;
+    padding: 2px 8px 2px 8px;
+    margin-bottom: 20px;
+    color: black;
+}
+
+ion-item{
+    --background: white;
+    color: black;
+}
+
+ion-datetime{
+    background: white;
+    color: black;
+}
