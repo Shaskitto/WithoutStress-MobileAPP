@@ -27,7 +27,6 @@ export class CalendarioPage implements OnInit {
 
   newEvent: any = {
     tittle: '',
-    content: '',
     allDay: false,
     startTime: null,
     endTime: null,
@@ -55,20 +54,44 @@ export class CalendarioPage implements OnInit {
     this.myCal.slideNext();
   }
 
-  onTimeSelected(ev: { selectedTime: Date; events: any[] }){
-    this.formattedStart = format(ev.selectedTime, 'HH:mm, MMM d, yyyy');
-    this.newEvent.startTime = format(ev.selectedTime, "yyyy-MM-dd'T'HH:mm:ss");
-    
-    const later = ev.selectedTime.setHours(ev.selectedTime.getHours() + 1);
-    
+  resetNewEvent() {
+    this.newEvent = {
+      title: '',
+      allDay: false,
+      startTime: null,
+      endTime: null,
+    };
+  
+    this.formattedStart = '';
+    this.formattedEnd = '';
+  }
+
+  onTimeSelected(ev: { selectedTime: Date; events: any[] }) {
+    this.resetNewEvent(); 
+    let selectedDate = new Date(ev.selectedTime);
+  
+    if (this.calendar.mode === 'month') {
+      selectedDate.setHours(6, 0, 0);
+    }
+  
+    this.formattedStart = format(selectedDate, 'HH:mm, MMM d, yyyy');
+    this.newEvent.startTime = format(selectedDate, "yyyy-MM-dd'T'HH:mm:ss");
+  
+    const later = new Date(selectedDate);
+    later.setHours(selectedDate.getHours() + 1);
+  
+    if (this.calendar.mode === 'month') {
+      later.setHours(23, 0, 0);
+    }
+  
     this.formattedEnd = format(later, 'HH:mm, MMM d, yyyy');
     this.newEvent.endTime = format(later, "yyyy-MM-dd'T'HH:mm:ss");
-
+  
     if (this.calendar.mode === 'day' || this.calendar.mode === 'week') {
       this.modal.present();
     }
   }
-
+  
   startChanged(value: any){
     this.newEvent.startTime = value;
     this.formattedStart = format(parseISO(value), 'HH:mm, MMM d, yyyy');
@@ -81,17 +104,41 @@ export class CalendarioPage implements OnInit {
 
   //Cargar notas desde el servidor y mostrarlas en el calendario
   loadNotes() {
-    this.userService.getNotes().subscribe((notes) => {
-      this.eventSource = notes.map((note: any) => ({
-        title: note.titulo,
-        content: note.contenido,
-        startTime: new Date(note.fecha + 'T' + (note.horaInicio || '06:00')),
-        endTime: new Date(note.fecha + 'T' + (note.horaFin || '23:00')),
-        allDay: note.allDay,
-        noteId: note._id, 
-      }));
-    });
+    this.userService.getNotes().subscribe(
+      (response) => {
+        console.log('Notas recibidas:', response); 
+
+  
+        if (!response || !Array.isArray(response.notas)) {
+          console.error('Error: La respuesta no contiene un array válido', response);
+          this.eventSource = [];
+          return;
+        }
+  
+        this.eventSource = response.notas.map((note: any) => {
+          const fechaBase = note.fecha.split('T')[0];
+        
+          return {
+            title: `${note.titulo}`,
+            startTime: new Date(`${fechaBase}T${note.horaInicio || '06:00:00'}`),
+            endTime: new Date(`${fechaBase}T${note.horaFin || '23:00:00'}`),
+            allDay: note.allDay,
+            noteId: note._id,
+          };
+        });
+
+        if (this.myCal) {
+          this.myCal.eventSource = [...this.eventSource]; 
+          this.myCal.loadEvents();
+        }
+        
+      },
+      (error) => {
+        console.error('Error al cargar notas:', error);
+      }
+    );
   }
+  
 
   //Guardar un nuevo evento (nota)
   scheduleEvent() {
@@ -99,10 +146,9 @@ export class CalendarioPage implements OnInit {
       console.error('Error: La fecha de inicio es requerida.');
       return;
     }
-
+    
     const note: any = {
       titulo: this.newEvent.title,
-      contenido: this.newEvent.content,
       fecha: this.newEvent.startTime.split('T')[0],
       allDay: this.newEvent.allDay,
     };
@@ -115,13 +161,14 @@ export class CalendarioPage implements OnInit {
       note.horaFin = this.newEvent.endTime?.split('T')[1] || "00:00:00";
     }
 
-    console.log('Datos enviados al backend:', JSON.stringify(note, null, 2));
-
     this.userService.createNote(note).subscribe(
       (res) => {
         console.log('Nota creada:', res);
         this.loadNotes();
         this.modal.dismiss();
+        if (this.myCal) {
+          this.myCal.loadEvents();
+        }
       },
       (err) => {
         console.error('Error al crear la nota:', err);
@@ -133,7 +180,6 @@ export class CalendarioPage implements OnInit {
   editNote(note: any) {
     const updatedNote = {
       titulo: note.title,
-      contenido: note.content,
       fecha: format(note.startTime, 'yyyy-MM-dd'),
       horaInicio: format(note.startTime, 'HH:mm'),
       horaFin: format(note.endTime, 'HH:mm'),
