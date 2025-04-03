@@ -1,19 +1,21 @@
 <ion-content [fullscreen]="true" [scrollY]="false">
   <div class="plan-header">
     <ion-toolbar>
-      <h1 class="plan-title">Calendario de Notas</h1>
+      <h1 class="plan-title">Calendario</h1>
       <ion-buttons slot="end">
-        <ion-button expand="block" (click)="setToday()"> Hoy </ion-button>
+        <ion-button style="--color: black;" expand="block" (click)="setToday()"> Hoy </ion-button>
       </ion-buttons>
     </ion-toolbar>
   </div>
 
+  <!-- Selector de Modo de Vista -->
   <ion-segment [(ngModel)]="calendar.mode">
     <ion-segment-button value="month"> Mes </ion-segment-button>
     <ion-segment-button value="week"> Semana </ion-segment-button>
     <ion-segment-button value="day"> Día </ion-segment-button>
   </ion-segment>
 
+  <!-- Navegación del Calendario -->
   <ion-grid>
     <ion-row class="ion-align-items-center">
       <ion-col size="3" class="ion-text-left">
@@ -34,25 +36,32 @@
     </ion-row>
   </ion-grid>
 
+  <!-- Calendario -->
   <calendar
+    #myCal
     [calendarMode]="calendar.mode"
+    [currentDate]="calendar.currentDate"
     (onTitleChanged)="viewTitle = $event"
     [startingDayWeek]="1"
     [startHour]="6"
-    [endHour]="24"
+    [endHour]="23"
+    [eventSource]="eventSource"
     (onTimeSelected)="onTimeSelected($event)"
   ></calendar>
 
+  <!-- Botón flotante para agregar evento -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button id="inputmodal">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
 
+  <!-- Modal para agregar evento -->
   <ion-modal
     #modal
     trigger="inputmodal"
     [presentingElement]="presentingElement"
+    mode="ios"
   >
     <ng-template>
       <ion-header class="ion-no-border">
@@ -60,8 +69,6 @@
           <ion-buttons slot="start">
             <ion-button (click)="modal.dismiss()">Cerrar</ion-button>
           </ion-buttons>
-
-          <ion-title> Nuevo Evento </ion-title>
 
           <ion-buttons slot="end">
             <ion-button
@@ -74,6 +81,7 @@
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
+      
       <ion-content class="ion-padding modal">
         <div class="group">
           <ion-input
@@ -112,6 +120,14 @@
             [presentation]="newEvent.allDay ? 'date' : 'time-date'"
             (ionChange)="endChanged(end.value)"
           ></ion-datetime>
+        </div>
+
+        <div class="group">
+          <ion-input
+            type="text"
+            [(ngModel)]="newEvent.content"
+            placeholder="Contenido"
+          ></ion-input>
         </div>
       </ion-content>
     </ng-template>

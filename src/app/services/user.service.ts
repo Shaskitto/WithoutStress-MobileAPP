@@ -48,7 +48,7 @@ export class UserService {
   }
 
   // Método para crear notas
-  createNote(noteData: { titulo: string; contenido: string; fecha: string; hora: string }): Observable<any> {
+  createNote(noteData: { titulo: string; contenido: string; fecha: string; horaInicio?: string;  horaFin?: string; allDay: boolean;}): Observable<any> {
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
   
@@ -61,7 +61,7 @@ export class UserService {
   }
   
   // Método para actulizar notas
-  updateNote(noteId: string, noteData: { titulo?: string; contenido?: string; fecha?: string; hora?: string }): Observable<any> {
+  updateNote(noteId: string, noteData: { titulo?: string; contenido?: string; fecha?: string; horaInicio?: string;  horaFin?: string; allDay: boolean; }): Observable<any> {
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('token');
   

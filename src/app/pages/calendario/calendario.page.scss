@@ -10,6 +10,15 @@
     color: black;
 }
 
+.plan-title {
+    font-weight: bold;
+    color: #1d3557;
+    text-align: center;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
 ion-item{
     --background: white;
     color: black;
@@ -18,4 +27,8 @@ ion-item{
 ion-datetime{
     background: white;
     color: black;
+}
+
+ion-toolbar{
+    --background: linear-gradient(to bottom, #8ecae6, #f1faee);
 }
