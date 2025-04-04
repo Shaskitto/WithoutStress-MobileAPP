@@ -1,34 +1,137 @@
-.modal{
-    --background: var(--bg-gradient-primary);
+ion-content {
+  --background: var(--bg-gradient-primary);
 }
 
-.group{
-    background: #fff;
-    border-radius: 10px;
-    padding: 2px 8px 2px 8px;
-    margin-bottom: 20px;
-    color: black;
+ion-content h2,
+ion-content p,
+ion-content span {
+  color: var(--text-color-dark);
+  font-weight: normal;
+}
+
+ion-button,
+ion-segment-button,
+ion-input,
+ion-textarea {
+  color: var(--text-color-dark);
+}
+
+ion-icon {
+  color: var(--text-color-dark);
+}
+
+ion-item {
+  --background: white;
+  color: black;
+}
+
+ion-datetime {
+  background: white;
+  color: black;
+}
+
+ion-toolbar {
+  --background: none;
+}
+
+.modal {
+  --background: var(--bg-gradient-primary);
+}
+
+.group {
+  background: #fff;
+  border-radius: 10px;
+  padding: 2px 8px 2px 8px;
+  margin-bottom: 20px;
+  color: black;
 }
 
 .plan-title {
-    font-weight: bold;
-    color: #1d3557;
-    text-align: center;
-    margin-bottom: 20px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-ion-item{
-    --background: white;
-    color: black;
+  font-weight: bold;
+  color: #1d3557;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-ion-datetime{
-    background: white;
-    color: black;
+.indicator-container {
+  padding-right: 0.4rem;
+  padding-left: 0.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
 }
 
-ion-toolbar{
-    --background: linear-gradient(to bottom, #8ecae6, #f1faee);
+.event-indicator {
+  background: var(--ion-color-success);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+
+ion-toggle {
+  --color: var(--ion-color-primary);
+  --handle-background: var(--ion-color-light);
+  --handle-border-color: var(--ion-color-dark);
+}
+
+ion-toggle[checked="false"] {
+  --color: var(--ion-color-medium);
+  --handle-background: var(--ion-color-light);
+  --handle-border-color: var(--ion-color-dark);
+}
+
+/* Día actual */
+::ng-deep td.monthview-current {
+  background-color: #ff6f61 !important;
+  color: var(--bg-white) !important;
+}
+
+/* Día seleccionado */
+::ng-deep td.monthview-selected {
+  background-color: #1abc9c !important;
+  color: var(--bg-white) !important;
+}
+
+/* Eventos */
+::ng-deep td.monthview-primary-with-event {
+  background-color: #00b8d4 !important;
+  color: var(--bg-white) !important;
+}
+
+::ng-deep .calendar-event-inner {
+  background-color: #00b8d4 !important;
+  color: var(--bg-white) !important;
+}
+
+::ng-deep td {
+  color: var(--text-color-dark);
+  background: white;
+}
+
+::ng-deep th {
+  color: var(--text-color-dark);
+  background: white;
+}
+
+::ng-deep .weekview-allday-label {
+  color: var(--text-color-dark);
+  background: white;
+}
+
+::ng-deep .dayview-allday-table {
+  color: var(--text-color-dark);
+  background: white;
+}
+
+::ng-deep .list-md {
+  background: none;
+}
+
+::ng-deep .calendar-event {
+  width: 100% !important;
+  position: unset !important;
+  padding: 0px !important;
 }
