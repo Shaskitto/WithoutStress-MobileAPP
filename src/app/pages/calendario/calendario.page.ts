@@ -32,7 +32,6 @@ export class CalendarioPage implements OnInit {
     endTime: null,
   };
 
-
   constructor(private ionRouterOutlet: IonRouterOutlet, private userService: UserService) {
     this.presentingElement = ionRouterOutlet.nativeEl;
     
@@ -114,19 +113,27 @@ export class CalendarioPage implements OnInit {
           this.eventSource = [];
           return;
         }
-  
+       
         this.eventSource = response.notas.map((note: any) => {
           const fechaBase = note.fecha.split('T')[0];
         
+          const startTime = note.allDay 
+            ? new Date(`${fechaBase}T00:00:00Z`)  
+            : new Date(`${fechaBase}T${note.horaInicio || '00:00:00'}`);
+
+          const endTime = note.allDay
+            ? new Date(`${fechaBase}T23:59:59Z`)  
+            : new Date(`${fechaBase}T${note.horaFin || '23:59:59'}`);
+        
           return {
-            title: `${note.titulo}`,
-            startTime: new Date(`${fechaBase}T${note.horaInicio || '06:00:00'}`),
-            endTime: new Date(`${fechaBase}T${note.horaFin || '23:00:00'}`),
+            title: note.titulo,
+            startTime: startTime,
+            endTime: endTime,
             allDay: note.allDay,
             noteId: note._id,
           };
         });
-
+        
         if (this.myCal) {
           this.myCal.eventSource = [...this.eventSource]; 
           this.myCal.loadEvents();
@@ -154,8 +161,8 @@ export class CalendarioPage implements OnInit {
     };
 
     if (this.newEvent.allDay) {
-      note.horaInicio = "06:00:00";
-      note.horaFin = "23:00:00";
+      note.horaInicio = null; // Empieza a medianoche
+      note.horaFin = null;
     } else {
       note.horaInicio = this.newEvent.startTime.split('T')[1] || "00:00:00";
       note.horaFin = this.newEvent.endTime?.split('T')[1] || "00:00:00";

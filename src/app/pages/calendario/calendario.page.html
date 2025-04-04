@@ -44,6 +44,7 @@
     (onTitleChanged)="viewTitle = $event"
     [startingDayWeek]="1"
     [startHour]="6"
+    [autoSelect]="false"
     [endHour]="23"
     [eventSource]="eventSource"
     (onTimeSelected)="onTimeSelected($event)"
@@ -55,7 +56,8 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
+  
+  
   <!-- Modal para agregar evento -->
   <ion-modal
     #modal
