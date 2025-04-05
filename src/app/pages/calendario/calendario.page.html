@@ -48,6 +48,7 @@
     [endHour]="23"
     [eventSource]="eventSource"
     (onTimeSelected)="onTimeSelected($event)"
+    (onEventSelected)="onEventSelected($event)"
     [monthviewDisplayEventTemplate]="template"
     [weekviewAllDayEventTemplate]="weekviewAllDayEventTemplate"
   ></calendar>
@@ -77,9 +78,9 @@
             <ion-button
               style="--color: green;"
               strong
-              (click)="scheduleEvent()"
+              (click)="selectedEvent ? editNote() : scheduleEvent()"
               [disabled]="!newEvent.title"
-              >Agregar</ion-button
+              >{{ selectedEvent ? 'Actualizar' : 'Agregar' }}</ion-button
             >
           </ion-buttons>
         </ion-toolbar>
@@ -124,6 +125,15 @@
             (ionChange)="endChanged(end.value)"
           ></ion-datetime>
         </div>
+
+        <ion-button 
+        color="danger" 
+        expand="block" 
+        *ngIf="selectedEvent" 
+        (click)="deleteNote()"
+      >
+        Eliminar
+      </ion-button>
       </ion-content>
     </ng-template>
   </ion-modal>

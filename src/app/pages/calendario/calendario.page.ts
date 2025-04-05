@@ -20,6 +20,7 @@ export class CalendarioPage implements OnInit {
   showEnd = false;
   formattedStart = '';
   formattedEnd = '';
+  selectedEvent: any = null;
 
   @ViewChild(CalendarComponent) myCal!: CalendarComponent;
   @ViewChild('modal') modal!: IonModal;
@@ -66,6 +67,7 @@ export class CalendarioPage implements OnInit {
   }
 
   onTimeSelected(ev: { selectedTime: Date; events: any[] }) {
+    this.selectedEvent = null;
     this.resetNewEvent(); 
     let selectedDate = new Date(ev.selectedTime);
   
@@ -91,6 +93,21 @@ export class CalendarioPage implements OnInit {
     }
   }
   
+  onEventSelected(event: any) {
+    this.newEvent = {
+      title: event.title,
+      allDay: event.allDay,
+      startTime: format(event.startTime, "yyyy-MM-dd'T'HH:mm:ss"),
+      endTime: format(event.endTime, "yyyy-MM-dd'T'HH:mm:ss"),
+    };
+  
+    this.formattedStart = format(event.startTime, 'HH:mm, MMM d, yyyy');
+    this.formattedEnd = format(event.endTime, 'HH:mm, MMM d, yyyy');
+    this.selectedEvent = event;
+  
+    this.modal.present();
+  }
+
   startChanged(value: any){
     this.newEvent.startTime = value;
     this.formattedStart = format(parseISO(value), 'HH:mm, MMM d, yyyy');
@@ -184,26 +201,34 @@ export class CalendarioPage implements OnInit {
   }
 
   //Editar una nota existente
-  editNote(note: any) {
+  editNote() {
+    if (!this.selectedEvent) return;
+
     const updatedNote = {
-      titulo: note.title,
-      fecha: format(note.startTime, 'yyyy-MM-dd'),
-      horaInicio: format(note.startTime, 'HH:mm'),
-      horaFin: format(note.endTime, 'HH:mm'),
-      allDay: note.allDay,
+      titulo: this.newEvent.title,
+      fecha: this.newEvent.startTime.split('T')[0],
+      horaInicio: this.newEvent.allDay ? null : this.newEvent.startTime.split('T')[1],
+      horaFin: this.newEvent.allDay ? null : this.newEvent.endTime?.split('T')[1],
+      allDay: this.newEvent.allDay,
     };
 
-    this.userService.updateNote(note.noteId, updatedNote).subscribe(() => {
+    this.userService.updateNote(this.selectedEvent.noteId, updatedNote).subscribe(() => {
       console.log('Nota actualizada');
+      this.modal.dismiss();
       this.loadNotes();
+      this.selectedEvent = null;
     });
   }
 
   //Eliminar una nota
-  deleteNote(note: any) {
-    this.userService.deleteNote(note.noteId).subscribe(() => {
+  deleteNote() {
+    if (!this.selectedEvent) return;
+
+    this.userService.deleteNote(this.selectedEvent.noteId).subscribe(() => {
       console.log('Nota eliminada');
+      this.modal.dismiss();
       this.loadNotes();
+      this.selectedEvent = null;
     });
   }
 }
