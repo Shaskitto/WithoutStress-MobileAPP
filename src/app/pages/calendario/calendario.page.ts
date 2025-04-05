@@ -132,16 +132,14 @@ export class CalendarioPage implements OnInit {
         }
        
         this.eventSource = response.notas.map((note: any) => {
-          const fechaBase = note.fecha.split('T')[0];
-        
-          const startTime = note.allDay 
-            ? new Date(`${fechaBase}T00:00:00Z`)  
-            : new Date(`${fechaBase}T${note.horaInicio || '00:00:00'}`);
+          const startTime = note.allDay
+          ? new Date(`${note.fechaInicio.split('T')[0]}T00:00:00Z`)
+          : new Date(`${note.fechaInicio.split('T')[0]}T${note.horaInicio || '00:00:00'}`);
 
-          const endTime = note.allDay
-            ? new Date(`${fechaBase}T23:59:59Z`)  
-            : new Date(`${fechaBase}T${note.horaFin || '23:59:59'}`);
-        
+        let endTime = note.allDay
+          ? new Date(`${note.fechaFin.split('T')[0]}T23:59:59Z`)
+          : new Date(`${note.fechaFin.split('T')[0]}T${note.horaFin || '23:59:59'}`);
+
           return {
             title: note.titulo,
             startTime: startTime,
@@ -170,19 +168,20 @@ export class CalendarioPage implements OnInit {
       console.error('Error: La fecha de inicio es requerida.');
       return;
     }
-    
+   
     const note: any = {
       titulo: this.newEvent.title,
-      fecha: this.newEvent.startTime.split('T')[0],
+      fechaInicio: this.newEvent.startTime.split('T')[0],
+      fechaFin: this.newEvent.endTime.split('T')[0],
       allDay: this.newEvent.allDay,
     };
 
     if (this.newEvent.allDay) {
-      note.horaInicio = null; // Empieza a medianoche
+      note.horaInicio = null;
       note.horaFin = null;
     } else {
-      note.horaInicio = this.newEvent.startTime.split('T')[1] || "00:00:00";
-      note.horaFin = this.newEvent.endTime?.split('T')[1] || "00:00:00";
+      note.horaInicio = this.newEvent.startTime.split('T')[1] || '00:00:00';
+      note.horaFin = this.newEvent.endTime.split('T')[1] || '23:59:59';
     }
 
     this.userService.createNote(note).subscribe(
@@ -206,7 +205,8 @@ export class CalendarioPage implements OnInit {
 
     const updatedNote = {
       titulo: this.newEvent.title,
-      fecha: this.newEvent.startTime.split('T')[0],
+      fechaInicio: this.newEvent.startTime.split('T')[0],
+      fechaFin: this.newEvent.endTime?.split('T')[0],
       horaInicio: this.newEvent.allDay ? null : this.newEvent.startTime.split('T')[1],
       horaFin: this.newEvent.allDay ? null : this.newEvent.endTime?.split('T')[1],
       allDay: this.newEvent.allDay,
