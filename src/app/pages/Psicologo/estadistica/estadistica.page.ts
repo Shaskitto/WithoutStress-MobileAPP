@@ -44,11 +44,11 @@ export class EstadisticaPage implements OnInit {
 
   getMoodColor(estado: string): { ionic: string; hex: string } {
     const moods = {
-      'Muy bien': { ionic: 'success', hex: '#28a745' },  // Verde
-      'Bien': { ionic: 'primary', hex: '#007bff' },      // Azul
-      'Neutro': { ionic: 'warning', hex: '#ffc107' },    // Amarillo
-      'Mal': { ionic: 'tertiary', hex: '#6c757d' },      // Gris
-      'Muy mal': { ionic: 'danger', hex: '#dc3545' }     // Rojo
+      'Muy bien': { ionic: 'success', hex: '#28a745' },  
+      'Bien': { ionic: 'primary', hex: '#007bff' },      
+      'Neutro': { ionic: 'warning', hex: '#ffc107' },   
+      'Mal': { ionic: 'tertiary', hex: '#6c757d' },      
+      'Muy mal': { ionic: 'danger', hex: '#dc3545' }     
     } as const;
   
     return moods[estado as keyof typeof moods] || { ionic: 'medium', hex: '#6c757d' };

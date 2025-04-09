@@ -84,7 +84,15 @@ export class LoginPage{
     this.userService.getUser().subscribe(
       data => {
         this.user = data; 
+        const rol = this.user?.rol;
 
+        // Si es Psicólogo, no validar semestre ni estado de ánimo
+        if (rol === 'Psicologo') {
+          this.navigate();
+          return;
+        }
+
+        // Verificación para estudiantes
         if (!this.user || !this.user.semestre) {
           this.router.navigate(['/evaluacion']);
           return; 
@@ -109,12 +117,14 @@ export class LoginPage{
     );
   }
 
-  // Método para redirigir al home o evaluación inicial
+  // Método para redirigir al home(Estudiante), Dashboard(Psicologo) o evaluación inicial
   navigate(){
-    if (!this.user || !this.user.semestre) {
-      this.router.navigate(['/evaluacion']);
+    const rol = this.user?.rol;
+
+    if (rol === 'Psicologo') {
+      this.router.navigate(['/psicologo-tabs/dashboard']);
     } else {
-      this.router.navigate(['/tabs/plan']);
+      this.router.navigate(['/tabs/plan']); 
     }
   }
   

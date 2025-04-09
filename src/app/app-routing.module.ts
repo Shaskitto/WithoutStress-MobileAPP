@@ -4,19 +4,19 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
+    loadChildren: () => import('./pages/Estudiante/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'plan',
-    loadChildren: () => import('./pages/plan/plan.module').then( m => m.PlanPageModule)
+    loadChildren: () => import('./pages/Estudiante/plan/plan.module').then( m => m.PlanPageModule)
   },
   {
     path: 'explorar',
-    loadChildren: () => import('./pages/explorar/explorar.module').then( m => m.ExplorarPageModule)
+    loadChildren: () => import('./pages/Estudiante/explorar/explorar.module').then( m => m.ExplorarPageModule)
   },
   {
     path: 'comunidad',
-    loadChildren: () => import('./pages/comunidad/comunidad.module').then( m => m.ComunidadPageModule)
+    loadChildren: () => import('./pages/Estudiante/comunidad/comunidad.module').then( m => m.ComunidadPageModule)
   },
   {
     path: 'login',
@@ -32,23 +32,29 @@ const routes: Routes = [
   },
   {
     path: 'perfil',
-    loadChildren: () => import('./pages/perfil/perfil.module').then( m => m.PerfilPageModule)
+    loadChildren: () => import('./pages/Estudiante/perfil/perfil.module').then( m => m.PerfilPageModule)
   },
   {
     path: 'evaluacion',
-    loadChildren: () => import('./pages/evaluacion/evaluacion.module').then( m => m.EvaluacionPageModule)
-  },  {
+    loadChildren: () => import('./pages/Estudiante/evaluacion/evaluacion.module').then( m => m.EvaluacionPageModule)
+  },
+  {
     path: 'calendario',
-    loadChildren: () => import('./pages/calendario/calendario.module').then( m => m.CalendarioPageModule)
+    loadChildren: () => import('./pages/Estudiante/calendario/calendario.module').then( m => m.CalendarioPageModule)
   },
   {
     path: 'estadistica',
-    loadChildren: () => import('./pages/estadistica/estadistica.module').then( m => m.EstadisticaPageModule)
+    loadChildren: () => import('./pages/Psicologo/estadistica/estadistica.module').then( m => m.EstadisticaPageModule)
   },
   {
     path: 'estado-de-animo',
-    loadChildren: () => import('./pages/estado-de-animo/estado-de-animo.module').then( m => m.EstadoDeAnimoPageModule)
+    loadChildren: () => import('./pages/Estudiante/estado-de-animo/estado-de-animo.module').then( m => m.EstadoDeAnimoPageModule)
+  },
+  {
+    path: 'psicologo-tabs',
+    loadChildren: () => import('./pages/Psicologo/psicologo-tabs/psicologo-tabs.module').then(m => m.PsicologoTabsModule)
   }
+  
 
 ];
 @NgModule({

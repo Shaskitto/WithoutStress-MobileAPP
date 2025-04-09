@@ -8,7 +8,7 @@ import { Router, NavigationEnd  } from '@angular/router';
 })
 export class AppComponent {
   showSidebar = true;
-  private pagesWithoutSidebar = ['/login', '/register', '/bienvenida', '/estado-de-animo'];
+  private pagesWithoutSidebar = ['/login', '/register', '/bienvenida', '/estado-de-animo', 'psicologo-dashboard'];
 
   constructor(private router: Router) {this.router.events.subscribe(event => {
     if (event instanceof NavigationEnd) {
