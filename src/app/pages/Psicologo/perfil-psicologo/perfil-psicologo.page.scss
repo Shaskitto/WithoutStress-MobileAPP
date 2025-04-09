@@ -1,0 +1,183 @@
+@media (min-width: 768px) {
+  .perfil-texto-container {
+    text-align: center;
+  }
+
+  .botones-container {
+    justify-content: flex-end;
+  }
+
+  .perfil-actividades-card ion-card-title {
+    font-size: 1rem;
+  }
+}
+
+.plan-header {
+  margin: 10px 0 25px 10px;
+}
+
+.plan-title {
+  font-weight: bold;
+  color: #1d3557;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.perfil-texto-container {
+  text-align: center;
+}
+
+/* Estilos generales */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+  background: linear-gradient(135deg, #f0f4ff, #d9e2ff);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+.loading-container ion-spinner {
+  width: 60px;
+  height: 60px;
+  color: var(--ion-color-primary);
+  animation: pulse 1.5s infinite alternate ease-in-out;
+}
+
+.loading-container p {
+  margin-top: 15px;
+  font-size: 1.3em;
+  font-weight: 500;
+  color: #444;
+  opacity: 0.8;
+  animation: fadeText 1.5s infinite alternate ease-in-out;
+}
+
+.content {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.content.loaded {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Contenedor de perfil */
+.perfil-content {
+  --background: linear-gradient(to bottom, #8ecae6, #f1faee);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+}
+
+.perfil-header-card,
+.perfil-info-card,
+.perfil-card {
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  padding: 15px;
+}
+
+ion-card-title,
+.perfil-card-title {
+  font-weight: bold;
+  color: #1d3557;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-style: italic;
+}
+
+/* Imagen de perfil */
+.perfil-img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.perfil-img {
+  width: 120px;
+  height: 120px;
+  border: 3px solid #d4af37;
+  object-fit: cover;
+}
+
+/* Botones */
+.botones-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.perfil-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+ion-button {
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+ion-button[color="danger"] {
+  --background: #e63946;
+  --color: white;
+}
+
+ion-button ion-icon {
+  margin-right: 8px;
+}
+
+.info-icon {
+  font-size: 1.4rem;
+  color: #457b9d;
+  padding: 10px;
+}
+
+/* Estilos para elementos de lista */
+ion-item {
+  --background: transparent;
+  --padding-start: 10px;
+  --inner-padding-end: 10px;
+  --border-radius: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  transition: background 0.3s ease;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
+  color: black;
+}
+
+ion-item:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+ion-list {
+  background: transparent;
+}
+
+ion-label {
+  color: black;
+  font-weight: 500;
+}
+
+ion-input,
+ion-textarea,
+ion-select {
+  color: gray;
+  font-weight: bold;
+}

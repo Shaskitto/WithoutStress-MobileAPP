@@ -1,0 +1,156 @@
+<ion-content [fullscreen]="true" class="perfil-content">
+
+  <!-- Spinner de Carga -->
+  <div *ngIf="isLoading" class="loading-container">
+   <ion-spinner name="crescent"></ion-spinner>
+   <p>Cargando Perfil...</p>
+ </div>
+
+ <div class="container content" [class.loaded]="!isLoading">
+
+ <ng-container *ngIf="!isEditing; else editMode">
+  <div class="plan-header">
+    <h1 class="plan-title">Perfil</h1>
+  </div>
+
+   <ion-card class="perfil-header-card">
+     <ion-grid>
+       <ion-row class="ion-align-items-center">
+         <ion-col size="12" size-md="3" class="perfil-img-container">
+           <ion-img
+             [src]="user?.profileImage"
+             class="perfil-img"
+           ></ion-img>
+         </ion-col>
+   
+         <ion-col size="12" size-md="6" class="perfil-texto-container">
+           <ion-card-header>
+             <ion-card-title>{{ user?.username }}</ion-card-title>
+             <ion-card-subtitle>
+               {{ user?.rol }}
+             </ion-card-subtitle>
+           </ion-card-header>
+         </ion-col>
+   
+         <ion-col size="12" size-md="3" class="botones-container">
+           <ion-button fill="clear" (click)="toggleEdit()">
+             <ion-icon name="create-outline"></ion-icon>
+           </ion-button>
+           <ion-button fill="clear" color="danger" (click)="logout()">
+             <ion-icon name="log-out-outline"></ion-icon>
+           </ion-button>
+         </ion-col>
+       </ion-row>
+     </ion-grid>
+   </ion-card>    
+   
+   <ion-card class="perfil-info-card">
+     <ion-card-header>
+       <ion-card-title>Información Personal</ion-card-title>
+     </ion-card-header>
+   
+     <ion-card-content>
+       <ion-grid>
+         <ion-row>
+           <ion-col size="12" size-md="4">
+             <ion-item lines="none">
+               <ion-icon name="mail-outline" slot="start" class="info-icon"></ion-icon>
+               <ion-label>{{ user?.email }}</ion-label>
+             </ion-item>
+           </ion-col>
+   
+           <ion-col size="12" size-md="4">
+             <ion-item lines="none">
+               <ion-icon name="person-outline" slot="start" class="info-icon"></ion-icon>
+               <ion-label>{{ user?.edad }} años</ion-label>
+             </ion-item>
+           </ion-col>
+   
+           <ion-col size="12" size-md="4">
+             <ion-item lines="none">
+               <ion-icon name="body-outline" slot="start" class="info-icon"></ion-icon>
+               <ion-label>{{ user?.sexo }}</ion-label>
+             </ion-item>
+           </ion-col>
+         </ion-row>
+       </ion-grid>
+     </ion-card-content>
+   </ion-card>
+ </ng-container>
+
+</div>
+
+ <!-- Modo de Edición -->
+ <ng-template #editMode>
+   <ion-card class="perfil-card">
+     <ion-card-header>
+       <ion-card-title class="perfil-card-title">Editar Perfil</ion-card-title>
+     </ion-card-header>
+
+     <ion-card-content>
+       <form [formGroup]="perfilForm" (ngSubmit)="updateUser()">
+         <ion-list>
+           <!-- Nombre de usuario -->
+           <ion-item>
+             <ion-label position="floating">Nombre de Usuario</ion-label>
+             <ion-input formControlName="username"></ion-input>
+           </ion-item>
+
+           <!-- Información -->
+           <ion-item>
+             <ion-label position="floating">Información</ion-label>
+             <ion-textarea
+               formControlName="informacion"
+               maxlength="140"
+             ></ion-textarea>
+           </ion-item>
+
+           <!-- Foto de perfil -->
+           <ion-item>
+             <ion-label position="stacked">Foto de perfil</ion-label>
+             <input
+               type="file"
+               (change)="onFileSelected($event)"
+               accept="image/*"
+             />
+           </ion-item>
+           <ion-note *ngIf="!isValidFileType" color="danger">
+             {{ validationMessage }}
+           </ion-note>
+
+           <!-- Edad -->
+           <ion-item>
+             <ion-label position="floating">Edad</ion-label>
+             <ion-input formControlName="edad" type="number"></ion-input>
+           </ion-item>
+
+           <!-- Sexo -->
+           <ion-item>
+             <ion-label position="floating">Sexo</ion-label>
+             <ion-select formControlName="sexo">
+               <ion-select-option value="Masculino"
+                 >Masculino</ion-select-option
+               >
+               <ion-select-option value="Femenino">Femenino</ion-select-option>
+             </ion-select>
+           </ion-item>
+         </ion-list>
+
+         <!-- Botones -->
+         <div class="perfil-buttons">
+           <ion-button
+             expand="block"
+             type="submit"
+             [disabled]="!perfilForm.valid || !isValidFileType"
+           >
+             <ion-icon name="save-outline"></ion-icon> Guardar Cambios
+           </ion-button>
+           <ion-button expand="block" color="danger" (click)="toggleEdit()">
+             <ion-icon name="close-circle-outline"></ion-icon> Cancelar
+           </ion-button>
+         </div>
+       </form>
+     </ion-card-content>
+   </ion-card>
+ </ng-template>
+</ion-content>

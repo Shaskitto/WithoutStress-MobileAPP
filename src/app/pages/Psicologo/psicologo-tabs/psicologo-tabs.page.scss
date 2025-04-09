@@ -1,0 +1,66 @@
+ion-tab-bar {
+    border-top-left-radius: var(--border-radius-lg);
+    border-top-right-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow-tab);
+    height: var(--tab-bar-height-md);
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+    display: flex;
+    justify-content: space-around;
+    background: var(--tab-bg-gradient);
+    transition: height var(--transition-fast);
+  }
+  
+  /* 🖲️ Botones de pestañas */
+  ion-tab-button {
+    color: var(--tab-text-color);
+    transition: var(--transition-fast);
+    background: var(--tab-bg-gradient);
+    flex: 1; 
+    font-size: var(--tab-font-size-md);
+  }
+  
+  /* 🔥 Efecto al estar seleccionada */
+  ion-tab-button.tab-selected {
+    color: var(--tab-text-selected);
+    font-weight: bold;
+    transform: scale(1.1);
+  }
+  
+  /* 🔍 Íconos */
+  ion-icon {
+    font-size: var(--icon-size-md);
+    transition: var(--transition-fast);
+  }
+  
+  /* 📱 Para pantallas pequeñas */
+  @media (max-width: 400px) {
+    ion-tab-bar {
+      height: var(--tab-bar-height-sm);
+    }
+  
+    ion-tab-button {
+      font-size: var(--tab-font-size-sm);
+    }
+  
+    ion-icon {
+      font-size: var(--icon-size-sm);
+    }
+  }
+  
+  /* 🖥️ Para pantallas grandes */
+  @media (min-width: 768px) {
+    ion-tab-bar {
+      height: var(--tab-bar-height-lg);
+    }
+  
+    ion-tab-button {
+      font-size: var(--tab-font-size-lg);
+    }
+  
+    ion-icon {
+      font-size: var(--icon-size-lg);
+    }
+  }

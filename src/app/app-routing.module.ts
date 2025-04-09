@@ -54,7 +54,6 @@ const routes: Routes = [
     path: 'psicologo-tabs',
     loadChildren: () => import('./pages/Psicologo/psicologo-tabs/psicologo-tabs.module').then(m => m.PsicologoTabsModule)
   }
-  
 
 ];
 @NgModule({
