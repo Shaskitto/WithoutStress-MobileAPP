@@ -15,6 +15,7 @@ export class EvaluacionPage{
   currentQuestionIndex = 0;
 
   questions = [
+    { id: 'nombre_completo', texto: '¿Cuál es su nombre completo?'},
     { id: 'carrera', texto: '¿Cuál es tu carrera?' },
     { id: 'semestre', texto: '¿Qué semestre estás cursando?' },
     { id: 'edad', texto: '¿Cuántos años tienes?' },
@@ -30,6 +31,7 @@ export class EvaluacionPage{
   ];
 
   answers: { [key: string]: string | number | string[] | any } = {
+    nombre_completo: '',
     carrera: '',
     semestre: 0,
     edad: 0,
@@ -58,6 +60,7 @@ export class EvaluacionPage{
     const currentQuestion = this.questions[this.currentQuestionIndex];
 
     const validationMap: { [key: string]: () => boolean } = {
+      'nombre_completo': () => this.answers['nombre_completo'] != '',
       'carrera': () => this.answers['carrera'] !== '',
       'semestre': () => this.answers['semestre'] > 0,
       'edad': () => this.answers['edad'] > 0,

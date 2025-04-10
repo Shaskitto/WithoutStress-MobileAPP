@@ -52,6 +52,7 @@ export class PerfilPage implements OnInit {
   initializeForm() {
     this.perfilForm = this.fb.group({
       username: [this.user.username, [Validators.required]],
+      nombre_completo: [this.user.nombre_completo, [Validators.required]],
       profileImage: [this.user.profileImage], 
       edad: [this.user.edad, [Validators.required, Validators.min(17)]],
       semestre: [this.user.semestre, [Validators.min(1), Validators.max(4)]],
@@ -112,6 +113,7 @@ export class PerfilPage implements OnInit {
       const formData = new FormData();
       const userData = this.perfilForm.value;
 
+      formData.append('nombre_completo', userData.nombre_completo);
       formData.append('username', userData.username);
       formData.append('edad', userData.edad);
       formData.append('semestre', userData.semestre);

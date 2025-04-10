@@ -5,6 +5,15 @@
       <ion-card-title>{{ questions[currentQuestionIndex].texto }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
+      <!-- Nombre Completo -->
+      <ion-item *ngIf="questions[currentQuestionIndex].id === 'nombre_completo'">
+        <ion-label position="stacked">Nombre completo</ion-label>
+        <ion-input 
+          [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
+          name="nombre_completo"
+          placeholder="Escriba su nombre completo">
+        </ion-input>
+      </ion-item>
 
       <!-- Carrera -->
       <ion-item *ngIf="questions[currentQuestionIndex].id === 'carrera'">
