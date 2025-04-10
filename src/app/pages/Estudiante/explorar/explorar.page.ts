@@ -8,7 +8,7 @@ import { ResourceService } from 'src/app/services/resource.service';
   styleUrls: ['./explorar.page.scss'],
 })
 export class ExplorarPage implements OnInit { 
-  categories = ['Aprender', 'Meditación', 'Sonidos Relajantes', 'Prácticas para Dormir', 'Ejercicios de respiración', 'Música'];
+  categories = ['Aprender', 'Meditación', 'Sonidos Relajantes', 'Prácticas para Dormir', 'Ejercicios de respiración', 'Música', 'Podcast'];
   resources: any[] = [];
   selectedResource: any = null;
   showCategories: boolean = true;
