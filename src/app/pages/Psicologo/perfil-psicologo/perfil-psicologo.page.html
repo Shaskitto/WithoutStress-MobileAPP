@@ -52,26 +52,33 @@
      <ion-card-content>
        <ion-grid>
          <ion-row>
-           <ion-col size="12" size-md="4">
-             <ion-item lines="none">
-               <ion-icon name="mail-outline" slot="start" class="info-icon"></ion-icon>
-               <ion-label>{{ user?.email }}</ion-label>
-             </ion-item>
-           </ion-col>
-   
-           <ion-col size="12" size-md="4">
-             <ion-item lines="none">
-               <ion-icon name="person-outline" slot="start" class="info-icon"></ion-icon>
-               <ion-label>{{ user?.edad }} años</ion-label>
-             </ion-item>
-           </ion-col>
-   
-           <ion-col size="12" size-md="4">
-             <ion-item lines="none">
-               <ion-icon name="body-outline" slot="start" class="info-icon"></ion-icon>
-               <ion-label>{{ user?.sexo }}</ion-label>
-             </ion-item>
-           </ion-col>
+          <ion-col size="12" size-md="4">
+            <ion-item lines="none">
+              <ion-icon name="person-circle-outline" slot="start" class="info-icon"></ion-icon>
+              <ion-label>{{ user?.nombre_completo }}</ion-label>
+            </ion-item>
+          </ion-col>
+
+          <ion-col size="12" size-md="4">
+            <ion-item lines="none">
+              <ion-icon name="mail-outline" slot="start" class="info-icon"></ion-icon>
+              <ion-label>{{ user?.email }}</ion-label>
+            </ion-item>
+          </ion-col>
+  
+          <ion-col size="12" size-md="4">
+            <ion-item lines="none">
+              <ion-icon name="calendar-outline" slot="start" class="info-icon"></ion-icon>
+              <ion-label>{{ user?.edad }} años</ion-label>
+            </ion-item>
+          </ion-col>
+  
+          <ion-col size="12" size-md="4">
+            <ion-item lines="none">
+              <ion-icon name="person-outline" slot="start" class="info-icon"></ion-icon>
+              <ion-label>{{ user?.sexo }}</ion-label>
+            </ion-item>
+          </ion-col>
          </ion-row>
        </ion-grid>
      </ion-card-content>
@@ -95,6 +102,12 @@
              <ion-label position="floating">Nombre de Usuario</ion-label>
              <ion-input formControlName="username"></ion-input>
            </ion-item>
+
+           <!-- Nombre Completo del usuario -->
+           <ion-item>
+            <ion-label position="floating">Nombre Completo del Usuario</ion-label>
+            <ion-input formControlName="nombre_completo"></ion-input>
+          </ion-item>
 
            <!-- Información -->
            <ion-item>
