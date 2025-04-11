@@ -1,13 +1,84 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>dashboard</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content fullscreen>
+  <div class="plan-header">
+    <h1 class="plan-title">Dashboard</h1>
+  </div>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">dashboard</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-accordion-group expand="inset">
+    <ion-accordion
+      *ngFor="let estudiante of estudiantes; let i = index"
+      [value]="estudiante._id"
+      [ngClass]="i % 2 === 0 ? 'estudiante-light' : 'estudiante-dark'"
+    >
+      <!-- Encabezado del acordeón (desplegable) -->
+      <ion-item slot="header" class="estudiante-header" lines="none">
+        <ion-avatar slot="start">
+          <img [src]="estudiante.profileImage" />
+        </ion-avatar>
+        <ion-label>
+          <h2 class="nombre-estudiante">{{ estudiante.nombre_completo }}</h2>
+        </ion-label>
+      </ion-item>
+
+      <!-- Contenido desplegable del estudiante -->
+      <div
+        class="estudiante-contenido"
+        slot="content"
+        [ngClass]="i % 2 === 0 ? 'estudiante-light' : 'estudiante-dark'"
+      >
+        <!-- Información general -->
+        <section class="perfil-bio">
+          <h3>Información General</h3>
+          <ul>
+            <li><strong>Correo:</strong> {{ estudiante.email }}</li>
+            <li><strong>Edad:</strong> {{ estudiante.edad }}</li>
+            <li><strong>Sexo:</strong> {{ estudiante.sexo }}</li>
+            <li><strong>Carrera:</strong> {{ estudiante.carrera }}</li>
+            <li><strong>Semestre:</strong> {{ estudiante.semestre }}</li>
+            <li><strong>Username:</strong> {{ estudiante.username }}</li>
+          </ul>
+        </section>
+
+        <!-- Historial -->
+        <ion-accordion-group expand="inset">
+          <ion-accordion value="historial-{{ estudiante._id }}">
+            <ion-item slot="header">
+              <ion-label>Historial de Estado de Ánimo</ion-label>
+            </ion-item>
+        
+            <div slot="content" class="custom-accordion-content">
+              <ion-list>
+                <ion-item
+                  *ngFor="let estado of estudiante.estadoDeAnimo"
+                  class="transparent-item"
+                >
+                  <ion-icon
+                    [name]="getMoodIcon(estado.estado)"
+                    slot="start"
+                  ></ion-icon>
+                  <ion-label>
+                    <h4>{{ estado.estado }}</h4>
+                    <p>{{ estado.fecha | date: 'longDate' }}</p>
+
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </div>
+          </ion-accordion>
+        </ion-accordion-group>
+        
+
+        <!-- Gráficos -->
+        <section class="graficos-section">
+          <div class="grafico">
+            <h4>Evolución Emocional</h4>
+            <canvas id="lineChart-{{ estudiante._id }}"></canvas>
+          </div>
+          <div class="grafico">
+            <h4>Distribución de Estados de Ánimo</h4>
+            <canvas id="pieChart-{{ estudiante._id }}"></canvas>
+          </div>
+        </section>
+      </div>
+    </ion-accordion>
+  </ion-accordion-group>
 </ion-content>

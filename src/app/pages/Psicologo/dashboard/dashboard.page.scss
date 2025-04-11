@@ -1,0 +1,152 @@
+ion-content {
+  --background: var(--bg-gradient-primary);
+}
+
+.plan-header {
+  margin: 10px 0 25px 10px;
+}
+
+ion-list {
+  --background: transparent;
+}
+
+.plan-title {
+  font-weight: bold;
+  color: #1d3557;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.estudiantes-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Línea divisoria entre estudiantes */
+.estudiantes-wrapper section:not(:last-child)::after {
+  display: block;
+  margin: 32px auto;
+  height: 1px;
+  width: 90%;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 1px;
+}
+
+/* Contenedor de cada estudiante */
+section.estudiante-light,
+section.estudiante-dark,
+.estudiante-contenido {
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-bottom: 32px;
+  border-radius: 16px;
+  transition: transform 0.2s ease;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+/* Fondos alternos */
+.estudiante-light {
+  background: linear-gradient(145deg, #fefae0, #faedcd);
+}
+
+.estudiante-dark {
+  background: linear-gradient(145deg, #caf0f8, #ade8f4);
+}
+
+ul,
+h2,
+p {
+  color: black;
+  font-weight: 500;
+}
+
+/* Header del acordeón */
+.estudiante-header {
+  --padding-start: 16px;
+  --inner-padding-end: 16px;
+  --background: white;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.estudiante-header ion-label h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.email-estudiante {
+  font-size: 0.85rem;
+  color: #888;
+}
+
+/* Perfil */
+.perfil-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.perfil-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.perfil-info h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.perfil-info p {
+  margin: 4px 0 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Secciones */
+.perfil-bio,
+.perfil-historial {
+  margin-bottom: 20px;
+}
+
+.perfil-bio h3,
+.perfil-historial h3,
+.graficos-section h4 {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.perfil-bio ul {
+  list-style: none;
+  padding: 0;
+}
+
+.perfil-bio li {
+  margin-bottom: 6px;
+}
+
+/* Gráficos */
+.graficos-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.grafico {
+  background: #fff;
+  padding: 50px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  height: 60vh;
+}
+
+.grafico canvas {
+  width: 100% !important;
+  height: 100% !important;
+}

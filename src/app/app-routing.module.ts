@@ -43,10 +43,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/Estudiante/calendario/calendario.module').then( m => m.CalendarioPageModule)
   },
   {
-    path: 'estadistica',
-    loadChildren: () => import('./pages/Psicologo/estadistica/estadistica.module').then( m => m.EstadisticaPageModule)
-  },
-  {
     path: 'estado-de-animo',
     loadChildren: () => import('./pages/Estudiante/estado-de-animo/estado-de-animo.module').then( m => m.EstadoDeAnimoPageModule)
   },
