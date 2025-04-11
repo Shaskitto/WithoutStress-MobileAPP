@@ -98,12 +98,30 @@ export class LoginPage{
           return; 
         }
         
-        const today = new Date().toISOString().split('T')[0];
+        const now = new Date();
+        const colombiaDate = new Intl.DateTimeFormat('en-CA', {
+          timeZone: 'America/Bogota',
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit'
+        }).format(now); 
+
+        const today = colombiaDate;
+        console.log('Fecha actual en zona horaria de Colombia:', today);
 
         this.moodRegisteredToday = data.estadoDeAnimo?.some((entry: any) => {
-          const entryDate = new Date(entry.fecha).toISOString().split('T')[0];
-          return entryDate === today;
+          const entryDate = new Date(entry.fecha);
+          const formattedEntryDate = new Intl.DateTimeFormat('en-CA', {
+            timeZone: 'America/Bogota',
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit'
+          }).format(entryDate);
+          
+          return formattedEntryDate === today;
         });
+        
+        console.log('¿Ya registró estado de ánimo hoy?:', this.moodRegisteredToday);
 
         if (!this.moodRegisteredToday) {
           this.router.navigate(['/estado-de-animo']); 
