@@ -85,19 +85,17 @@ export class LoginPage{
       data => {
         this.user = data; 
         const rol = this.user?.rol;
-
-        // Si es Psicólogo, no validar semestre ni estado de ánimo
+  
         if (rol === 'Psicologo') {
           this.navigate();
           return;
         }
-
-        // Verificación para estudiantes
+  
         if (!this.user || !this.user.semestre) {
           this.router.navigate(['/evaluacion']);
           return; 
         }
-        
+  
         const now = new Date();
         const colombiaDate = new Intl.DateTimeFormat('en-CA', {
           timeZone: 'America/Bogota',
@@ -105,24 +103,27 @@ export class LoginPage{
           month: '2-digit',
           day: '2-digit'
         }).format(now); 
-
+  
         const today = colombiaDate;
         console.log('Fecha actual en zona horaria de Colombia:', today);
-
+  
         this.moodRegisteredToday = data.estadoDeAnimo?.some((entry: any) => {
-          const entryDate = new Date(entry.fecha);
+          const isoDate = entry.fecha.split('T')[0]; 
+          const entryDate = new Date(isoDate + 'T00:00:00-05:00');
+  
           const formattedEntryDate = new Intl.DateTimeFormat('en-CA', {
             timeZone: 'America/Bogota',
             year: 'numeric',
             month: '2-digit',
             day: '2-digit'
           }).format(entryDate);
-          
+  
+          console.log(`Comparando entrada: ${formattedEntryDate} con hoy: ${today}`);
           return formattedEntryDate === today;
         });
-        
+  
         console.log('¿Ya registró estado de ánimo hoy?:', this.moodRegisteredToday);
-
+  
         if (!this.moodRegisteredToday) {
           this.router.navigate(['/estado-de-animo']); 
         } else {
@@ -134,6 +135,7 @@ export class LoginPage{
       }
     );
   }
+  
 
   // Método para redirigir al home(Estudiante), Dashboard(Psicologo) o evaluación inicial
   navigate(){
