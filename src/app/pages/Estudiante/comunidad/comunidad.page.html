@@ -20,11 +20,8 @@
     <ion-card-header>
       <ion-grid>
         <ion-row class="ion-align-items-center">
-          <ion-col>
-            <ion-card-title>Lista de Amigos</ion-card-title>
-          </ion-col>
           <ion-col size="auto">
-            <ion-button (click)="toggleManageFriends()" size="small"
+            <ion-button (click)="toggleManageFriends()" size="small" 
               >{{ manageFriends ? 'Cancelar Gestión' : 'Gestionar Amigos'
               }}</ion-button
             >
@@ -33,7 +30,11 @@
       </ion-grid>
     </ion-card-header>
 
+    <!-- Amigos -->
     <ion-card class="friend-card">
+      <ion-card-header>
+        <ion-card-title>Amigos</ion-card-title>
+      </ion-card-header>
       <ion-card-content>
         <ion-list *ngIf="friends.length > 0; else noFriends">
           <ion-item *ngFor="let friend of friends" lines="full">
@@ -47,13 +48,14 @@
               <h2 class="custom-name">{{ friend.friendId.username }}</h2>
               <p>{{ friend.friendId.informacion }}</p>
             </ion-label>
+
             <ion-button
               slot="end"
               (click)="manageFriends ? deleteFriend(friend.friendId._id) : goToChat(friend.friendId._id)"
               [color]="manageFriends ? 'danger' : 'primary'"
-              shape="round"
+              fill="outline"
             >
-              {{ manageFriends ? 'Eliminar' : 'Ir al Chat' }}
+              {{ manageFriends ? 'Eliminar' : 'Chatear' }}
             </ion-button>
           </ion-item>
         </ion-list>
@@ -64,6 +66,37 @@
         </ng-template>
       </ion-card-content>
     </ion-card>
+
+    <!-- Psicologo -->
+    <ion-card class="friend-card" *ngIf="psicologos.length > 0">
+      <ion-card-header>
+        <ion-card-title>Psicologos</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list *ngFor="let psicologo of psicologos">
+          <ion-item lines="full">
+            <ion-avatar slot="start" class="custom-avatar">
+              <img
+              [src]="psicologo.profileImage" alt="{{ psicologo.username }}"
+              />
+            </ion-avatar>
+            <ion-label>
+              <h2 class="custom-name">{{ psicologo.nombre_completo }}</h2>
+              <p>{{ psicologo.informacion }}</p>
+            </ion-label>
+
+            <ion-button
+              slot="end"
+              (click)="goToChat(psicologo._id)"
+              [color]="'primary'"
+              fill="outline"
+            >
+              {{ 'Chatear' }}
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>  
   </div>
 
   <!-- Agregar amigos -->

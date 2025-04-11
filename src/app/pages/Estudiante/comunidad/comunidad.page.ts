@@ -10,30 +10,35 @@ import { environment } from 'src/environments/environment';
   templateUrl: './comunidad.page.html',
   styleUrls: ['./comunidad.page.scss'],
 })
-
 export class ComunidadPage implements OnInit {
   private apiUrl = environment.apiUrl;
   users$: Observable<any> | undefined;
   friends: any[] = [];
+  psicologos: any[] = [];
   activeSection: string = 'friendsList';
   pendingRequests: any[] = [];
-  searchTerm: string = ''; 
+  searchTerm: string = '';
   filteredUsers: any[] = [];
   allUsers: any[] = [];
   manageFriends: boolean = false;
 
-  constructor(private userService: UserService, private friendsService: FriendsService,private alertController: AlertController) { }
-  
+  constructor(
+    private userService: UserService,
+    private friendsService: FriendsService,
+    private alertController: AlertController
+  ) {}
+
   // Cargar los datos de los usuarios cuando se inicializa el componente
   ngOnInit() {
     this.fetchUsers();
+    this.fetchPsicologos()
   }
 
   // Cargar los datos de los usuarios cada vez que la vista vuelve a ser visible
   ionViewWillEnter() {
-    this.resetSearchTerm(); 
+    this.resetSearchTerm();
     this.fetchUsers();
-    this.fetchPendingRequests(); 
+    this.fetchPendingRequests();
     this.fetchFriends();
   }
 
@@ -42,7 +47,7 @@ export class ComunidadPage implements OnInit {
     const alert = await this.alertController.create({
       header: header,
       message: message,
-      buttons: ['Aceptar']
+      buttons: ['Aceptar'],
     });
     await alert.present();
   }
@@ -59,77 +64,107 @@ export class ComunidadPage implements OnInit {
 
   // Método para reiniciar el término de búsqueda y mostrar todos los usuarios
   resetSearchTerm() {
-    this.searchTerm = ''; 
-    this.filteredUsers = [...this.allUsers]; 
+    this.searchTerm = '';
+    this.filteredUsers = [...this.allUsers];
   }
 
   // Método para cargar los datos de los usuarios
   fetchUsers() {
     const loggedInUserId = localStorage.getItem('userId');
-  
+
     this.users$ = this.userService.getUsers().pipe(
-      map(users => {
+      map((users) => {
         const filteredUsers = users
-          .filter((user: { _id: string | null; }) => user._id !== loggedInUserId)
-          .map((user: { profileImage: string; _id: any; }) => {
+          .filter(
+            (user: { _id: string | null; rol: string }) =>
+              user._id !== loggedInUserId && user.rol !== 'Psicologo'
+          )
+          .map((user: { profileImage: string; _id: any }) => {
             user.profileImage = this.userService.getProfileImageUrl(user._id);
             return user;
           });
-        this.allUsers = filteredUsers; 
-        return filteredUsers; 
+
+        this.allUsers = filteredUsers;
+        return filteredUsers;
       })
     );
+
+    this.users$.subscribe((users) => {
+      this.filteredUsers = users;
+    });
+  }
+
+  fetchPsicologos() {
+    this.userService.getUsers().subscribe((users) => {
+      const psicologosFiltrados = users
+        .filter((user: { rol: string }) => user.rol === 'Psicologo')
+        .map((user: { profileImage: string; _id: any }) => {
+          user.profileImage = this.userService.getProfileImageUrl(user._id);
+          return user;
+        });
   
-    this.users$.subscribe(users => {
-      this.filteredUsers = users; 
+      this.psicologos = psicologosFiltrados;
     });
   }
   
+
   // Método para buscar usuarios por username
   searchFriends() {
     const term = this.searchTerm.toLowerCase();
     if (term === '') {
       this.filteredUsers = [...this.allUsers];
-    } else {  
-      this.filteredUsers = this.allUsers.filter(user => user.username.toLowerCase().includes(term));
+    } else {
+      this.filteredUsers = this.allUsers.filter((user) =>
+        user.username.toLowerCase().includes(term)
+      );
     }
   }
 
   // Método para carga los datos de los usuarios amigos ('accepted')
   fetchFriends() {
-    this.friendsService.getFriends().subscribe(friends => {
-      this.friends = friends.map((friend: { friendId: { _id: any; profileImage: string; }; }) => {
-        const userId = friend.friendId._id;
-        friend.friendId.profileImage = this.userService.getProfileImageUrl(userId);
-        return friend;
-      });
-      console.log('Amigos recibidos:', this.friends);
+    this.friendsService.getFriends().subscribe((friends) => {
+      this.friends = friends.map(
+        (friend: { friendId: { _id: any; profileImage: string } }) => {
+          const userId = friend.friendId._id;
+          friend.friendId.profileImage =
+            this.userService.getProfileImageUrl(userId);
+          return friend;
+        }
+      );
     });
   }
 
   // Método para carga los datos de los usuarios en solicitud ('pending')
   fetchPendingRequests() {
-    this.friendsService.getPendingRequests().subscribe(requests => {
-      this.pendingRequests = requests.map((request: { friendId: { _id: any; profileImage: string; }; }) => {
-        const userId = request.friendId._id;
-        request.friendId.profileImage = this.userService.getProfileImageUrl(userId);
-        return request;
-      });
-      console.log('Solicitudes pendientes recibidas:', this.pendingRequests);
+    this.friendsService.getPendingRequests().subscribe((requests) => {
+      this.pendingRequests = requests.map(
+        (request: { friendId: { _id: any; profileImage: string } }) => {
+          const userId = request.friendId._id;
+          request.friendId.profileImage =
+            this.userService.getProfileImageUrl(userId);
+          return request;
+        }
+      );
     });
   }
-  
+
   // Método para enviar solicitud a un usuario
   sendFriendRequest(friendId: string): void {
     this.friendsService.sendFriendRequest(friendId).subscribe(
       async (response) => {
         console.log('Solicitud de amistad enviada:', response);
-        await this.showAlert('Solicitud de amistad enviada', 'La solicitud de amistad se ha enviado correctamente.');
+        await this.showAlert(
+          'Solicitud de amistad enviada',
+          'La solicitud de amistad se ha enviado correctamente.'
+        );
         this.fetchPendingRequests();
       },
       async (error) => {
         console.error('Error al enviar solicitud de amistad:', error);
-        await this.showAlert('Alerta', 'Ya has enviado una solicitud de amistad a este usuario.');
+        await this.showAlert(
+          'Alerta',
+          'Ya has enviado una solicitud de amistad a este usuario.'
+        );
       }
     );
   }
@@ -139,8 +174,8 @@ export class ComunidadPage implements OnInit {
     this.friendsService.acceptFriendRequest(friendId).subscribe(
       (response) => {
         console.log('Solicitud de amistad aceptada:', response);
-        this.fetchPendingRequests(); 
-        this.fetchFriends(); 
+        this.fetchPendingRequests();
+        this.fetchFriends();
         this.setActiveSection('friendsList');
       },
       (error) => {
@@ -154,7 +189,7 @@ export class ComunidadPage implements OnInit {
     this.friendsService.declineFriendRequest(friendId).subscribe(
       (response) => {
         console.log('Solicitud de amistad rechazada:', response);
-        this.fetchPendingRequests(); 
+        this.fetchPendingRequests();
       },
       (error) => {
         console.error('Error al rechazar la solicitud de amistad:', error);
@@ -165,17 +200,17 @@ export class ComunidadPage implements OnInit {
   // Método para eliminar un amigo del usuario
   deleteFriend(friendId: string) {
     this.friendsService.deleteFriend(friendId).subscribe(
-      response => {
+      (response) => {
         console.log('Amigo eliminado:', response);
-        this.fetchFriends(); 
+        this.fetchFriends();
       },
-      error => {
+      (error) => {
         console.error('Error al eliminar amigo:', error);
       }
     );
   }
 
   goToChat(friendId: string) {
-    console.log("Enviando al chat del amigo")
+    console.log('Enviando al chat');
   }
 }
