@@ -1,13 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>chat</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">chat</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card class="friend-card" *ngIf="estudiantes.length > 0">
+    <ion-card-header>
+      <ion-card-title>Estudiantes</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content class="scrollable-content">
+      <ion-list *ngFor="let estudiante of estudiantes" lines="full">
+        <ion-item>
+          <ion-avatar slot="start" class="custom-avatar">
+            <img
+              [src]="estudiante.profileImage"
+              alt="{{ estudiante.username }}"
+            />
+          </ion-avatar>
+
+          <ion-label>
+            <p class="custom-name">{{ estudiante.nombre_completo }}</p>
+            <p class="custom-sub">{{ estudiante.username }}</p>
+          </ion-label>
+
+          <ion-button
+            slot="end"
+            (click)="goToChat(estudiante._id)"
+            [color]="'primary'"
+            fill="outline"
+          >
+            <ion-icon name="chatbubbles-outline" slot="start"></ion-icon>
+            Chatear
+          </ion-button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

@@ -94,6 +94,7 @@ export class ComunidadPage implements OnInit {
     });
   }
 
+  // Método para cargar los psicologos
   fetchPsicologos() {
     this.userService.getUsers().subscribe((users) => {
       const psicologosFiltrados = users
@@ -106,7 +107,6 @@ export class ComunidadPage implements OnInit {
       this.psicologos = psicologosFiltrados;
     });
   }
-  
 
   // Método para buscar usuarios por username
   searchFriends() {

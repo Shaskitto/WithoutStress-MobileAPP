@@ -55,6 +55,7 @@
               [color]="manageFriends ? 'danger' : 'primary'"
               fill="outline"
             >
+            <ion-icon color="primary" name="chatbubbles-outline" slot="icon-only"></ion-icon>
               {{ manageFriends ? 'Eliminar' : 'Chatear' }}
             </ion-button>
           </ion-item>
@@ -91,8 +92,9 @@
               [color]="'primary'"
               fill="outline"
             >
-              {{ 'Chatear' }}
-            </ion-button>
+            <ion-icon color="primary" name="chatbubbles-outline" slot="icon-only"></ion-icon>
+            Chatear
+          </ion-button>
           </ion-item>
         </ion-list>
       </ion-card-content>

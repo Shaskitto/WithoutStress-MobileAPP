@@ -1,0 +1,49 @@
+ion-content {
+  --background: var(--bg-gradient-primary);
+}
+
+ion-card {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: var(--card-radius);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: var(--transition-fast);
+}
+
+ion-card-title {
+  color: var(--text-color-title);
+  font-weight: bold;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+ion-list {
+  background: transparent !important;
+}
+
+ion-item {
+  --background: transparent !important;
+  --color: var(--text-color-primary);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  margin-bottom: 12px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.custom-name {
+    font-weight: bold;
+    color: var(--text-color-primary);
+    margin-bottom: 4px;
+  }
+  
+  .custom-sub {
+    font-size: 0.85rem;
+    color: var(--text-color-secondary);
+  }
+
+.custom-avatar img {
+  border-radius: 50%;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+  
