@@ -32,4 +32,11 @@
       </ion-list>
     </ion-card-content>
   </ion-card>
+
+  <app-chat-box
+  *ngIf="chatOpen"
+  [contactId]="selectedContactId"
+  (closeChat)="closeChat()"
+  >
+  </app-chat-box>
 </ion-content>

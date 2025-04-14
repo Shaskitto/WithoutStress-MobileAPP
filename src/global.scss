@@ -37,6 +37,11 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+.tabs-hidden ion-tab-bar {
+  display: none !important;
+}
+
+
 :root {
   /* Gradientes */
   --bg-gradient-primary: linear-gradient(to bottom, #8ecae6, #f1faee);

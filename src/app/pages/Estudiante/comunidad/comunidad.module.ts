@@ -7,15 +7,17 @@ import { IonicModule } from '@ionic/angular';
 import { ComunidadPageRoutingModule } from './comunidad-routing.module';
 
 import { ComunidadPage } from './comunidad.page';
-import { ChatBoxComponent } from 'src/app/components/chat-box/chat-box.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    SharedModule,
     ComunidadPageRoutingModule
   ],
-  declarations: [ComunidadPage, ChatBoxComponent]
+  declarations: [ComunidadPage]
 })
 export class ComunidadPageModule {}

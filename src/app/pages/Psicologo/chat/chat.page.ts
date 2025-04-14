@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -8,8 +8,10 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class ChatPage implements OnInit {
   estudiantes: any[] = [];
+  chatOpen = false;
+  selectedContactId: string = '';
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private renderer: Renderer2) { }
 
   ngOnInit() {
     this.fetchEstudiantes();
@@ -29,8 +31,14 @@ export class ChatPage implements OnInit {
     });
   }
 
-  goToChat(friendId: string) {
-    console.log('Enviando al chat');
+  goToChat(contactId: string) {
+    this.selectedContactId = contactId;
+    this.chatOpen = true;
+    this.renderer.addClass(document.body, 'tabs-hidden');
   }
 
+  closeChat() {
+    this.chatOpen = false;
+    this.renderer.removeClass(document.body, 'tabs-hidden'); 
+  }
 }
