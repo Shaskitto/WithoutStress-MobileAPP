@@ -105,7 +105,6 @@ export class LoginPage{
         }).format(now); 
   
         const today = colombiaDate;
-        console.log('Fecha actual en zona horaria de Colombia:', today);
   
         this.moodRegisteredToday = data.estadoDeAnimo?.some((entry: any) => {
           const isoDate = entry.fecha.split('T')[0]; 
@@ -118,7 +117,6 @@ export class LoginPage{
             day: '2-digit'
           }).format(entryDate);
   
-          console.log(`Comparando entrada: ${formattedEntryDate} con hoy: ${today}`);
           return formattedEntryDate === today;
         });
   

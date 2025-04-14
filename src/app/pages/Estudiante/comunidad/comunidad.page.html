@@ -101,6 +101,12 @@
     </ion-card>  
   </div>
 
+  <app-chat-box
+  *ngIf="chatOpen"
+  [contactId]="selectedContactId"
+  (closeChat)="chatOpen = false">
+  </app-chat-box>
+
   <!-- Agregar amigos -->
   <div *ngIf="activeSection === 'addFriends'" class="section">
     <ion-card-header>

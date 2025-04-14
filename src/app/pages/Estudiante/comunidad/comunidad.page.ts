@@ -21,6 +21,8 @@ export class ComunidadPage implements OnInit {
   filteredUsers: any[] = [];
   allUsers: any[] = [];
   manageFriends: boolean = false;
+  chatOpen = false;
+  selectedContactId: string = '';
 
   constructor(
     private userService: UserService,
@@ -31,7 +33,7 @@ export class ComunidadPage implements OnInit {
   // Cargar los datos de los usuarios cuando se inicializa el componente
   ngOnInit() {
     this.fetchUsers();
-    this.fetchPsicologos()
+    this.fetchPsicologos();
   }
 
   // Cargar los datos de los usuarios cada vez que la vista vuelve a ser visible
@@ -103,7 +105,7 @@ export class ComunidadPage implements OnInit {
           user.profileImage = this.userService.getProfileImageUrl(user._id);
           return user;
         });
-  
+
       this.psicologos = psicologosFiltrados;
     });
   }
@@ -210,7 +212,8 @@ export class ComunidadPage implements OnInit {
     );
   }
 
-  goToChat(friendId: string) {
-    console.log('Enviando al chat');
+  goToChat(contactId: string) {
+    this.selectedContactId = contactId;
+    this.chatOpen = true;
   }
 }

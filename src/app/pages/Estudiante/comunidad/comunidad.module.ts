@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ComunidadPageRoutingModule } from './comunidad-routing.module';
 
 import { ComunidadPage } from './comunidad.page';
+import { ChatBoxComponent } from 'src/app/components/chat-box/chat-box.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { ComunidadPage } from './comunidad.page';
     IonicModule,
     ComunidadPageRoutingModule
   ],
-  declarations: [ComunidadPage]
+  declarations: [ComunidadPage, ChatBoxComponent]
 })
 export class ComunidadPageModule {}
