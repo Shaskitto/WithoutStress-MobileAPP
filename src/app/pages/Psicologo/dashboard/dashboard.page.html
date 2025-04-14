@@ -53,12 +53,12 @@
                 >
                   <ion-icon
                     [name]="getMoodIcon(estado.estado)"
+                    [color]="getMoodColor(estado.estado).ionic"
                     slot="start"
                   ></ion-icon>
                   <ion-label>
                     <h4>{{ estado.estado }}</h4>
-                    <p>{{ estado.fecha | date: 'longDate' }}</p>
-
+                    <p class="fecha">{{ estado.fecha | date: 'longDate' }}</p>
                   </ion-label>
                 </ion-item>
               </ion-list>
