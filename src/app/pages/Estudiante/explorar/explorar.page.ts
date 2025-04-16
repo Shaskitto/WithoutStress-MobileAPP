@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ResourceService } from 'src/app/services/resource.service';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-explorar',
@@ -8,26 +8,26 @@ import { ResourceService } from 'src/app/services/resource.service';
   styleUrls: ['./explorar.page.scss'],
 })
 export class ExplorarPage implements OnInit { 
-  categories = ['Aprender', 'Meditación', 'Sonidos Relajantes', 'Prácticas para Dormir', 'Ejercicios de respiración', 'Música', 'Podcast'];
+  categories = ['Aprender', 'Meditación y Mindfulness', 'Música y Sonidos Relajantes', 'Prácticas para Dormir', 'Ejercicios de Respiración', 'Podcast'];
   resources: any[] = [];
   selectedResource: any = null;
   showCategories: boolean = true;
   currentCategory: string = '';
-  pdfURL: string  | null = null;
-  audioURL: string | null = null;
-
+  showContent: boolean = false; 
+  safeUrl: SafeResourceUrl | undefined;
+  
   constructor(private resourceService: ResourceService, private sanitizer: DomSanitizer) { }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit() {}
 
   // Método para cargar recursos de la categoría seleccionada
   loadResources(categoria: string) {
+    this.currentCategory = categoria;  
     this.resourceService.getByCategory(categoria).subscribe(data => {
-      this.resources = data; 
+      this.resources = data;
       this.selectedResource = null;
       this.showCategories = false;
+      this.showContent = false;
     });
   }
 
@@ -35,6 +35,7 @@ export class ExplorarPage implements OnInit {
   realizar(resourceId: any) {
     this.resourceService.getResource(resourceId._id).subscribe(data => {
       this.selectedResource = data; 
+      this.showContent = false;
     });
   }
 
@@ -44,46 +45,26 @@ export class ExplorarPage implements OnInit {
     this.resources = []; 
     this.selectedResource = null; 
     this.currentCategory = '';
+    this.showContent = false;
   }
 
   // Método para volver
   volver() {
     this.selectedResource = null; 
+    this.showContent = false;
   }
 
-  comenzar(resource: any) {
-    this.resourceService.getContent(resource._id).subscribe(
-      (blob: Blob) => {
-        const mimeType = blob.type;
-        const fileURL = URL.createObjectURL(blob);
-
-        if (mimeType === 'application/pdf') {
-          this.pdfURL = fileURL; 
-          window.open(fileURL);
-        } else if (mimeType === 'audio/mpeg' || mimeType === 'audio/mp3') {
-          this.audioURL = fileURL;
-        } else {
-          console.error('Tipo de archivo no soportado:', mimeType);
-        }
-      },
-      error => {
-        console.error('Error al obtener el contenido del recurso:', error);
-      }
-    );
-  }
-  
-  // Método para abrir el visor de PDF en la misma página
-  openPdfViewer(pdfURL: string) {
-    this.pdfURL = pdfURL; // Almacena la URL en una propiedad para el visor
-  }
-  
-  // Método para reproducir audio
-  playAudio(audioURL: string) {
-    const audio = new Audio(audioURL);
-    audio.play().then(() => {
-      console.log('Reproduciendo audio:', audioURL);
-    }).catch(error => {
-      console.error('Error al reproducir audio:', error);
-    });
+  // Método para cargar el contenido
+  loadContent() {
+    this.showContent = true;
+    if (this.selectedResource.mediaType === 'pdf') {
+      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+        'https://docs.google.com/gview?embedded=true&url=' + this.selectedResource.contenidoUrl
+      );
+    } else if (this.selectedResource.mediaType === 'youtube') {
+      this.safeUrl = this.sanitizer.bypassSecurityTrustResourceUrl(
+        'https://www.youtube.com/embed/' + this.selectedResource.contenidoUrl
+      );
+    }
   }
 }
