@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/explorar"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ resource?.titulo }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="resource">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ resource.titulo }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Descripción:</strong> {{ resource.descripcion }}</p>
+      <p><strong>Duración:</strong> {{ resource.duracion }} min</p>
+      <p><strong>Autor:</strong> {{ resource.autor }}</p>
+
+      <ion-button expand="full" (click)="loadContent()">
+        <ion-icon name="play"></ion-icon> Cargar Contenido
+      </ion-button>
+
+      <div *ngIf="showContent">
+        <div *ngIf="resource.mediaType === 'pdf'">
+          <iframe [src]="safeUrl" style="width:100%; height:100vh;" frameborder="0"></iframe>
+        </div>
+        <div *ngIf="resource.mediaType === 'youtube'">
+          <iframe width="100%" height="100%" [src]="safeUrl" frameborder="0" allowfullscreen></iframe>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

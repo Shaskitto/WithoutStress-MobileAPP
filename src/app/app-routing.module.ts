@@ -49,7 +49,12 @@ const routes: Routes = [
   {
     path: 'psicologo-tabs',
     loadChildren: () => import('./pages/Psicologo/psicologo-tabs/psicologo-tabs.module').then(m => m.PsicologoTabsModule)
+  },
+  {
+    path: 'recurso-detalle/:id',
+    loadChildren: () => import('./pages/Estudiante/recurso-detalle/recurso-detalle.module').then( m => m.RecursoDetallePageModule)
   }
+
 
 ];
 @NgModule({

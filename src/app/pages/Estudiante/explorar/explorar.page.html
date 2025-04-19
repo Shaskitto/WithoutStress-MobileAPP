@@ -1,79 +1,51 @@
 <ion-content [fullscreen]="true">
-  <div class="header">
-    <ion-buttons>
-      <ion-menu-button style="font-size: 22px; color: black;"></ion-menu-button>
+  <!-- Encabezado con botón de menú -->
+  <div *ngIf="showCategories" class="plan-header">
+    <ion-buttons slot="start">
+      <ion-menu-button style="font-size: 22px; color: black"></ion-menu-button>
     </ion-buttons>
+    <h1 class="plan-title">Explorar</h1>
   </div>
 
-  <!-- Volver a la lista de categorías -->
-  <div *ngIf="!showCategories && !selectedResource" style="padding: 16px; display: flex; align-items: center;">
-    <ion-icon name="arrow-back" (click)="showCategoryList()" style="cursor: pointer; margin-right: 8px;"></ion-icon>
-    <h2>{{ currentCategory }}</h2>
+  <!-- Botón para volver a la lista de categorías -->
+  <div *ngIf="!showCategories" class="back-bar">
+    <ion-icon
+      name="arrow-back"
+      class="back-icon"
+      (click)="showCategoryList()"
+    ></ion-icon>
+    <h2 class="category-title">{{ currentCategory }}</h2>
   </div>
 
-  <!-- Volver a la selección de recurso -->
-  <div *ngIf="!showCategories && selectedResource" style="padding: 16px; display: flex; align-items: center;">
-    <ion-icon name="arrow-back" (click)="volver()" style="cursor: pointer; margin-right: 8px;"></ion-icon>
-    <h2>{{ selectedResource.titulo }}</h2>
-  </div>
-
-  <!-- Mostrar lista de categorías -->
-  <ion-list *ngIf="showCategories">
-    <ion-card *ngFor="let category of categories" (click)="loadResources(category)" style="cursor: pointer;">
+  <!-- Lista de categorías -->
+  <ion-list *ngIf="showCategories" class="card-list">
+    <ion-card
+      *ngFor="let category of categories"
+      (click)="loadResources(category)"
+      class="category-card"
+    >
       <ion-card-header>
-        <ion-card-title>{{ category }}</ion-card-title>
+        <ion-card-title class="category">{{ category }}</ion-card-title>
       </ion-card-header>
     </ion-card>
-  </ion-list>  
-
-  <!-- Mostrar recursos de la categoría seleccionada -->
-  <ion-list *ngIf="!showCategories && !selectedResource">
-    <ion-item *ngFor="let resource of resources">
-      <ion-label>
-        <h2>{{ resource.titulo }}</h2>
-        <p>Autor: {{ resource.autor }}</p>
-        <p>Duración: {{ resource.duracion }} min</p>
-      </ion-label>
-      <ion-button slot="end" (click)="realizar(resource)"><ion-icon name="arrow-forward"></ion-icon></ion-button>
-    </ion-item>
   </ion-list>
 
-  <!-- Mostrar detalle del recurso seleccionado -->
-  <ion-card *ngIf="selectedResource">
-    <ion-card-header>
-      <ion-card-title>{{ selectedResource.titulo }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div style="margin-bottom: 16px;">
-        <p><strong>Descripción:</strong> {{ selectedResource.descripcion }}</p>
-        <p><strong>Duración:</strong> {{ selectedResource.duracion }} min</p>
-        <p><strong>Autor:</strong> {{ selectedResource.autor }}</p>
-      </div>
-
-      <!-- Botón de play para cargar el contenido -->
-      <ion-button expand="full" (click)="loadContent()">
-        <ion-icon name="play"></ion-icon>
-        Cargar Contenido
-      </ion-button>
-
-      <!-- Mostrar el contenido solo si showContent es verdadero -->
-      <div *ngIf="showContent">
-        <div *ngIf="selectedResource.mediaType === 'pdf'">
-          <iframe 
-            [src]="safeUrl" 
-            style="width:100%; height:100vh;" 
-            frameborder="0">
-          </iframe>
-        </div>
-
-        <div *ngIf="selectedResource.mediaType === 'youtube'">
-          <iframe 
-            width="100%" height="100%" 
-            [src]="safeUrl" 
-            frameborder="0" allowfullscreen>
-          </iframe>
-        </div>
-      </div>
-    </ion-card-content>
-  </ion-card>
+  <!-- Recursos de la categoría seleccionada -->
+  <ion-list *ngIf="!showCategories" class="resource-list">
+    <ion-card *ngFor="let resource of resources" class="resource-card">
+      <ion-card-content>
+        <h2 class="resource-title">{{ resource.titulo }}</h2>
+        <p class="resource-detail">👤 Autor: {{ resource.autor }}</p>
+        <p class="resource-detail">⏱️ Duración: {{ resource.duracion }} min</p>
+        <ion-button
+          fill="clear"
+          size="small"
+          class="detail-button"
+          (click)="verDetalle(resource._id)"
+        >
+          Ver más <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>
