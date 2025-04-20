@@ -32,17 +32,23 @@ export class PlanPage implements OnInit, ViewWillEnter {
   }
 
   loadUserData() {
-    this.user$ = this.userService.getUser().pipe(
-      catchError((error) => {
-        console.error('Error al obtener los datos del usuario', error);
-        return of([]);
-      })
-    );
-
-    this.user$.subscribe((user) => {
-      this.horarios = user.horario;
-      this.generarPlan(user);
-    });
+    const planGuardado = localStorage.getItem('planDiario');
+    if (planGuardado) {
+      this.planDiario = JSON.parse(planGuardado);
+      this.isLoading = false;
+    } else {
+      this.user$ = this.userService.getUser().pipe(
+        catchError((error) => {
+          console.error('Error al obtener los datos del usuario', error);
+          return of([]);
+        })
+      );
+  
+      this.user$.subscribe((user) => {
+        this.horarios = user.horario;
+        this.generarPlan(user);
+      });
+    }
   }
 
   generarPlan(user: any) {
@@ -129,6 +135,8 @@ export class PlanPage implements OnInit, ViewWillEnter {
 
       this.planDiario = plan;
       this.isLoading = false;
+
+      localStorage.setItem('planDiario', JSON.stringify(plan));
     });
   }
   
