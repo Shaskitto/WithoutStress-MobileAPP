@@ -1,34 +1,56 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="resource-toolbar">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/explorar"></ion-back-button>
+      <ion-back-button defaultHref="/explorar" icon="arrow-back-outline" text="" class="back-button"></ion-back-button>
     </ion-buttons>
-    <ion-title>{{ resource?.titulo }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="resource">
-  <ion-card>
-    <ion-card-header>
-      <ion-card-title>{{ resource.titulo }}</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <p><strong>Descripción:</strong> {{ resource.descripcion }}</p>
-      <p><strong>Duración:</strong> {{ resource.duracion }} min</p>
-      <p><strong>Autor:</strong> {{ resource.autor }}</p>
+<ion-content *ngIf="resource" class="resource-page">
 
-      <ion-button expand="full" (click)="loadContent()">
-        <ion-icon name="play"></ion-icon> Cargar Contenido
-      </ion-button>
+  <!-- Sección Visual del Encabezado -->
+  <section class="resource-hero">
+    <ion-icon
+      class="resource-hero-icon"
+      [name]="resource.mediaType === 'pdf' ? 'document-text-outline' : 'logo-youtube'"
+    ></ion-icon>
+    <h1 class="resource-hero-title">{{ resource.titulo }}</h1>
+  </section>
 
-      <div *ngIf="showContent">
-        <div *ngIf="resource.mediaType === 'pdf'">
-          <iframe [src]="safeUrl" style="width:100%; height:100vh;" frameborder="0"></iframe>
-        </div>
-        <div *ngIf="resource.mediaType === 'youtube'">
-          <iframe width="100%" height="100%" [src]="safeUrl" frameborder="0" allowfullscreen></iframe>
-        </div>
+  <!-- Sección de Detalles -->
+  <section class="resource-details">
+    <div class="resource-meta">
+      <div class="meta-block">
+        <ion-icon name="person-outline"></ion-icon>
+        <span>{{ resource.autor }}</span>
       </div>
-    </ion-card-content>
-  </ion-card>
+      <div class="meta-block">
+        <ion-icon name="time-outline"></ion-icon>
+        <span>{{ resource.duracion }} min</span>
+      </div>
+      <div class="meta-block">
+        <ion-icon name="pricetag-outline"></ion-icon>
+        <span>{{ resource.mediaType === 'pdf' ? 'Documento' : 'Video' }}</span>
+      </div>
+    </div>
+
+    <div class="resource-description">
+      <h2>Descripción</h2>
+      <p>{{ resource.descripcion }}</p>
+    </div>
+
+    <ion-button expand="block" class="view-button" (click)="loadContent()">
+      <ion-icon slot="start" name="eye-outline"></ion-icon>
+      Ver Contenido
+    </ion-button>
+  </section>
+
+  <!-- Sección Multimedia -->
+  <section *ngIf="showContent" class="resource-media">
+    <ng-container [ngSwitch]="resource.mediaType">
+      <iframe *ngSwitchCase="'pdf'" [src]="safeUrl" frameborder="0"></iframe>
+      <iframe *ngSwitchCase="'youtube'" [src]="safeUrl" frameborder="0" allowfullscreen></iframe>
+    </ng-container>
+  </section>
+
 </ion-content>

@@ -5,94 +5,55 @@
     <p>Cargando Plan Diario...</p>
   </div>
 
-  <!-- Horarios -->
+  <!-- Contenido Principal -->
   <div class="container content" [class.loaded]="!isLoading">
-    <div *ngIf="!isLoading && horarios">
+    <div *ngIf="!isLoading && planDiario">
       <div class="plan-header">
         <ion-buttons slot="start">
-          <ion-menu-button
-            style="font-size: 22px; color: black"
-          ></ion-menu-button>
+          <ion-menu-button style="font-size: 22px; color: black"></ion-menu-button>
         </ion-buttons>
         <h1 class="plan-title">Tu Plan Diario</h1>
       </div>
 
       <ion-grid>
         <ion-row class="horarios-row">
-          <!-- Horario Mañana -->
-          <ion-col *ngIf="horarios.manana?.length > 0" size="12" size-md="4">
-            <ion-card class="horario-card morning">
+          <!-- Franjas Horarias -->
+          <ion-col *ngFor="let franja of getFranjasPlanificadas()" size="12" size-md="4">
+            <ion-card class="horario-card">
               <ion-card-header>
                 <ion-card-title>
                   <ion-icon
-                    name="sunny-outline"
-                    class="horario-icon morning-icon"
+                    [name]="getIconForFranja(franja)"
+                    class="horario-icon"
                   ></ion-icon>
-                  Horario Mañana
+                  {{ franja | titlecase }}
                 </ion-card-title>
               </ion-card-header>
               <ion-card-content>
-                <ion-list>
-                  <ion-item *ngFor="let tarea of horarios.manana">
-                    <ion-checkbox
-                      slot="start"
-                      class="custom-checkbox"
-                    ></ion-checkbox>
-                    <ion-label>{{ tarea }}</ion-label>
-                  </ion-item>
-                </ion-list>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-
-          <!-- Horario Tarde -->
-          <ion-col *ngIf="horarios.tarde?.length > 0" size="12" size-md="4">
-            <ion-card class="horario-card afternoon">
-              <ion-card-header>
-                <ion-card-title>
-                  <ion-icon
-                    name="partly-sunny-outline"
-                    class="horario-icon afternoon-icon"
-                  ></ion-icon>
-                  Horario Tarde
-                </ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <ion-list>
-                  <ion-item *ngFor="let tarea of horarios.tarde">
-                    <ion-checkbox
-                      slot="start"
-                      class="custom-checkbox"
-                    ></ion-checkbox>
-                    <ion-label>{{ tarea }}</ion-label>
-                  </ion-item>
-                </ion-list>
-              </ion-card-content>
-            </ion-card>
-          </ion-col>
-
-          <!-- Horario Noche -->
-          <ion-col *ngIf="horarios.noche?.length > 0" size="12" size-md="4">
-            <ion-card class="horario-card night">
-              <ion-card-header>
-                <ion-card-title>
-                  <ion-icon
-                    name="moon-outline"
-                    class="horario-icon night-icon"
-                  ></ion-icon>
-                  Horario Noche
-                </ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                <ion-list>
-                  <ion-item *ngFor="let tarea of horarios.noche">
-                    <ion-checkbox
-                      slot="start"
-                      class="custom-checkbox"
-                    ></ion-checkbox>
-                    <ion-label>{{ tarea }}</ion-label>
-                  </ion-item>
-                </ion-list>
+                <div *ngIf="planDiario[franja]?.length > 0">
+                  <ion-list>
+                    <ion-item *ngFor="let actividad of planDiario[franja]">
+                      <ion-checkbox slot="start" class="custom-checkbox"></ion-checkbox>
+                      <ion-label>
+                        <h2>{{ actividad.titulo }}</h2>
+                        <p class="actividad">{{ actividad.duracion }}</p>
+                        <p class="actividad">{{ actividad.autor }}</p>
+                      </ion-label>
+                      <!-- Botón de Ver Más -->
+                      <ion-button
+                        fill="clear"
+                        size="small"
+                        class="detail-button"
+                        (click)="verDetalle(actividad._id)"
+                      >
+                        Ir <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+                      </ion-button>
+                    </ion-item>
+                  </ion-list>
+                </div>
+                <ng-template #sinActividades>
+                  <p *ngIf="planDiario[franja]?.length === 0">No hay actividades para esta franja.</p>
+                </ng-template>
               </ion-card-content>
             </ion-card>
           </ion-col>
