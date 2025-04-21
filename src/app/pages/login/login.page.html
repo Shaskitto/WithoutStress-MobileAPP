@@ -4,7 +4,15 @@
     Volver
   </ion-button>
   
-  <ion-grid>
+  <!-- Spinner con frase -->
+  <div *ngIf="showMotivationalPhrase" class="phrase-spinner">
+    <div class="animated-text">
+      <p class="phrase">"{{ phrase }}"</p>
+      <p class="author">— {{ author }}</p>
+    </div>
+  </div>
+
+  <ion-grid *ngIf = "!showMotivationalPhrase">
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-md="8" soffset-md="2">
         <div class="login-header" *ngIf="!forgotPasswordMode">

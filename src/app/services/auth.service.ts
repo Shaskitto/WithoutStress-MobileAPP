@@ -12,6 +12,12 @@ export class AuthService {
   
   constructor(private http: HttpClient) { }
 
+
+  //Método para obtener frase del día
+  getDailyPhrase(){
+    return this.http.get(`${this.apiUrl}/auth/api/phrase`);
+  }
+
   // Método para registrar un nuevo usuario
   registerUser(userData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/auth/register`, userData);
