@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { catchError, forkJoin, Observable, of } from 'rxjs';
 import { ViewWillEnter } from '@ionic/angular';
 import { UserService } from 'src/app/services/user.service';
@@ -19,7 +19,8 @@ export class PlanPage implements OnInit, ViewWillEnter {
   constructor(
     private userService: UserService,
     private resourceService: ResourceService,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef  // Inyección de ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -48,26 +49,36 @@ export class PlanPage implements OnInit, ViewWillEnter {
       const planGuardadoRaw = localStorage.getItem('planDiario');
       const planGuardado = planGuardadoRaw ? JSON.parse(planGuardadoRaw) : null;
       const horarioActual = user.horario;
+
+      if (planGuardado) {
+        const estadoGuardado = planGuardado.estadoDeAnimo;
+        
+        const estadoActual = user.estadoDeAnimo?.sort(
+          (a: any, b: any) =>
+            new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
+        )[0]?.estado;
   
-      const horarioGuardado = planGuardado?.horario;
-  
-      if (planGuardado && JSON.stringify(horarioGuardado) === JSON.stringify(horarioActual)) {
-        this.planDiario = planGuardado.data;
-        this.isLoading = false;
+        if (estadoGuardado !== estadoActual) {
+          this.horarios = horarioActual;
+          this.generarPlan(user, estadoActual);
+        } else {
+          this.planDiario = planGuardado.data;
+          this.isLoading = false;
+          this.cdr.detectChanges();  
+        }
       } else {
+        console.log("No hay plan guardado, generando un plan nuevo.");
         this.horarios = horarioActual;
-        this.generarPlan(user);
+        const estadoActual = user.estadoDeAnimo?.sort(
+          (a: any, b: any) =>
+            new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
+        )[0]?.estado;
+        this.generarPlan(user, estadoActual); 
       }
     });
   }
-  
 
-  generarPlan(user: any) {
-    const estadoActual = user.estadoDeAnimo?.sort(
-      (a: any, b: any) =>
-        new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
-    )[0]?.estado;
-  
+  generarPlan(user: any, estadoActual: string) {
     const categoriasPorEstado: any = {
       'Muy bien': {
         Manana: ['Aprender', 'Ejercicios de Respiración'],
@@ -146,10 +157,12 @@ export class PlanPage implements OnInit, ViewWillEnter {
 
       this.planDiario = plan;
       this.isLoading = false;
+      this.cdr.detectChanges();  // Fuerza la actualización de la vista
 
       const planCompleto = {
         data: plan,
         horario: user.horario,
+        estadoDeAnimo: estadoActual,
       };
       
       localStorage.setItem('planDiario', JSON.stringify(planCompleto));

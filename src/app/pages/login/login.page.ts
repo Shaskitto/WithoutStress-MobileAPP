@@ -82,7 +82,6 @@ export class LoginPage {
         
             setTimeout(() => {
               this.showMotivationalPhrase = false;
-              this.navigate();
               this.loadUserData();
             }, 10000);
           },
