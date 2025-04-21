@@ -32,24 +32,35 @@ export class PlanPage implements OnInit, ViewWillEnter {
   }
 
   loadUserData() {
-    const planGuardado = localStorage.getItem('planDiario');
-    if (planGuardado) {
-      this.planDiario = JSON.parse(planGuardado);
-      this.isLoading = false;
-    } else {
-      this.user$ = this.userService.getUser().pipe(
-        catchError((error) => {
-          console.error('Error al obtener los datos del usuario', error);
-          return of([]);
-        })
-      );
+    this.user$ = this.userService.getUser().pipe(
+      catchError((error) => {
+        console.error('Error al obtener los datos del usuario', error);
+        return of(null);
+      })
+    );
   
-      this.user$.subscribe((user) => {
-        this.horarios = user.horario;
+    this.user$.subscribe((user) => {
+      if (!user) {
+        this.isLoading = false;
+        return;
+      }
+  
+      const planGuardadoRaw = localStorage.getItem('planDiario');
+      const planGuardado = planGuardadoRaw ? JSON.parse(planGuardadoRaw) : null;
+      const horarioActual = user.horario;
+  
+      const horarioGuardado = planGuardado?.horario;
+  
+      if (planGuardado && JSON.stringify(horarioGuardado) === JSON.stringify(horarioActual)) {
+        this.planDiario = planGuardado.data;
+        this.isLoading = false;
+      } else {
+        this.horarios = horarioActual;
         this.generarPlan(user);
-      });
-    }
+      }
+    });
   }
+  
 
   generarPlan(user: any) {
     const estadoActual = user.estadoDeAnimo?.sort(
@@ -136,13 +147,22 @@ export class PlanPage implements OnInit, ViewWillEnter {
       this.planDiario = plan;
       this.isLoading = false;
 
-      localStorage.setItem('planDiario', JSON.stringify(plan));
+      const planCompleto = {
+        data: plan,
+        horario: user.horario,
+      };
+      
+      localStorage.setItem('planDiario', JSON.stringify(planCompleto));
     });
   }
   
   getFranjasPlanificadas(): string[] {
-    return Object.keys(this.planDiario || {});
+    if (!this.planDiario) return [];
+    return Object.keys(this.planDiario).filter(franja => {
+      return this.planDiario[franja] && this.planDiario[franja].length > 0;
+    });
   }
+  
 
   getIconForFranja(franja: string): string {
     switch (franja.toLowerCase()) {
@@ -156,6 +176,19 @@ export class PlanPage implements OnInit, ViewWillEnter {
         return 'time-outline';
     }
   }
+
+  getNombreFranjaBonito(franja: string): string {
+    switch (franja.toLowerCase()) {
+      case 'manana':
+        return 'Mañana';
+      case 'tarde':
+        return 'Tarde';
+      case 'noche':
+        return 'Noche';
+      default:
+        return franja;
+    }
+  }  
 
   verDetalle(resourceId: string) {
     this.router.navigate(['/recurso-detalle', resourceId]);

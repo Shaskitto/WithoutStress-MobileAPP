@@ -26,7 +26,7 @@
                     [name]="getIconForFranja(franja)"
                     class="horario-icon"
                   ></ion-icon>
-                  {{ franja | titlecase }}
+                  {{ getNombreFranjaBonito(franja) }}
                 </ion-card-title>
               </ion-card-header>
               <ion-card-content>
@@ -51,9 +51,6 @@
                     </ion-item>
                   </ion-list>
                 </div>
-                <ng-template #sinActividades>
-                  <p *ngIf="planDiario[franja]?.length === 0">No hay actividades para esta franja.</p>
-                </ng-template>
               </ion-card-content>
             </ion-card>
           </ion-col>
