@@ -119,7 +119,7 @@ export class EvaluacionPage{
   }
 
   // Navegar 
-  navigate(){
-    this.router.navigate(['/estado-de-animo']);
-  }
+  navigate() {
+    this.router.navigate(['/mensaje'], { queryParams: { next: '/estado-de-animo' } });
+  }  
 }

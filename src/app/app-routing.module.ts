@@ -53,7 +53,11 @@ const routes: Routes = [
   {
     path: 'recurso-detalle/:id',
     loadChildren: () => import('./pages/Estudiante/recurso-detalle/recurso-detalle.module').then( m => m.RecursoDetallePageModule)
+  },  {
+    path: 'mensaje',
+    loadChildren: () => import('./pages/mensaje/mensaje.module').then( m => m.MensajePageModule)
   }
+
 
 
 ];

@@ -1,0 +1,45 @@
+.phrase-spinner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    background: var(--bg-gradient-primary);
+  }
+  
+  .animated-text {
+    animation: fadeInOut 15s ease-in-out;
+  }
+  
+  .phrase {
+    font-size: 1.3rem;
+    font-style: italic;
+    margin: 20px;
+    color: #333;
+  }
+  
+  .author {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  @keyframes fadeInOut {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    10% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    90% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+  }
+  

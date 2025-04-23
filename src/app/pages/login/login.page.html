@@ -4,14 +4,6 @@
     Volver
   </ion-button>
   
-  <!-- Spinner con frase -->
-  <div *ngIf="showMotivationalPhrase" class="phrase-spinner">
-    <div class="animated-text">
-      <p class="phrase">"{{ phrase }}"</p>
-      <p class="author">— {{ author }}</p>
-    </div>
-  </div>
-  
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" size-md="8" soffset-md="2">
@@ -22,7 +14,7 @@
 
 
         <!-- Formulario de Inicio de Sesión -->
-        <form [formGroup]="loginForm" *ngIf="!forgotPasswordMode && !showMotivationalPhrase" (ngSubmit)="login()" class="login-form">
+        <form [formGroup]="loginForm" *ngIf="!forgotPasswordMode" (ngSubmit)="login()" class="login-form">
           <div class="input-container">
             <label class="input-label">Correo Electrónico</label>
             <ion-item class="login-item">

@@ -25,9 +25,6 @@ export class LoginPage {
   otp: string | undefined;
   newPassword: string | undefined;
   moodRegisteredToday: boolean = false;
-  showMotivationalPhrase: boolean = false;
-  phrase: string = '';
-  author: string = '';
 
   constructor(
     private fb: FormBuilder,
@@ -74,21 +71,7 @@ export class LoginPage {
         } else {
           localStorage.removeItem('rememberedEmail');
         }
-        this.authService.getDailyPhrase().subscribe(
-          (data: any) => {
-            this.phrase = data.phrase;
-            this.author = data.author;
-            this.showMotivationalPhrase = true;
-        
-            setTimeout(() => {
-              this.showMotivationalPhrase = false;
-              this.loadUserData();
-            }, 10000);
-          },
-          error => {
-            this.loadUserData();
-          }
-        );
+        this.loadUserData();
       },
       (error) => {
         console.error('Error de login:', error);
@@ -149,7 +132,7 @@ export class LoginPage {
         );
 
         if (!this.moodRegisteredToday) {
-          this.router.navigate(['/estado-de-animo']);
+          this.router.navigate(['/mensaje'], { queryParams: { next: '/estado-de-animo' } });
         } else {
           this.navigate();
         }
@@ -167,7 +150,7 @@ export class LoginPage {
     if (rol === 'Psicologo') {
       this.router.navigate(['/psicologo-tabs/dashboard']);
     } else {
-      this.router.navigate(['/tabs/plan']);
+      this.router.navigate(['/mensaje']);
     }
   }
 
