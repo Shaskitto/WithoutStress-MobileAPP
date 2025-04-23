@@ -1,207 +1,91 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { catchError, forkJoin, Observable, of } from 'rxjs';
-import { ViewWillEnter } from '@ionic/angular';
-import { UserService } from 'src/app/services/user.service';
-import { ResourceService } from 'src/app/services/resource.service';
+import { Component, OnInit } from '@angular/core';
+import { PlanService } from 'src/app/services/plan.service';
 import { Router } from '@angular/router';
+import { ResourceService } from 'src/app/services/resource.service';
 
 @Component({
   selector: 'app-plan',
   templateUrl: './plan.page.html',
   styleUrls: ['./plan.page.scss'],
 })
-export class PlanPage implements OnInit, ViewWillEnter {
-  user$: Observable<any> | undefined;
-  horarios: any;
+export class PlanPage implements OnInit {
   isLoading = true;
-  planDiario: any;
+  plan: any;
+  franjas = ['Manana', 'Tarde', 'Noche'];
 
   constructor(
-    private userService: UserService,
+    private planService: PlanService,
     private resourceService: ResourceService,
-    private router: Router,
-    private cdr: ChangeDetectorRef  // Inyección de ChangeDetectorRef
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.loadUserData();
+    const userId = localStorage.getItem('userId');
+
+    if (userId) {
+      this.obtenerPlan();
+    }
   }
 
-  ionViewWillEnter() {
-    this.isLoading = true;
-    this.loadUserData();
-  }
-
-  loadUserData() {
-    this.user$ = this.userService.getUser().pipe(
-      catchError((error) => {
-        console.error('Error al obtener los datos del usuario', error);
-        return of(null);
-      })
-    );
-  
-    this.user$.subscribe((user) => {
-      if (!user) {
+  // Método para obtener el plan de un usuario y cargar los contenidos
+  obtenerPlan() {
+    this.planService.obtenerPlan().subscribe({
+      next: (data) => {
+        this.plan = data;
         this.isLoading = false;
-        return;
-      }
-  
-      const planGuardadoRaw = localStorage.getItem('planDiario');
-      const planGuardado = planGuardadoRaw ? JSON.parse(planGuardadoRaw) : null;
-      const horarioActual = user.horario;
-
-      if (planGuardado) {
-        const estadoGuardado = planGuardado.estadoDeAnimo;
-        
-        const estadoActual = user.estadoDeAnimo?.sort(
-          (a: any, b: any) =>
-            new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
-        )[0]?.estado;
-  
-        if (estadoGuardado !== estadoActual) {
-          this.horarios = horarioActual;
-          this.generarPlan(user, estadoActual);
-        } else {
-          this.planDiario = planGuardado.data;
-          this.isLoading = false;
-          this.cdr.detectChanges();  
-        }
-      } else {
-        console.log("No hay plan guardado, generando un plan nuevo.");
-        this.horarios = horarioActual;
-        const estadoActual = user.estadoDeAnimo?.sort(
-          (a: any, b: any) =>
-            new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
-        )[0]?.estado;
-        this.generarPlan(user, estadoActual); 
-      }
-    });
-  }
-
-  generarPlan(user: any, estadoActual: string) {
-    const categoriasPorEstado: any = {
-      'Muy bien': {
-        Manana: ['Aprender', 'Ejercicios de Respiración'],
-        Tarde: ['Meditación y Mindfulness', 'Podcast'],
-        Noche: ['Música y Sonidos Relajantes', 'Meditación y Mindfulness'],
-      },
-      Bien: {
-        Manana: ['Aprender', 'Podcast'],
-        Tarde: ['Meditación y Mindfulness', 'Meditación'],
-        Noche: ['Música y Sonidos Relajantes', 'Ejercicios de Respiración'],
-      },
-      Neutro: {
-        Manana: ['Ejercicios de Respiración', 'Aprender'],
-        Tarde: ['Podcast', 'Mindfulness'],
-        Noche: ['Música y Sonidos Relajantes', 'Meditación y Mindfulness'],
-      },
-      Mal: {
-        Manana: ['Ejercicios de Respiración', 'Meditación y Mindfulness'],
-        Tarde: ['Podcast', 'Mindfulness'],
-        Noche: ['Música y Sonidos Relajantes', 'Meditación y Mindfulness'],
-      },
-      'Muy mal': {
-        Manana: ['Ejercicios de Respiración', 'Meditación y Mindfulness'],
-        Tarde: ['Podcast', 'Mindfulness'],
-        Noche: ['Música y Sonidos Relajantes', 'Meditación y Mindfulness'],
-      },
-    };
-  
-    const categoriasPorFranja = categoriasPorEstado[estadoActual] || {};
-    const plan: any = {};
-  
-    const peticiones: Observable<any>[] = [];
-  
-    for (const franja in categoriasPorFranja) {
-      const franjaLower = franja.toLowerCase(); 
-  
-      if (!user.horario[franjaLower] || user.horario[franjaLower].length === 0) {
-        continue;
-      }
-  
-      plan[franja] = [];
-  
-      const cantidadRecursos = user.horario[franjaLower].length; 
-      const categorias = categoriasPorFranja[franja];
-  
-      const categoriasSeleccionadas = categorias.slice(0, cantidadRecursos);
-  
-      categoriasSeleccionadas.forEach((categoria: string) => {
-        peticiones.push(
-          this.resourceService.getByCategory(categoria).pipe(
-            catchError(err => {
-              console.error(err);
-              return of([]);
-            })
-          )
-        );
-      });
-    }
-
-    forkJoin(peticiones).subscribe((respuestas) => {
-      let i = 0;
-
-      for (const franja in categoriasPorFranja) {
-        const recursosFranja: any[] = [];
-  
-        for (let j = 0; j < user.horario[franja.toLowerCase()].length; j++) {
-          const recursos = respuestas[i++] || [];
-          if (recursos.length > 0) {
-            const random = recursos[Math.floor(Math.random() * recursos.length)];
-            recursosFranja.push(random);
-          }
-        }
-  
-        plan[franja] = recursosFranja;
-      }
-
-      this.planDiario = plan;
-      this.isLoading = false;
-      this.cdr.detectChanges();  // Fuerza la actualización de la vista
-
-      const planCompleto = {
-        data: plan,
-        horario: user.horario,
-        estadoDeAnimo: estadoActual,
-      };
       
-      localStorage.setItem('planDiario', JSON.stringify(planCompleto));
+        this.franjas.forEach(franja => {
+          const actividadIds = this.plan?.planDiario?.data?.[franja] || [];
+          actividadIds.forEach((id: string) => {
+            this.resourceService.getResource(id).subscribe({
+              next: (recursoData) => {
+                const actividad = {
+                  _id: id,
+                  detalle: recursoData
+                };
+                
+                if (!this.plan[franja]) {
+                  this.plan[franja] = [];
+                }
+                this.plan[franja].push(actividad);
+              },
+              error: (error) => {
+                console.error(error);
+              }
+            });
+          });
+        });
+      },
+      error: (error) => {
+        console.error(error);
+        this.isLoading = false;
+      }
     });
   }
   
-  getFranjasPlanificadas(): string[] {
-    if (!this.planDiario) return [];
-    return Object.keys(this.planDiario).filter(franja => {
-      return this.planDiario[franja] && this.planDiario[franja].length > 0;
-    });
-  }
-  
-
-  getIconForFranja(franja: string): string {
-    switch (franja.toLowerCase()) {
-      case 'manana':
-        return 'sunny-outline';
-      case 'tarde':
-        return 'partly-sunny-outline';
-      case 'noche':
-        return 'moon-outline';
-      default:
-        return 'time-outline';
-    }
+  getFranjasPlanificadas() {
+    return this.franjas.filter(franja =>
+      this.plan?.planDiario?.data?.[franja]?.length > 0
+    );
   }
 
   getNombreFranjaBonito(franja: string): string {
-    switch (franja.toLowerCase()) {
-      case 'manana':
-        return 'Mañana';
-      case 'tarde':
-        return 'Tarde';
-      case 'noche':
-        return 'Noche';
-      default:
-        return franja;
+    switch (franja) {
+      case 'Manana': return 'Mañana';
+      case 'Tarde': return 'Tarde';
+      case 'Noche': return 'Noche';
+      default: return franja;
     }
-  }  
+  }
+
+  getIconForFranja(franja: string): string {
+    switch (franja) {
+      case 'Manana': return 'sunny';
+      case 'Tarde': return 'partly-sunny';
+      case 'Noche': return 'moon';
+      default: return 'time';
+    }
+  }
 
   verDetalle(resourceId: string) {
     this.router.navigate(['/recurso-detalle', resourceId]);

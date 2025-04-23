@@ -4,10 +4,10 @@
     <ion-spinner name="crescent"></ion-spinner>
     <p>Cargando Plan Diario...</p>
   </div>
-  
+
   <!-- Contenido Principal -->
   <div class="container content" [class.loaded]="!isLoading">
-    <div *ngIf="!isLoading && planDiario">
+    <div *ngIf="!isLoading && plan">
       <div class="plan-header">
         <ion-buttons slot="start">
           <ion-menu-button style="font-size: 22px; color: black"></ion-menu-button>
@@ -17,40 +17,32 @@
 
       <ion-grid>
         <ion-row class="horarios-row">
-          <!-- Franjas Horarias -->
+          <!-- Iterar sobre las franjas del día (mañana, tarde, noche) -->
           <ion-col *ngFor="let franja of getFranjasPlanificadas()" size="12" size-md="4">
             <ion-card class="horario-card">
               <ion-card-header>
                 <ion-card-title>
-                  <ion-icon
-                    [name]="getIconForFranja(franja)"
-                    class="horario-icon"
-                  ></ion-icon>
+                  <ion-icon [name]="getIconForFranja(franja)" class="horario-icon"></ion-icon>
                   {{ getNombreFranjaBonito(franja) }}
                 </ion-card-title>
               </ion-card-header>
               <ion-card-content>
-                <div *ngIf="planDiario[franja]?.length > 0">
-                  <ion-list>
-                    <ion-item *ngFor="let actividad of planDiario[franja]">
+                <ion-list>
+                  <!-- Mostrar actividades dentro de la franja -->
+                  <div *ngIf="plan[franja]?.length > 0">
+                    <ion-item *ngFor="let actividad of plan[franja]">
                       <ion-checkbox slot="start" class="custom-checkbox"></ion-checkbox>
                       <ion-label>
-                        <h2>{{ actividad.titulo }}</h2>
-                        <p class="actividad">{{ actividad.duracion }}</p>
-                        <p class="actividad">{{ actividad.autor }}</p>
+                        <h2>{{ actividad.detalle.titulo }}</h2>
+                        <p class="actividad">{{ actividad.detalle.categoria }}</p>
+                        <p class="actividad">{{ actividad.detalle.duracion }}</p>
                       </ion-label>
-                      <!-- Botón de Ver Más -->
-                      <ion-button
-                        fill="clear"
-                        size="small"
-                        class="detail-button"
-                        (click)="verDetalle(actividad._id)"
-                      >
+                      <ion-button fill="clear" size="small" class="detail-button" (click)="verDetalle(actividad._id)">
                         Ir <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
                       </ion-button>
                     </ion-item>
-                  </ion-list>
-                </div>
+                  </div>
+                </ion-list>
               </ion-card-content>
             </ion-card>
           </ion-col>

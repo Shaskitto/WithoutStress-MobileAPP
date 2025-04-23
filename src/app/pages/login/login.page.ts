@@ -64,8 +64,7 @@ export class LoginPage {
     const userData = this.loginForm.value;
 
     this.authService.login(userData).subscribe(
-      (response) => {
-        console.log('Login exitoso:', response);
+      () => {
         if (this.rememberMe) {
           localStorage.setItem('rememberedEmail', this.loginForm.value.email);
         } else {
@@ -74,7 +73,7 @@ export class LoginPage {
         this.loadUserData();
       },
       (error) => {
-        console.error('Error de login:', error);
+        console.error(error);
         this.isSubmitting = false;
 
         if (error.status === 400 || error.status === 404) {
