@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -25,10 +25,9 @@ export class PlanService {
   }
 
   // Método para obtener el plan de un usuario 
-  obtenerPlan(): Observable<any> {
-    const userId = localStorage.getItem('userId');
+  obtenerPlan(userId: string): Observable<any> {
     const token = localStorage.getItem('token'); 
-
+  
     if (token) {
       const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
       return this.http.get(`${this.apiUrl}/plan/${userId}`, { headers });
@@ -36,4 +35,5 @@ export class PlanService {
       throw new Error('Token no encontrado');
     }
   }
+  
 }

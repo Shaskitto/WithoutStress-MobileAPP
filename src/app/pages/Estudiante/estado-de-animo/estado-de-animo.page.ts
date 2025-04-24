@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { PlanService } from 'src/app/services/plan.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -10,23 +11,32 @@ import { UserService } from 'src/app/services/user.service';
 export class EstadoDeAnimoPage implements OnInit {
   moodRegisteredToday = false;
   
-  constructor(private userService: UserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router, private planService: PlanService) { }
 
   ngOnInit() {
   }
 
   // Método para registrar el estado de ánimo
   setMood(mood: string) {
-    if (this.moodRegisteredToday) {
-      alert('Ya registraste tu estado de ánimo hoy.');
-      return;
-    }
-
+    if (this.moodRegisteredToday) return;
+  
     this.userService.registerMood(mood).subscribe(
       response => {
         console.log('Estado de ánimo registrado:', response);
         this.moodRegisteredToday = true;
-        this.router.navigate(['/tabs/plan']);
+  
+        // Llamar a generarPlan SOLO después de registrar el estado de ánimo
+        this.planService.generarPlan(mood).subscribe(
+          plan => {
+            console.log('Plan generado:', plan);
+            this.router.navigate(['/tabs/plan']);
+          },
+          error => {
+            console.error('Error al generar el plan:', error);
+            alert('Ocurrió un error al generar el plan.');
+            this.router.navigate(['/tabs/plan']);
+          }
+        );
       },
       error => {
         if (error.status === 400) {
