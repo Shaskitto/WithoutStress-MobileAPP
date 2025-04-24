@@ -14,6 +14,12 @@ export class EstadoDeAnimoPage implements OnInit {
   constructor(private userService: UserService, private router: Router, private planService: PlanService) { }
 
   ngOnInit() {
+    // Verificar si ya existe un plan cargado (por si hay uno generado previamente)
+    this.planService.plan$.subscribe(plan => {
+      if (plan) {
+        console.log('Plan cargado desde el servicio:', plan);
+      }
+    });
   }
 
   // Método para registrar el estado de ánimo

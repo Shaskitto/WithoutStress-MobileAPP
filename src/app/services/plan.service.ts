@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -8,17 +8,23 @@ import { environment } from 'src/environments/environment';
 })
 export class PlanService {
   private apiUrl = environment.apiUrl;
-
+  private planSubject = new BehaviorSubject<any>(null);  // Usamos un BehaviorSubject para almacenar el plan
+  plan$ = this.planSubject.asObservable();
+  
   constructor(private http: HttpClient) { }
 
   // Método para generar un plan 
-  generarPlan(estadoDeAnimo?: string): Observable<any> {
-    const token = localStorage.getItem('token'); 
+  generarPlan(estadoDeAnimo: string): Observable<any> {
+    const token = localStorage.getItem('token');
 
     if (token) {
-      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`).set('Content-Type', 'application/json');
-      const body = estadoDeAnimo ? { estadoDeAnimo } : {}; 
-      return this.http.post(`${this.apiUrl}/plan/generar`, body, { headers });
+      const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+      const body = { estadoDeAnimo };
+      return this.http.post(`${this.apiUrl}/plan/generar`, body, { headers }).pipe(
+        tap(plan => {
+          this.planSubject.next(plan); // Emitimos el nuevo plan cuando se genera
+        })
+      );
     } else {
       throw new Error('Token no encontrado');
     }
