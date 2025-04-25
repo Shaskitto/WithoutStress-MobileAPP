@@ -3,6 +3,7 @@ import { PlanService } from 'src/app/services/plan.service';
 import { Router } from '@angular/router';
 import { ResourceService } from 'src/app/services/resource.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-plan',
@@ -14,7 +15,8 @@ export class PlanPage implements OnInit {
   plan: any;
   franjas = ['Manana', 'Tarde', 'Noche'];
   errorMessage: string | null = null;
-
+  planUpdateSubscription: Subscription | undefined;
+  
   constructor(
     private planService: PlanService,
     private resourceService: ResourceService,
@@ -25,11 +27,16 @@ export class PlanPage implements OnInit {
   ngOnInit() {
     this.authService.getCurrentUser().subscribe(userId => {
       if (userId) {
-        console.log('Usuario logueado con ID:', userId);
         this.obtenerPlan(userId); 
-      } else {
-        console.log('No se encontró el ID de usuario.');
       }
+    });
+
+    this.planUpdateSubscription = this.planService.planUpdated$.subscribe(() => {
+      this.authService.getCurrentUser().subscribe(userId => {
+        if (userId) {
+          this.obtenerPlan(userId);
+        }
+      });
     });
   }
 

@@ -14,7 +14,6 @@ export class EstadoDeAnimoPage implements OnInit {
   constructor(private userService: UserService, private router: Router, private planService: PlanService) { }
 
   ngOnInit() {
-    // Verificar si ya existe un plan cargado (por si hay uno generado previamente)
     this.planService.plan$.subscribe(plan => {
       if (plan) {
         console.log('Plan cargado desde el servicio:', plan);
@@ -31,7 +30,6 @@ export class EstadoDeAnimoPage implements OnInit {
         console.log('Estado de ánimo registrado:', response);
         this.moodRegisteredToday = true;
   
-        // Llamar a generarPlan SOLO después de registrar el estado de ánimo
         this.planService.generarPlan(mood).subscribe(
           plan => {
             console.log('Plan generado:', plan);

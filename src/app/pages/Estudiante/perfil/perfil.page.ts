@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { PlanService } from 'src/app/services/plan.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
@@ -18,8 +19,9 @@ export class PerfilPage implements OnInit {
   isValidFileType = true;
   selectedFile: File | null = null;
   validationMessage: string = '';
+  originalHorario: any;
 
-  constructor(private userService: UserService, private authService: AuthService, private fb: FormBuilder, private router: Router) { }
+  constructor(private userService: UserService, private authService: AuthService, private fb: FormBuilder, private planService: PlanService, private router: Router) { }
 
   // Cargar los datos del usuario cuando se inicializa el componente
   ngOnInit() { 
@@ -44,6 +46,7 @@ export class PerfilPage implements OnInit {
           this.user.profileImage = this.userService.getProfileImageUrl(userId) + '?t=' + timestamp;
         }
         this.initializeForm();  
+        this.originalHorario = JSON.parse(JSON.stringify(this.user.horario));
       }
     });
   }
@@ -113,6 +116,9 @@ export class PerfilPage implements OnInit {
       const formData = new FormData();
       const userData = this.perfilForm.value;
 
+      const horarioCambio = this.horarioHaCambiado(userData.horario, this.originalHorario);
+
+      // Datos básicos del usuario
       formData.append('nombre_completo', userData.nombre_completo);
       formData.append('username', userData.username);
       formData.append('edad', userData.edad);
@@ -122,6 +128,7 @@ export class PerfilPage implements OnInit {
       formData.append('email', userData.email);
       formData.append('informacion', userData.informacion);
 
+      // Horario
       if (userData.horario) {
         if (userData.horario.manana) {
           userData.horario.manana.forEach((hora: string) => {
@@ -140,17 +147,35 @@ export class PerfilPage implements OnInit {
         }
       }
 
+      // Imagen
       if (this.selectedFile) {
         formData.append('profileImage', this.selectedFile);
       }
 
+      // Actividades
       userData.actividades.forEach((actividad: string) => {
         formData.append('actividades[]', actividad);
       });
 
+      const userId = localStorage.getItem('userId');
+
+      // Actualizar usuario
       this.userService.updateUser(formData).subscribe(
         response => {
           console.log('Usuario actualizado con éxito:', response);
+
+          if (userId && horarioCambio) {
+            this.planService.reorganizarPlanPorHorario(userId).subscribe(
+              res => {
+                console.log('Plan reorganizado correctamente:', res);
+                this.planService.notifyPlanUpdated();
+              },
+              err => {
+                console.error('Error al reorganizar el plan:', err);
+              }
+            );
+          }
+
           this.isEditing = false;
           this.loadUserData(); 
         },
@@ -160,6 +185,20 @@ export class PerfilPage implements OnInit {
       );
     }
   }
+
+  // Comparar horarios
+  horarioHaCambiado(nuevo: any, original: any): boolean {
+    const franjas = ['manana', 'tarde', 'noche'];
+    for (const franja of franjas) {
+      const a = (original?.[franja] || []).slice().sort();
+      const b = (nuevo?.[franja] || []).slice().sort();
+      if (a.length !== b.length || a.some((val: any, i: string | number) => val !== b[i])) {
+        return true;
+      }
+    }
+    return false;
+  }
+  
 
   // Cerrar sesión
   logout() {
