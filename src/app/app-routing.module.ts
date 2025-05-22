@@ -43,6 +43,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/Estudiante/calendario/calendario.module').then( m => m.CalendarioPageModule)
   },
   {
+    path: 'estadistica',
+    loadChildren: () => import('./pages/Estudiante/estadistica/estadistica.module').then( m => m.EstadisticaPageModule)
+  },
+  {
     path: 'estado-de-animo',
     loadChildren: () => import('./pages/Estudiante/estado-de-animo/estado-de-animo.module').then( m => m.EstadoDeAnimoPageModule)
   },
@@ -53,7 +57,8 @@ const routes: Routes = [
   {
     path: 'recurso-detalle/:id',
     loadChildren: () => import('./pages/Estudiante/recurso-detalle/recurso-detalle.module').then( m => m.RecursoDetallePageModule)
-  },  {
+  },
+  {
     path: 'mensaje',
     loadChildren: () => import('./pages/mensaje/mensaje.module').then( m => m.MensajePageModule)
   }
