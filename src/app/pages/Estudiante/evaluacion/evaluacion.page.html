@@ -7,7 +7,6 @@
     <ion-card-content>
       <!-- Nombre Completo -->
       <ion-item *ngIf="questions[currentQuestionIndex].id === 'nombre_completo'">
-        <ion-label position="stacked">Nombre completo</ion-label>
         <ion-input 
           [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
           name="nombre_completo"
@@ -136,12 +135,25 @@
           </ion-item>
         </ion-list>
       </div>
+
+      <!-- Consentimiento -->
+      <ion-item *ngIf="questions[currentQuestionIndex].id === 'consentimiento'">
+        <ion-checkbox 
+          [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
+          name="consentimiento" 
+          slot="start">
+        </ion-checkbox>
+        <ion-label>
+          Acepto el registro y manejo de mis datos personales conforme a la 
+          <strong>Política de Privacidad</strong>, que incluye el uso responsable, almacenamiento seguro y la posibilidad de ejercer mis derechos de acceso, rectificación, cancelación y oposición.
+        </ion-label>
+      </ion-item>
     </ion-card-content>
   </ion-card>
 
   <!-- botones -->
   <ion-button 
-    *ngIf="currentQuestionIndex !== questions.length - 1 || questions[currentQuestionIndex].id !== 'horario'" 
+    *ngIf="currentQuestionIndex !== questions.length - 1 || questions[currentQuestionIndex].id !== 'consentimiento'" 
     expand="full" 
     (click)="nextQuestion()" 
     [disabled]="!isQuestionAnswered()">
@@ -154,5 +166,9 @@
     *ngIf="currentQuestionIndex === questions.length - 1 && isQuestionAnswered()">
     Terminar y continuar
   </ion-button>
+
+  <ion-text color="success" *ngIf="savedSuccessfully" style="margin-top: 15px; display: block; text-align: center;">
+    ¡Datos guardados con éxito!
+  </ion-text>  
 </ion-grid>
 </ion-content>

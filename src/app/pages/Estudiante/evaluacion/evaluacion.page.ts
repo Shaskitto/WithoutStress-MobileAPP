@@ -13,6 +13,7 @@ export class EvaluacionPage{
   mostrarTarde: boolean = false;
   mostrarNoche: boolean = false
   currentQuestionIndex = 0;
+  savedSuccessfully = false;
 
   questions = [
     { id: 'nombre_completo', texto: '¿Cuál es su nombre completo?'},
@@ -27,7 +28,8 @@ export class EvaluacionPage{
         manana: ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00'],
         tarde: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
         noche: ['18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
-    }}
+    }},
+    { id: 'consentimiento', texto: 'Acepto el registro y manejo de mis datos personales según la política de privacidad.'}
   ];
 
   answers: { [key: string]: string | number | string[] | any } = {
@@ -41,7 +43,8 @@ export class EvaluacionPage{
       manana: [],
       tarde: [],
       noche: []
-    }
+    },
+    consentimiento: false
   };
 
   constructor(private userService: UserService, private router: Router) {}
@@ -63,7 +66,7 @@ export class EvaluacionPage{
       'nombre_completo': () => this.answers['nombre_completo'] != '',
       'carrera': () => this.answers['carrera'] !== '',
       'semestre': () => this.answers['semestre'] > 0,
-      'edad': () => this.answers['edad'] > 0,
+      'edad': () => this.answers['edad'] >= 18 && this.answers['edad'] <= 23,
       'sexo': () => this.answers['sexo'] !== '',
       'tecnicas': () => this.answers['tecnicas'] !== '',
       'actividades': () => this.answers['actividades'].length > 0,
@@ -71,6 +74,7 @@ export class EvaluacionPage{
         const horarios = this.answers['horario'];
         return horarios?.manana?.length > 0 || horarios?.tarde?.length > 0 || horarios?.noche?.length > 0;
       },
+      'consentimiento': () => this.answers['consentimiento'] === true,
     };
 
     return validationMap[currentQuestion.id]?.() ?? false;
@@ -106,11 +110,16 @@ export class EvaluacionPage{
 
   // Método para actualizar los datos del usuarios (Evaluación inicial)
   updateUser() {
-    console.log('Datos a enviar:', this.answers);
     this.userService.updateUser(this.answers).subscribe(
       response => {
-        console.log('Usuario actualizado con éxito:', response);
-        this.navigate();
+        this.savedSuccessfully = true;
+        console.log(response);
+
+        // Mostrar mensaje 3 segundos, luego navegar
+        setTimeout(() => {
+          this.savedSuccessfully = false;
+          this.navigate();
+        }, 2000);
       },
       error => {
         console.error('Error al actualizar el usuario:', error);
