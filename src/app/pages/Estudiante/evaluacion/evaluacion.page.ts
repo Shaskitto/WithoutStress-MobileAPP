@@ -16,6 +16,7 @@ export class EvaluacionPage{
   savedSuccessfully = false;
 
   questions = [
+    { id: 'consentimiento', texto: 'Acepto el registro y manejo de mis datos personales según la política de privacidad.'},
     { id: 'nombre_completo', texto: '¿Cuál es su nombre completo?'},
     { id: 'carrera', texto: '¿Cuál es tu carrera?' },
     { id: 'semestre', texto: '¿Qué semestre estás cursando?' },
@@ -28,11 +29,11 @@ export class EvaluacionPage{
         manana: ['06:00', '07:00', '08:00', '09:00', '10:00', '11:00'],
         tarde: ['12:00', '13:00', '14:00', '15:00', '16:00', '17:00'],
         noche: ['18:00', '19:00', '20:00', '21:00', '22:00', '23:00']
-    }},
-    { id: 'consentimiento', texto: 'Acepto el registro y manejo de mis datos personales según la política de privacidad.'}
+    }}
   ];
 
   answers: { [key: string]: string | number | string[] | any } = {
+    consentimiento: false,
     nombre_completo: '',
     carrera: '',
     semestre: 0,
@@ -43,8 +44,7 @@ export class EvaluacionPage{
       manana: [],
       tarde: [],
       noche: []
-    },
-    consentimiento: false
+    }
   };
 
   constructor(private userService: UserService, private router: Router) {}

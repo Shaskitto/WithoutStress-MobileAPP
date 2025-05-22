@@ -5,6 +5,19 @@
       <ion-card-title>{{ questions[currentQuestionIndex].texto }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
+      <!-- Consentimiento -->
+      <ion-item *ngIf="questions[currentQuestionIndex].id === 'consentimiento'">
+        <ion-checkbox 
+          [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
+          name="consentimiento" 
+          slot="start">
+        </ion-checkbox>
+        <ion-label>
+          Acepto el registro y manejo de mis datos personales conforme a la 
+          <strong>Política de Privacidad</strong>, que incluye el uso responsable, almacenamiento seguro y la posibilidad de ejercer mis derechos de acceso, rectificación, cancelación y oposición.
+        </ion-label>
+      </ion-item>
+
       <!-- Nombre Completo -->
       <ion-item *ngIf="questions[currentQuestionIndex].id === 'nombre_completo'">
         <ion-input 
@@ -135,25 +148,12 @@
           </ion-item>
         </ion-list>
       </div>
-
-      <!-- Consentimiento -->
-      <ion-item *ngIf="questions[currentQuestionIndex].id === 'consentimiento'">
-        <ion-checkbox 
-          [(ngModel)]="answers[questions[currentQuestionIndex].id]" 
-          name="consentimiento" 
-          slot="start">
-        </ion-checkbox>
-        <ion-label>
-          Acepto el registro y manejo de mis datos personales conforme a la 
-          <strong>Política de Privacidad</strong>, que incluye el uso responsable, almacenamiento seguro y la posibilidad de ejercer mis derechos de acceso, rectificación, cancelación y oposición.
-        </ion-label>
-      </ion-item>
     </ion-card-content>
   </ion-card>
 
   <!-- botones -->
   <ion-button 
-    *ngIf="currentQuestionIndex !== questions.length - 1 || questions[currentQuestionIndex].id !== 'consentimiento'" 
+    *ngIf="currentQuestionIndex !== questions.length - 1 || questions[currentQuestionIndex].id !== 'horario'" 
     expand="full" 
     (click)="nextQuestion()" 
     [disabled]="!isQuestionAnswered()">
