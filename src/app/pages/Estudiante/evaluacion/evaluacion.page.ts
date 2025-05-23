@@ -66,7 +66,7 @@ export class EvaluacionPage{
       'nombre_completo': () => this.answers['nombre_completo'] != '',
       'carrera': () => this.answers['carrera'] !== '',
       'semestre': () => this.answers['semestre'] > 0,
-      'edad': () => this.answers['edad'] >= 18 && this.answers['edad'] <= 23,
+      'edad': () => this.answers['edad'] >= 18 && this.answers['edad'] <= 50,
       'sexo': () => this.answers['sexo'] !== '',
       'tecnicas': () => this.answers['tecnicas'] !== '',
       'actividades': () => this.answers['actividades'].length > 0,
