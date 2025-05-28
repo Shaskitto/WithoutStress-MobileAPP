@@ -1,9 +1,14 @@
 <ion-content [fullscreen]="true">
-
   <!-- Spinner de Carga -->
   <div *ngIf="isLoading" class="loading-container">
     <ion-spinner name="crescent"></ion-spinner>
     <p>Cargando Estadisticas...</p>
+  </div>
+
+  <div class="plan-header">
+    <ion-buttons slot="start">
+      <ion-menu-button style="font-size: 22px; color: black"></ion-menu-button>
+    </ion-buttons>
   </div>
 
   <div class="container content" [class.loaded]="!isLoading">
@@ -18,8 +23,12 @@
       <ion-card-content>
         <ion-list>
           <ion-item>
-            <ion-label><strong>Estados de Ánimo Registrados:</strong></ion-label>
-            <ion-badge color="primary">{{ user?.estadoDeAnimo?.length || 0 }}</ion-badge>
+            <ion-label
+              ><strong>Estados de Ánimo Registrados:</strong></ion-label
+            >
+            <ion-badge color="primary"
+              >{{ user?.estadoDeAnimo?.length || 0 }}</ion-badge
+            >
           </ion-item>
           <ion-item>
             <ion-label><strong>Estado Más Frecuente:</strong></ion-label>
@@ -43,10 +52,16 @@
       <ion-card-content>
         <ion-list class="mood-list">
           <ion-item *ngFor="let mood of user.estadoDeAnimo" class="mood-item">
-            <ion-chip [color]="getMoodColor(mood.estado).ionic" class="mood-chip">
-              <ion-icon [name]="getMoodIcon(mood.estado)" class="mood-icon"></ion-icon>
+            <ion-chip
+              [color]="getMoodColor(mood.estado).ionic"
+              class="mood-chip"
+            >
+              <ion-icon
+                [name]="getMoodIcon(mood.estado)"
+                class="mood-icon"
+              ></ion-icon>
               <ion-label class="mood-label">
-                <strong>{{ mood.estado }}</strong>  
+                <strong>{{ mood.estado }}</strong>
                 <span class="date">{{ formatDate(mood.fecha) }}</span>
               </ion-label>
             </ion-chip>
@@ -66,15 +81,17 @@
       <ion-card-content>
         <div class="chart-container">
           <div *ngFor="let mood of getMoodStatistics()" class="bar-container">
-            <div 
-              class="bar" 
-              [style.height]="mood.cantidad * 10 + 'px'" 
-              [style.background-color]="getMoodColor(mood.estado).hex">
+            <div
+              class="bar"
+              [style.height]="mood.cantidad * 10 + 'px'"
+              [style.background-color]="getMoodColor(mood.estado).hex"
+            >
               {{ mood.cantidad }}
             </div>
-            <ion-icon 
-              [name]="getMoodIcon(mood.estado)" 
-              [color]="getMoodColor(mood.estado).ionic">
+            <ion-icon
+              [name]="getMoodIcon(mood.estado)"
+              [color]="getMoodColor(mood.estado).ionic"
+            >
             </ion-icon>
             <span class="label">{{ mood.estado }}</span>
           </div>

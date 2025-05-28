@@ -1,5 +1,12 @@
 <ion-content>
   <!-- Botones -->
+  <div>
+    <ion-buttons slot="start">
+      <ion-menu-button
+        style="font-size: 22px; color: black"
+      ></ion-menu-button>
+    </ion-buttons>
+  </div>
   <ion-segment [(ngModel)]="activeSection" class="custom-segment">
     <ion-segment-button value="friendsList">
       <ion-icon name="people"></ion-icon>
@@ -21,7 +28,7 @@
       <ion-grid>
         <ion-row class="ion-align-items-center">
           <ion-col size="auto">
-            <ion-button (click)="toggleManageFriends()" size="small" 
+            <ion-button (click)="toggleManageFriends()" size="small"
               >{{ manageFriends ? 'Cancelar Gestión' : 'Gestionar Amigos'
               }}</ion-button
             >
@@ -55,7 +62,11 @@
               [color]="manageFriends ? 'danger' : 'primary'"
               fill="outline"
             >
-            <ion-icon color="primary" name="chatbubbles-outline" slot="icon-only"></ion-icon>
+              <ion-icon
+                color="primary"
+                name="chatbubbles-outline"
+                slot="icon-only"
+              ></ion-icon>
               {{ manageFriends ? 'Eliminar' : 'Chatear' }}
             </ion-button>
           </ion-item>
@@ -78,7 +89,8 @@
           <ion-item lines="full">
             <ion-avatar slot="start" class="custom-avatar">
               <img
-              [src]="psicologo.profileImage" alt="{{ psicologo.username }}"
+                [src]="psicologo.profileImage"
+                alt="{{ psicologo.username }}"
               />
             </ion-avatar>
             <ion-label>
@@ -92,19 +104,24 @@
               [color]="'primary'"
               fill="outline"
             >
-            <ion-icon color="primary" name="chatbubbles-outline" slot="icon-only"></ion-icon>
-            Chatear
-          </ion-button>
+              <ion-icon
+                color="primary"
+                name="chatbubbles-outline"
+                slot="icon-only"
+              ></ion-icon>
+              Chatear
+            </ion-button>
           </ion-item>
         </ion-list>
       </ion-card-content>
-    </ion-card>  
+    </ion-card>
   </div>
 
   <app-chat-box
-  *ngIf="chatOpen"
-  [contactId]="selectedContactId"
-  (closeChat)="chatOpen = false">
+    *ngIf="chatOpen"
+    [contactId]="selectedContactId"
+    (closeChat)="chatOpen = false"
+  >
   </app-chat-box>
 
   <!-- Agregar amigos -->
@@ -125,7 +142,7 @@
         </ion-item>
       </ion-card-header>
       <ion-card-content>
-        <ion-list >
+        <ion-list>
           <ion-item *ngFor="let user of filteredUsers" lines="full">
             <ion-avatar slot="start" class="custom-avatar">
               <img [src]="user.profileImage" alt="{{ user.username }}" />

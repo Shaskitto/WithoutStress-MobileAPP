@@ -29,6 +29,10 @@ ion-content {
   animation: fadeText 1.5s infinite alternate ease-in-out;
 }
 
+.plan-header {
+  margin: 10px 0 25px 10px;
+}
+
 .content {
   opacity: 0;
   transform: translateY(20px);
