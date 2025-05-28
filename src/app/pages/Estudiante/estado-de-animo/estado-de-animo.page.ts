@@ -16,7 +16,6 @@ export class EstadoDeAnimoPage implements OnInit {
   ngOnInit() {
     this.planService.plan$.subscribe(plan => {
       if (plan) {
-        console.log('Plan cargado desde el servicio:', plan);
       }
     });
   }
@@ -27,16 +26,13 @@ export class EstadoDeAnimoPage implements OnInit {
   
     this.userService.registerMood(mood).subscribe(
       response => {
-        console.log('Estado de ánimo registrado:', response);
         this.moodRegisteredToday = true;
   
         this.planService.generarPlan(mood).subscribe(
           plan => {
-            console.log('Plan generado:', plan);
             this.router.navigate(['/tabs/plan']);
           },
           error => {
-            console.error('Error al generar el plan:', error);
             alert('Ocurrió un error al generar el plan.');
             this.router.navigate(['/tabs/plan']);
           }

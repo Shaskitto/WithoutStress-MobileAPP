@@ -154,7 +154,6 @@ export class ComunidadPage implements OnInit {
   sendFriendRequest(friendId: string): void {
     this.friendsService.sendFriendRequest(friendId).subscribe(
       async (response) => {
-        console.log('Solicitud de amistad enviada:', response);
         await this.showAlert(
           'Solicitud de amistad enviada',
           'La solicitud de amistad se ha enviado correctamente.'
@@ -162,7 +161,6 @@ export class ComunidadPage implements OnInit {
         this.fetchPendingRequests();
       },
       async (error) => {
-        console.error('Error al enviar solicitud de amistad:', error);
         await this.showAlert(
           'Alerta',
           'Ya has enviado una solicitud de amistad a este usuario.'
@@ -175,13 +173,11 @@ export class ComunidadPage implements OnInit {
   acceptFriendRequest(friendId: string): void {
     this.friendsService.acceptFriendRequest(friendId).subscribe(
       (response) => {
-        console.log('Solicitud de amistad aceptada:', response);
         this.fetchPendingRequests();
         this.fetchFriends();
         this.setActiveSection('friendsList');
       },
       (error) => {
-        console.error('Error al aceptar la solicitud de amistad:', error);
       }
     );
   }
@@ -190,11 +186,9 @@ export class ComunidadPage implements OnInit {
   declineFriendRequest(friendId: string): void {
     this.friendsService.declineFriendRequest(friendId).subscribe(
       (response) => {
-        console.log('Solicitud de amistad rechazada:', response);
         this.fetchPendingRequests();
       },
       (error) => {
-        console.error('Error al rechazar la solicitud de amistad:', error);
       }
     );
   }
@@ -203,11 +197,9 @@ export class ComunidadPage implements OnInit {
   deleteFriend(friendId: string) {
     this.friendsService.deleteFriend(friendId).subscribe(
       (response) => {
-        console.log('Amigo eliminado:', response);
         this.fetchFriends();
       },
       (error) => {
-        console.error('Error al eliminar amigo:', error);
       }
     );
   }

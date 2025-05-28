@@ -93,7 +93,6 @@ export class PerfilPage implements OnInit {
         this.isValidFileType = false; 
         this.selectedFile = null;  
         this.validationMessage = 'El archivo seleccionado no es una imagen';
-        console.error(this.validationMessage);
       } else {
         this.isValidFileType = true;  
         this.selectedFile = file;
@@ -162,16 +161,13 @@ export class PerfilPage implements OnInit {
       // Actualizar usuario
       this.userService.updateUser(formData).subscribe(
         response => {
-          console.log('Usuario actualizado con éxito:', response);
 
           if (userId && horarioCambio) {
             this.planService.reorganizarPlanPorHorario(userId).subscribe(
               res => {
-                console.log('Plan reorganizado correctamente:', res);
                 this.planService.notifyPlanUpdated();
               },
               err => {
-                console.error('Error al reorganizar el plan:', err);
               }
             );
           }
@@ -180,7 +176,6 @@ export class PerfilPage implements OnInit {
           this.loadUserData(); 
         },
         error => {
-          console.error('Error al actualizar el usuario:', error);
         }
       );
     }

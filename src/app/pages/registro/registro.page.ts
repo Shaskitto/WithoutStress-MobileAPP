@@ -58,11 +58,9 @@ export class RegistroPage implements OnInit {
 
     this.authService.registerUser(this.registerForm.value).subscribe(
       response => {
-        console.log('Usuario registrado con éxito:', response);
         this.navigateLogin();
       },
       error => {
-        console.error('Error al registrar el usuario:', error);
       }
     );
   }

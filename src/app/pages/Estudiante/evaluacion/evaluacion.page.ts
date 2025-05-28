@@ -113,7 +113,6 @@ export class EvaluacionPage{
     this.userService.updateUser(this.answers).subscribe(
       response => {
         this.savedSuccessfully = true;
-        console.log(response);
 
         // Mostrar mensaje 3 segundos, luego navegar
         setTimeout(() => {
@@ -122,7 +121,6 @@ export class EvaluacionPage{
         }, 2000);
       },
       error => {
-        console.error('Error al actualizar el usuario:', error);
       }
     );
   }

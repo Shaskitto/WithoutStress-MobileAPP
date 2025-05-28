@@ -47,7 +47,6 @@ export class ChatService {
   onNuevoMensaje(): Observable<any> {
     return this.socketService.listen('new-message').pipe(  
       tap((mensaje) => {
-        console.log('Nuevo mensaje recibido:', mensaje);
         this.newMessageSubject.next(mensaje);
       })
     );

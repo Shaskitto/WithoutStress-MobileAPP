@@ -15,9 +15,7 @@ export class AuthService {
     const storedUserId = localStorage.getItem('userId');
     if (storedUserId) {
       this.userIdSubject.next(storedUserId);
-      console.log('User ID cargado desde localStorage:', storedUserId);
     } else {
-      console.warn('No se encontró el ID de usuario en localStorage.');
     }
   }
 

@@ -81,7 +81,6 @@ export class PerfilPsicologoPage implements OnInit {
         this.isValidFileType = false; 
         this.selectedFile = null;  
         this.validationMessage = 'El archivo seleccionado no es una imagen';
-        console.error(this.validationMessage);
       } else {
         this.isValidFileType = true;  
         this.selectedFile = file;
@@ -117,12 +116,10 @@ export class PerfilPsicologoPage implements OnInit {
 
       this.userService.updateUser(formData).subscribe(
         response => {
-          console.log('Usuario actualizado con éxito:', response);
           this.isEditing = false;
           this.loadUserData(); 
         },
         error => {
-          console.error('Error al actualizar el usuario:', error);
         }
       );
     }

@@ -122,11 +122,7 @@ export class CalendarioPage implements OnInit {
   loadNotes() {
     this.userService.getNotes().subscribe(
       (response) => {
-        console.log('Notas recibidas:', response); 
-
-  
         if (!response || !Array.isArray(response.notas)) {
-          console.error('Error: La respuesta no contiene un array válido', response);
           this.eventSource = [];
           return;
         }
@@ -156,7 +152,6 @@ export class CalendarioPage implements OnInit {
         
       },
       (error) => {
-        console.error('Error al cargar notas:', error);
       }
     );
   }
@@ -165,7 +160,6 @@ export class CalendarioPage implements OnInit {
   //Guardar un nuevo evento (nota)
   scheduleEvent() {
     if (!this.newEvent.startTime) {
-      console.error('Error: La fecha de inicio es requerida.');
       return;
     }
    
@@ -186,7 +180,6 @@ export class CalendarioPage implements OnInit {
 
     this.userService.createNote(note).subscribe(
       (res) => {
-        console.log('Nota creada:', res);
         this.loadNotes();
         this.modal.dismiss();
         if (this.myCal) {
@@ -194,7 +187,6 @@ export class CalendarioPage implements OnInit {
         }
       },
       (err) => {
-        console.error('Error al crear la nota:', err);
       }
     );
   }
@@ -213,7 +205,6 @@ export class CalendarioPage implements OnInit {
     };
 
     this.userService.updateNote(this.selectedEvent.noteId, updatedNote).subscribe(() => {
-      console.log('Nota actualizada');
       this.modal.dismiss();
       this.loadNotes();
       this.selectedEvent = null;
@@ -225,7 +216,6 @@ export class CalendarioPage implements OnInit {
     if (!this.selectedEvent) return;
 
     this.userService.deleteNote(this.selectedEvent.noteId).subscribe(() => {
-      console.log('Nota eliminada');
       this.modal.dismiss();
       this.loadNotes();
       this.selectedEvent = null;

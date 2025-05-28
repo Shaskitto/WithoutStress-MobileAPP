@@ -73,7 +73,6 @@ export class LoginPage {
         this.loadUserData();
       },
       (error) => {
-        console.error(error);
         this.isSubmitting = false;
 
         if (error.status === 400 || error.status === 404) {
@@ -125,11 +124,6 @@ export class LoginPage {
           return formattedEntryDate === today;
         });
 
-        console.log(
-          '¿Ya registró estado de ánimo hoy?:',
-          this.moodRegisteredToday
-        );
-
         if (!this.moodRegisteredToday) {
           this.router.navigate(['/mensaje'], { queryParams: { next: '/estado-de-animo' } });
         } else {
@@ -137,7 +131,6 @@ export class LoginPage {
         }
       },
       (error) => {
-        console.error('Error al cargar datos del usuario:', error);
       }
     );
   }
@@ -195,7 +188,6 @@ export class LoginPage {
         this.authService
           .forgotPassword(userData)
           .subscribe(async (response) => {
-            console.log('Correo de recuperación enviado:', response);
             this.codeSent = true;
             this.isSubmitting = false;
 
@@ -236,7 +228,6 @@ export class LoginPage {
 
     this.authService.resetPassword(resetData).subscribe(
       async (response) => {
-        console.log('Contraseña restablecida:', response);
         this.forgotPasswordMode = false;
         this.resetForgotPasswordFields();
 
@@ -249,7 +240,6 @@ export class LoginPage {
         await alert.present();
       },
       (error) => {
-        console.error('Error al restablecer la contraseña:', error);
 
         if (error.status === 400) {
           this.errorMessage = 'El código OTP es incorrecto';
