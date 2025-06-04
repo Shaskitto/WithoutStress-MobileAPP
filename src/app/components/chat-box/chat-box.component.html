@@ -9,21 +9,37 @@
     <!-- Contenedor de la foto de perfil y nombre -->
     <div class="user-info">
       <ion-avatar class="user-avatar" slot="start">
-        <img *ngIf="getContact(contactId)" [src]="getContact(contactId)?.profileImage" alt="User Profile Image" />
+        <img
+          *ngIf="getContact(contactId)"
+          [src]="getContact(contactId)?.profileImage"
+          alt="User Profile Image"
+        />
       </ion-avatar>
-      <ion-label class="user-name">{{ getContact(contactId)?.username }}</ion-label>
+      <ion-label class="user-name">{{
+        getContact(contactId)?.username
+      }}</ion-label>
     </div>
   </ion-toolbar>
 
   <ion-card-content class="chat-content">
     <div class="message-list" id="chat-container">
-      <div *ngFor="let msg of messages" [ngClass]="{ 'my-message': msg.sender === userId, 'their-message': msg.sender !== userId }">
+      <div
+        *ngFor="let msg of messages"
+        [ngClass]="{
+          'my-message': msg.sender === userId,
+          'their-message': msg.sender !== userId
+        }"
+      >
         <p>{{ msg.content }}</p>
       </div>
     </div>
 
     <ion-item>
-      <ion-input [(ngModel)]="newMessage" placeholder="Escribe un mensaje..."></ion-input>
+      <ion-input
+        [(ngModel)]="newMessage"
+        placeholder="Escribe un mensaje..."
+        (keydown.enter)="sendMessage()"
+      ></ion-input>
       <ion-button (click)="sendMessage()" fill="clear">
         <ion-icon name="send-outline"></ion-icon>
       </ion-button>

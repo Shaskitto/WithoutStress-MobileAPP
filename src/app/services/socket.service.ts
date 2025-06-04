@@ -7,29 +7,57 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SocketService {
-  private socket: Socket;
+  private socket: Socket | undefined;
   private apiUrl = environment.apiUrl;
 
-  constructor() { 
-    this.socket = io(this.apiUrl);
-  }
+  constructor() {}
 
-  // Método para escuchar eventos
-  listen(eventName: string): Observable<any> {
-    return new Observable((observer) => {
-      this.socket.on(eventName, (data) => {
-        observer.next(data);
+  connect(userId: string, roomId: string) {
+  this.socket = io(this.apiUrl);
+
+  this.socket.on('connect', () => {
+    console.log('✅ Conectado al servidor Socket.IO');
+
+    // Únete a la sala de chat (roomId)
+    this.socket?.emit('join-room', { roomId });
+    console.log('🟢 Usuario unido a la sala:', roomId);
+  });
+
+  this.socket.on('disconnect', () => {
+    console.log('⚠️ Desconectado del servidor Socket.IO');
+  });
+}
+
+
+  sendMessage(roomId: string, sender: string, receiver: string, content: string) {
+    if (!this.socket) return;
+
+    console.log(`Enviando mensaje a la sala ${roomId}`, { sender, receiver, content });
+    this.socket.emit('send-message', {
+      roomId,
+      sender,
+      receiver,
+      content
+    });
+  }
+  
+  onNewMessage(): Observable<any> {
+    return new Observable(observer => {
+      if (!this.socket) return;
+
+      this.socket.on('new-message', (message: any) => {
+        observer.next(message);
       });
+
+      // Limpieza al cerrar suscripción
+      return () => {
+        this.socket?.off('new-message');
+      };
     });
   }
 
-  // Método para emitir eventos
-  emit(eventName: string, data: any): void {
-    this.socket.emit(eventName, data);
-  }
-
   // Método para desconectar el socket cuando ya no se necesita
-  disconnect(): void {
-    this.socket.disconnect();
+  disconnect() {
+    this.socket?.disconnect();
   }
 }

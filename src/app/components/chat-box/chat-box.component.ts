@@ -1,101 +1,101 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { ChatService } from 'src/app/services/chat.service';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
+import { SocketService } from 'src/app/services/socket.service';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-chat-box',
   templateUrl: './chat-box.component.html',
   styleUrls: ['./chat-box.component.scss'],
 })
-export class ChatBoxComponent  implements OnInit, OnDestroy {
+export class ChatBoxComponent implements OnInit, OnDestroy {
   @Input() contactId: string = '';
   @Output() closeChat = new EventEmitter<void>();
 
-  users$: Observable<any> | undefined;
   allUsers: any[] = [];
+  filteredUsers: any[] = [];
   messages: any[] = [];
   newMessage: string = '';
   userId: string = localStorage.getItem('userId') || '';
-  filteredUsers: any[] = [];
+  roomId: string = '';
 
-  constructor(private chatService: ChatService, private userService: UserService) { }
+  private messageSubscription?: Subscription;
+
+  constructor(
+    private userService: UserService,
+    private socketService: SocketService,
+    private chatService: ChatService
+  ) {}
 
   ngOnInit(): void {
     if (this.contactId) {
       this.fetchUsers();
-      this.loadMessages();
-      this.openChatWith(this.contactId);
+      this.setupChat();
     }
-
-    // Suscribirse a nuevos mensajes
-    this.chatService.onNuevoMensaje().subscribe(mensaje => {
-      if ((mensaje.sender === this.contactId && mensaje.receiver === this.userId) ||
-          (mensaje.sender === this.userId && mensaje.receiver === this.contactId)) {
-        this.messages.push(mensaje);
-        this.scrollToBottom();
-      }
-    });
   }
 
-  // Cargar los mensajes previos
-  loadMessages() {
-    this.chatService.getMensajes(this.userId, this.contactId).subscribe(data => {
-      this.messages = data;
-      this.scrollToBottom();
-    });
-  }
-
-  // Método para cargar los datos de los usuarios
   fetchUsers() {
-    const loggedInUserId = localStorage.getItem('userId');
+    const loggedInUserId = this.userId;
 
-    this.users$ = this.userService.getUsers().pipe(
-      map((users) => {
-        const filteredUsers = users
-          .filter(
-            (user: { _id: string | null; rol: string }) =>
-              user._id !== loggedInUserId 
-          )
-          .map((user: { profileImage: string; _id: any }) => {
-            user.profileImage = this.userService.getProfileImageUrl(user._id);
-            return user;
-          });
+    this.userService.getUsers().subscribe((users: any[]) => {
+      const filteredUsers = users
+        .filter((user) => user._id !== loggedInUserId)
+        .map((user) => {
+          user.profileImage = this.userService.getProfileImageUrl(user._id);
+          return user;
+        });
 
-        this.allUsers = filteredUsers;
-        return filteredUsers;
-      })
-    );
-
-    this.users$.subscribe((users) => {
-      this.filteredUsers = users;
+      this.allUsers = filteredUsers;
+      this.filteredUsers = filteredUsers;
     });
   }
 
-  // Buscar el usuario en la lista de usuarios filtrados
-  getContact(contactId: string) {
-    return this.filteredUsers.find(user => user._id === contactId);
-  }
+  setupChat() {
+    this.roomId = [this.userId, this.contactId].sort().join('_');
 
-  // Enviar un mensaje
+    // Ahora paso userId y roomId juntos
+    this.socketService.connect(this.userId, this.roomId);
+
+    // Cargar mensajes previos entre los dos usuarios
+    this.chatService.getMensajes(this.userId, this.contactId).subscribe((msgs) => {
+      this.messages = msgs;
+      this.scrollToBottom();
+  });
+
+
+  // Suscríbete a nuevos mensajes
+  this.messageSubscription = this.socketService.onNewMessage().subscribe((mensaje: any) => {
+    if (mensaje.roomId === this.roomId) {
+      this.messages.push(mensaje);
+      this.scrollToBottom();
+    }
+  });
+
+  this.messages = [];
+}
+
   sendMessage() {
     if (!this.newMessage.trim()) return;
 
-    this.chatService.enviarMensaje(this.userId, this.contactId, this.newMessage)
-      .subscribe(() => {
-        this.loadMessages(); 
-        this.newMessage = '';
-      });
+    this.socketService.sendMessage(
+      this.roomId,
+      this.userId,
+      this.contactId,
+      this.newMessage
+    );
+
+    this.newMessage = '';
+    this.scrollToBottom();
   }
 
-  // Unirse a la sala de chat
-  openChatWith(contactId: string) {
-    const roomId = `${this.userId}_${this.contactId}`;
-    this.chatService.unirseSala(roomId);
-    this.loadMessages();
-  }
-  
-  // Desplazar el chat al fondo
   scrollToBottom() {
     setTimeout(() => {
       const el = document.getElementById('chat-container');
@@ -105,14 +105,16 @@ export class ChatBoxComponent  implements OnInit, OnDestroy {
     }, 100);
   }
 
-  // Cerrar el chat
   cerrarChat() {
     this.closeChat.emit();
   }
-  
-  // Limpiar cuando el componente se destruye
+
   ngOnDestroy() {
-    this.chatService.desconectar();
+    this.messageSubscription?.unsubscribe();
+    this.socketService.disconnect();
   }
-  
+
+  getContact(contactId: string) {
+    return this.filteredUsers.find((user) => user._id === contactId);
+  }
 }
