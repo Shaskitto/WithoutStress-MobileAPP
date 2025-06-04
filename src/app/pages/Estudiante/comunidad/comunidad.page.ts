@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { map, Observable } from 'rxjs';
+import { DiarioBotService } from 'src/app/services/diario-bot.service';
 import { FriendsService } from 'src/app/services/friends.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
@@ -23,11 +24,17 @@ export class ComunidadPage implements OnInit {
   manageFriends: boolean = false;
   chatOpen = false;
   selectedContactId: string = '';
+  textoDiario = '';
+  resultadoDiario: any = null;
+  errorDiario: string | null = null;
+  cargandoDiario = false;
+  public libroAbierto = false;
 
   constructor(
     private userService: UserService,
     private friendsService: FriendsService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private diariobotService: DiarioBotService
   ) {}
 
   // Cargar los datos de los usuarios cuando se inicializa el componente
@@ -177,8 +184,7 @@ export class ComunidadPage implements OnInit {
         this.fetchFriends();
         this.setActiveSection('friendsList');
       },
-      (error) => {
-      }
+      (error) => {}
     );
   }
 
@@ -188,8 +194,7 @@ export class ComunidadPage implements OnInit {
       (response) => {
         this.fetchPendingRequests();
       },
-      (error) => {
-      }
+      (error) => {}
     );
   }
 
@@ -199,13 +204,48 @@ export class ComunidadPage implements OnInit {
       (response) => {
         this.fetchFriends();
       },
-      (error) => {
-      }
+      (error) => {}
     );
   }
 
   goToChat(contactId: string) {
     this.selectedContactId = contactId;
     this.chatOpen = true;
+  }
+
+  analizarDiario() {
+    this.errorDiario = null;
+    this.resultadoDiario = null;
+
+    if (!this.textoDiario.trim()) {
+      this.errorDiario = 'Por favor escribe algo en tu diario';
+      return;
+    }
+
+    this.cargandoDiario = true;
+    this.diariobotService.analizarTexto(this.textoDiario).subscribe({
+      next: (res) => {
+        if (res.error) {
+          this.errorDiario = res.error;
+          this.libroAbierto = false;
+        } else {
+          this.resultadoDiario = res;
+          this.libroAbierto = true; 
+        }
+        this.cargandoDiario = false;
+      },
+      error: () => {
+        this.errorDiario = 'Error al comunicarse con la API';
+        this.cargandoDiario = false;
+        this.libroAbierto = false;
+      },
+    });
+  }
+
+  cerrarLibro() {
+    this.libroAbierto = false;
+    this.textoDiario = '';
+    this.resultadoDiario = null;
+    this.errorDiario = null;
   }
 }

@@ -2,9 +2,7 @@
   <!-- Botones -->
   <div>
     <ion-buttons slot="start">
-      <ion-menu-button
-        style="font-size: 22px; color: black"
-      ></ion-menu-button>
+      <ion-menu-button style="font-size: 22px; color: black"></ion-menu-button>
     </ion-buttons>
   </div>
   <ion-segment [(ngModel)]="activeSection" class="custom-segment">
@@ -19,6 +17,10 @@
     <ion-segment-button value="friendRequests">
       <ion-icon name="mail"></ion-icon>
       <span>Solicitudes</span>
+    </ion-segment-button>
+    <ion-segment-button value="diarioBot">
+      <ion-icon name="book"></ion-icon>
+      <span>DiarioBot</span>
     </ion-segment-button>
   </ion-segment>
 
@@ -208,5 +210,59 @@
         </ng-template>
       </ion-card-content>
     </ion-card>
+  </div>
+
+  <!-- DiarioBot -->
+  <div *ngIf="activeSection === 'diarioBot'" class="section">
+    <div class="book-cover" [class.open]="libroAbierto">
+      <!-- Portada -->
+      <div class="portada" *ngIf="!libroAbierto">
+        <h1>Tu Diario Personal</h1>
+        <p>Escribe tu reflexión</p>
+
+        <ion-textarea
+          [(ngModel)]="textoDiario"
+          placeholder="Escribe lo que sientes o piensas..."
+          rows="6"
+          autoGrow="true"
+          class="page-textarea"
+        ></ion-textarea>
+
+        <ion-button
+          expand="block"
+          (click)="analizarDiario()"
+          [disabled]="cargandoDiario || !textoDiario.trim()"
+          class="btn-reflect"
+        >
+          {{ cargandoDiario ? 'Analizando...' : 'Abrir Diario' }}
+        </ion-button>
+
+        <ion-text color="danger" *ngIf="errorDiario" style="margin-top: 10px">
+          {{ errorDiario }}
+        </ion-text>
+      </div>
+
+      <!-- Libro abierto -->
+      <div class="libro-abierto" *ngIf="libroAbierto">
+        <div class="pagina izquierda">
+          <h2>Eco de Tus Sentimientos</h2>
+          <p>{{ resultadoDiario.respuesta }}</p>
+        </div>
+        <div class="pagina derecha">
+          <h2>Actividad sugerida</h2>
+          <p>{{ resultadoDiario.actividad }}</p>
+        </div>
+      </div>
+      <!-- Botón volver a portada solo cuando libro abierto -->
+      <ion-button
+        *ngIf="libroAbierto"
+        expand="block"
+        (click)="cerrarLibro()"
+        class="btn-reflect"
+        style="margin-top: 30px;"
+      >
+        Volver a portada
+      </ion-button>
+    </div>
   </div>
 </ion-content>
