@@ -11,6 +11,14 @@ interface AnalizarRespuesta {
   raw?: any;
 }
 
+export interface EntradaDiario {
+  _id: string;
+  texto: string;
+  respuesta: string;
+  fecha: string;
+  user: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -20,8 +28,16 @@ export class DiarioBotService {
   constructor(private http: HttpClient) {}
 
   analizarTexto(texto: string): Observable<AnalizarRespuesta> {
-    // Usa la URL completa del endpoint
-    const url = `${this.apiUrl}/diario/analizar`; 
-    return this.http.post<AnalizarRespuesta>(url, { texto });
+    const userId = localStorage.getItem('userId');
+
+    const url = `${this.apiUrl}/diario/analizar`;
+    return this.http.post<AnalizarRespuesta>(url, { texto, userId  });
+  }
+
+  obtenerEntradas(): Observable<EntradaDiario[]> {
+    const userId = localStorage.getItem('userId');
+
+    const url = `${this.apiUrl}/diario/${userId}`;
+    return this.http.get<EntradaDiario[]>(url);
   }
 }

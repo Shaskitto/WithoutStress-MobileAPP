@@ -5,6 +5,7 @@ import { DiarioBotService } from 'src/app/services/diario-bot.service';
 import { FriendsService } from 'src/app/services/friends.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
+import { EntradaDiario } from 'src/app/services/diario-bot.service';
 
 @Component({
   selector: 'app-comunidad',
@@ -28,7 +29,12 @@ export class ComunidadPage implements OnInit {
   resultadoDiario: any = null;
   errorDiario: string | null = null;
   cargandoDiario = false;
+
   public libroAbierto = false;
+  diarioAbierto = false;
+  entradasDiario: EntradaDiario[] = [];
+  cargandoEntradas = false;
+  errorEntradas: string | null = null;
 
   constructor(
     private userService: UserService,
@@ -49,6 +55,7 @@ export class ComunidadPage implements OnInit {
     this.fetchUsers();
     this.fetchPendingRequests();
     this.fetchFriends();
+    this.cargarEntradasDiario();
   }
 
   // Método para mostrar alertas
@@ -230,7 +237,7 @@ export class ComunidadPage implements OnInit {
           this.libroAbierto = false;
         } else {
           this.resultadoDiario = res;
-          this.libroAbierto = true; 
+          this.libroAbierto = true;
         }
         this.cargandoDiario = false;
       },
@@ -247,5 +254,29 @@ export class ComunidadPage implements OnInit {
     this.textoDiario = '';
     this.resultadoDiario = null;
     this.errorDiario = null;
+  }
+
+  cargarEntradasDiario() {
+    this.cargandoEntradas = true;
+    this.errorEntradas = null;
+    this.diariobotService.obtenerEntradas().subscribe({
+      next: (entradas) => {
+        this.entradasDiario = entradas;
+        this.cargandoEntradas = false;
+      },
+      error: () => {
+        this.errorEntradas = 'Error al cargar las entradas del diario';
+        this.cargandoEntradas = false;
+      },
+    });
+  }
+
+  mostrarDiario() {
+    this.cargarEntradasDiario();
+    this.diarioAbierto = true;
+  }
+
+  cerrarDiario() {
+    this.diarioAbierto = false;
   }
 }
