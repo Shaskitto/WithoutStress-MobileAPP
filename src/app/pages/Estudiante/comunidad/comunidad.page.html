@@ -273,24 +273,50 @@
       </ion-button>
     </div>
       <!-- Vista leer diario: mostrar todas las entradas guardadas -->
-    <div class="diario-guardado" *ngIf="diarioAbierto">
-      <h2>Diario</h2>
-      <ion-list>
-        <ion-item *ngFor="let entrada of entradasDiario">
-          <p>{{ entrada.texto }}</p>
-          <small>{{ entrada.fecha | date:'short' }}</small>
-        </ion-item>
-      </ion-list>
+    <div class="libro-abierto" *ngIf="diarioAbierto">
+        <div class="pagina izquierda" *ngIf="mensajeIzquierda">
+          <p>{{ mensajeIzquierda.texto }}</p>
+          <small>{{ mensajeIzquierda.fecha | date:'short' }}</small>
+        </div>
 
-      <ion-button
-        expand="block"
-        (click)="cerrarDiario()"
-        class="btn-reflect"
-        style="margin-top: 20px;"
-      >
-        Cerrar Diario
-      </ion-button>
-    </div>
+        <div class="pagina derecha">
+          <ng-container *ngIf="mensajeDerecha; else paginaDerechaVacia">
+            <p>{{ mensajeDerecha.texto }}</p>
+            <small>{{ mensajeDerecha.fecha | date:'short' }}</small>
+          </ng-container>
+          <ng-template #paginaDerechaVacia>
+            <!-- Página derecha vacía para mantener el espacio -->
+            <div class="pagina-vacia"></div>
+          </ng-template>
+        </div>
+
+        <div class="botones-paginacion">
+          <ion-button
+            (click)="paginaAnterior()"
+            [disabled]="paginaActual === 0"
+            expand="block"
+          >
+            Anterior
+          </ion-button>
+
+          <ion-button
+            (click)="paginaSiguiente()"
+            [disabled]="(paginaActual + 1) * 2 >= entradasDiario.length"
+            expand="block"
+          >
+            Siguiente
+          </ion-button>
+        </div>
+
+        <ion-button
+          (click)="cerrarDiario()"
+          class="btn-reflect"
+          expand="block"
+          style="margin-top: 10px"
+        >
+          Cerrar Diario
+        </ion-button>
+      </div>
     </div>
   </div>
 </ion-content>

@@ -242,7 +242,7 @@ export class ComunidadPage implements OnInit {
         this.cargandoDiario = false;
       },
       error: () => {
-        this.errorDiario = 'Error al comunicarse con la API';
+        this.errorDiario = 'Limite excedido';
         this.cargandoDiario = false;
         this.libroAbierto = false;
       },
@@ -278,5 +278,37 @@ export class ComunidadPage implements OnInit {
 
   cerrarDiario() {
     this.diarioAbierto = false;
+  }
+
+  paginaActual = 0; // índice de página, empieza en 0
+
+  // Devuelve los mensajes que se mostrarán en la página actual (máximo 2)
+  get mensajesPaginaActual(): any[] {
+    const start = this.paginaActual * 2;
+    return this.entradasDiario.slice(start, start + 2);
+  }
+
+  // Mensaje izquierda (primer mensaje de la página actual)
+  get mensajeIzquierda(): any | null {
+    return this.mensajesPaginaActual[0] || null;
+  }
+
+  // Mensaje derecha (segundo mensaje de la página actual)
+  get mensajeDerecha(): any | null {
+    return this.mensajesPaginaActual[1] || null;
+  }
+
+  // Pasar a página siguiente
+  paginaSiguiente() {
+    if ((this.paginaActual + 1) * 2 < this.entradasDiario.length) {
+      this.paginaActual++;
+    }
+  }
+
+  // Pasar a página anterior
+  paginaAnterior() {
+    if (this.paginaActual > 0) {
+      this.paginaActual--;
+    }
   }
 }

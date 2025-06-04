@@ -56,11 +56,22 @@ ion-button:hover {
   transform: scale(1.05);
 }
 
-.chat-button { background-color: #1d3557; color: white; }
-.add-button { background-color: #007bff; }
-.accept-button { background-color: #28a745; }
-.decline-button { background-color: #dc3545; }
-.remove-button { background-color: #ff4500; }
+.chat-button {
+  background-color: #1d3557;
+  color: white;
+}
+.add-button {
+  background-color: #007bff;
+}
+.accept-button {
+  background-color: #28a745;
+}
+.decline-button {
+  background-color: #dc3545;
+}
+.remove-button {
+  background-color: #ff4500;
+}
 
 .empty-message {
   text-align: center;
@@ -75,7 +86,7 @@ ion-button:hover {
   background: var(--bg-gradient-primary);
   border-radius: var(--border-radius-xl);
   box-shadow: var(--box-shadow-lg);
-  font-family: 'Georgia', serif;
+  font-family: "Georgia", serif;
   color: var(--text-color-dark);
   user-select: none;
   transition: all 0.7s ease;
@@ -107,15 +118,13 @@ ion-button:hover {
   background: linear-gradient(135deg, #fdfcfb, #e2d1c3); /* fondo tipo papel */
   padding: 32px;
   border-radius: var(--card-radius);
-  box-shadow:
-    inset 0 0 10px rgba(0,0,0,0.1),
-    0 8px 30px rgba(0,0,0,0.2);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1), 0 8px 30px rgba(0, 0, 0, 0.2);
   color: var(--text-color-primary);
   max-width: 900px;
   margin: 40px auto;
   flex-wrap: wrap;
   position: relative;
-  font-family: 'Georgia', serif;
+  font-family: "Georgia", serif;
   user-select: text;
 }
 
@@ -129,7 +138,7 @@ ion-button:hover {
   width: 6px;
   background: linear-gradient(90deg, #a1887f, #d7c4b4, #a1887f);
   border-radius: 3px;
-  box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.3);
   transform: translateX(-50%);
   z-index: 5;
 }
@@ -138,9 +147,7 @@ ion-button:hover {
   background: #fffef9; /* papel ligeramente amarillento */
   padding: 28px 24px;
   border-radius: 8px;
-  box-shadow:
-    2px 4px 10px rgba(0,0,0,0.12),
-    inset 0 0 15px #f8f4ef;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.12), inset 0 0 15px #f8f4ef;
   flex: 1 1 45%;
   display: flex;
   flex-direction: column;
@@ -151,13 +158,11 @@ ion-button:hover {
 
 /* Sombra interior tipo página doblada */
 .pagina:hover {
-  box-shadow:
-    4px 6px 20px rgba(0,0,0,0.18),
-    inset 0 0 25px #f0e9dc;
+  box-shadow: 4px 6px 20px rgba(0, 0, 0, 0.18), inset 0 0 25px #f0e9dc;
 }
 
 .pagina h3 {
-  font-family: 'Georgia', serif;
+  font-family: "Georgia", serif;
   font-weight: 700;
   font-size: 1.6rem;
   margin-bottom: 18px;
@@ -167,18 +172,19 @@ ion-button:hover {
   letter-spacing: 0.02em;
 }
 
-.mensaje, .actividad {
+.mensaje,
+.actividad {
   background: #f9f6f0;
   margin-bottom: 14px;
   padding: 14px 18px;
   border-radius: var(--border-radius-sm);
-  box-shadow: inset 1px 1px 6px rgba(255,255,255,0.8),
-              1px 1px 3px rgba(0,0,0,0.08);
+  box-shadow: inset 1px 1px 6px rgba(255, 255, 255, 0.8),
+    1px 1px 3px rgba(0, 0, 0, 0.08);
   font-size: 1.05rem;
   color: var(--text-color-secondary);
   line-height: 1.5;
   font-style: italic;
-  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
   user-select: text;
 }
 
@@ -190,7 +196,7 @@ ion-button:hover {
     padding: 20px;
     margin: 20px auto;
   }
-  
+
   .pagina {
     flex: 1 1 100%;
     margin-bottom: 28px;
@@ -201,7 +207,6 @@ ion-button:hover {
   }
 }
 
-
 /* textarea y botón iguales a lo que ya tienes */
 .page-textarea {
   --background: var(--bg-light) !important;
@@ -209,7 +214,7 @@ ion-button:hover {
   --padding-end: 16px !important;
   --border-radius: var(--border-radius-md) !important;
   border: 2px solid var(--highlight-color) !important;
-  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif !important;
+  font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif !important;
   font-size: 1.1rem !important;
   color: var(--text-color-primary) !important;
   margin-bottom: 24px !important;
@@ -235,4 +240,26 @@ ion-button:hover {
 .btn-reflect:hover {
   --background: var(--text-color-hover);
   color: var(--bg-white);
+}
+
+.botones-paginacion {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start; /* alinea los botones a la izquierda */
+  margin-top: 20px;
+  gap: 305px; /* aumenta el espacio entre botones */
+  max-width: 400px; /* limita el ancho para que no se extiendan mucho */
+}
+
+.botones-paginacion ion-button {
+  flex: 1 1 auto; /* que los botones se adapten y tengan tamaño similar */
+  max-width: 150px; /* ancho máximo para cada botón */
+}
+
+/* En móvil se apilan */
+@media (max-width: 600px) {
+  .botones-paginacion {
+    flex-direction: column;
+    gap: 12px;
+  }
 }
