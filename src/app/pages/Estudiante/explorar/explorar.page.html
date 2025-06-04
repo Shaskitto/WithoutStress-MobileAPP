@@ -1,5 +1,5 @@
 <ion-content [fullscreen]="true">
-  <!-- Encabezado con botón de menú -->
+  <!-- Encabezado -->
   <div *ngIf="showCategories" class="plan-header">
     <ion-buttons slot="start">
       <ion-menu-button style="font-size: 22px; color: black"></ion-menu-button>
@@ -7,7 +7,7 @@
     <h1 class="plan-title">Explorar</h1>
   </div>
 
-  <!-- Botón para volver a la lista de categorías -->
+  <!-- Botón volver -->
   <div *ngIf="!showCategories" class="back-bar">
     <ion-icon
       name="arrow-back"
@@ -30,8 +30,35 @@
     </ion-card>
   </ion-list>
 
-  <!-- Recursos de la categoría seleccionada -->
-  <ion-list *ngIf="!showCategories" class="resource-list">
+  <!-- Descripción de la categoría -->
+  <div *ngIf="showDescription" class="category-description">
+  <ion-card color="light" class="description-card">
+    <ion-card-content>
+      <div class="description-flex-container">
+        <img
+          [src]="currentImage"
+          alt="{{ currentCategory }}"
+          class="description-image"
+        />
+        <div class="description-text-container">
+          <p class="description-text">{{ currentDescription }}</p>
+        </div>
+        <div class="btn-container">
+          <ion-button
+            color="primary"
+            (click)="mostrarRecursos()"
+          >
+            Siguiente
+          </ion-button>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</div>
+
+
+  <!-- Lista de recursos -->
+  <ion-list *ngIf="!showDescription && !showCategories" class="resource-list">
     <ion-card *ngFor="let resource of resources" class="resource-card">
       <ion-card-content>
         <h2 class="resource-title">{{ resource.titulo }}</h2>
