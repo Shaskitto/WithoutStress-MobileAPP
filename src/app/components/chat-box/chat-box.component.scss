@@ -1,128 +1,125 @@
 .chat-box {
   position: fixed;
-  top: 0;
+  top: env(safe-area-inset-top);
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: env(safe-area-inset-bottom);
   width: 100vw;
-  height: 100vh;
+  height: calc(100vh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
   z-index: 9999;
   display: flex;
   flex-direction: column;
   background: white;
   padding: 0;
   margin: 0;
+}
 
-  .chat-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 0;
-    margin: 0;
-    overflow: hidden;
-    width: 100%;
-    box-sizing: border-box;
-  }
+.chat-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
+  overscroll-behavior: contain;
+}
 
-  .message-list {
-    flex-grow: 1;
-    padding: 1rem 0.5rem;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-  }
+.message-list {
+  flex-grow: 1;
+  padding: 1rem 0.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;  /* IE y Edge */
+  scrollbar-width: none; 
 
-  .my-message,
-  .their-message {
-    border-radius: 10px;
-    padding: 8px 12px;
-    margin: 4px 0;
-    max-width: 80%;
-    word-wrap: break-word;
-    box-sizing: border-box;
-    color: black; 
-  }
-
-  .my-message {
-    align-self: flex-end;
-    background: #dcf8c6;
-    text-align: right;
-    margin-right: 10px;
-  }
-
-  .their-message {
-    align-self: flex-start;
-    background: #eee;
-    text-align: left;
-    margin-left: 10px;
-  }
-
-  ion-item {
-    margin: 0;
-    padding: 0;
-    --inner-padding-end: 0;
-    --inner-padding-start: 0;
-  }
-
-  /* Diseño minimalista para el input */
-  .input-container {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-top: 1px solid #ddd; 
-    background: white;
-  }
-
-  ion-input {
-    flex-grow: 1;
-    padding: 16px 15px; 
-    border-radius: 15px;
-    background: #f9f9f9; 
-    border: 1px solid #ddd; 
-    box-sizing: border-box; 
-    margin-right: 12px; 
-    color: black; 
-    font-size: 16px;
-    text-align: left; 
-  }
-
-  /* Estilo para el placeholder */
-  ion-input::placeholder {
-    color: #888; 
-    font-size: 14px;
-    padding-left: 16px; 
-    padding-right: 16px; 
-  }
-
-  ion-icon {
-    font-size: 20px;
+   &::-webkit-scrollbar {
+    display: none;           /* Chrome, Safari, Opera */
   }
 }
 
+.my-message,
+.their-message {
+  border-radius: 10px;
+  padding: 8px 12px;
+  margin: 4px 0;
+  max-width: 80%;
+  word-wrap: break-word;
+  box-sizing: border-box;
+  color: black;
+}
+
+.my-message {
+  align-self: flex-end;
+  background: #dcf8c6;
+  text-align: right;
+  margin-right: 10px;
+}
+
+.their-message {
+  align-self: flex-start;
+  background: #eee;
+  text-align: left;
+  margin-left: 10px;
+}
+
+ion-item {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  z-index: 10;
+  margin: 0;
+  padding: 0 10px;
+  border-top: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+}
+
+ion-input {
+  flex-grow: 1;
+  padding: 12px 15px;
+  border-radius: 15px;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  margin-right: 10px;
+  color: black;
+  font-size: 16px;
+}
+
+ion-input::placeholder {
+  color: #888;
+  font-size: 14px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+ion-icon {
+  font-size: 20px;
+}
 
 /* Estilos para el contenedor de foto y nombre */
 .user-info {
   display: flex;
   align-items: center;
-  gap: 10px;  // Espaciado entre la imagen y el nombre
+  gap: 10px;
 }
 
-/* Estilo para la imagen de perfil */
 .user-avatar {
-  width: 40px;  // Tamaño de la imagen de perfil
-  height: 40px;  // Tamaño de la imagen de perfil
-  border-radius: 50%;  // Hacer la imagen redonda
-  overflow: hidden;  // Asegurar que no se vea fuera del borde redondeado
-  border: 2px solid #fff;  // Borde blanco alrededor de la imagen
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);  // Sombra ligera para darle un efecto 3D
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo para el nombre de usuario */
 .user-name {
-  font-size: 16px;  // Tamaño de la fuente del nombre
-  font-weight: bold;  // Hacer que el nombre se vea más destacado
-  color: #fff;  // Color del nombre (blanco por defecto)
-  margin-left: 10px;  // Espaciado entre la imagen y el nombre
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  margin-left: 10px;
 }
-
-
