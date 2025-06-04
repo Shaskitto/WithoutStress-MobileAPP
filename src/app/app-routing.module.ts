@@ -61,7 +61,11 @@ const routes: Routes = [
   {
     path: 'mensaje',
     loadChildren: () => import('./pages/mensaje/mensaje.module').then( m => m.MensajePageModule)
+  },  {
+    path: 'preguntas',
+    loadChildren: () => import('./pages/preguntas/preguntas.module').then( m => m.PreguntasPageModule)
   }
+
 
 
 

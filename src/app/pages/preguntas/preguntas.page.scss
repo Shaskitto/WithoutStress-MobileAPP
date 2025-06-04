@@ -1,0 +1,119 @@
+.preguntas-content {
+  --background: var(--bg-gradient-primary);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+}
+
+.preguntas-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--text-color-primary);
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.plan-header {
+  margin: 10px 0 25px 10px;
+}
+
+.plan-title {
+  font-weight: bold;
+  color: #1d3557;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.preguntas-subtitle {
+  font-size: 1rem;
+  color: var(--text-color-title);
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+ion-accordion-group {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 800px;
+}
+
+ion-accordion {
+  margin-bottom: 12px;
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--box-shadow-sm);
+  transition: var(--transition-fast);
+  overflow: hidden;
+}
+
+ion-accordion ion-item {
+  --background: transparent;
+  --color: var(--text-color-title);
+  font-weight: bold;
+  font-size: 1rem;
+  transition: var(--transition-fast);
+}
+
+ion-accordion:hover ion-item {
+  --color: var(--text-color-hover);
+}
+
+ion-accordion[expanded] {
+  box-shadow: var(--box-shadow-md);
+  transform: scale(1.01);
+}
+
+ion-accordion div[slot="content"] {
+  background-color: var(--bg-white);
+  color: var(--text-color-secondary);
+  padding: 16px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive para dispositivos móviles */
+@media (max-width: 768px) {
+  .preguntas-title {
+    font-size: 1.6rem;
+  }
+
+  .preguntas-subtitle {
+    font-size: 0.9rem;
+  }
+
+  ion-accordion div[slot="content"] {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .preguntas-title {
+    font-size: 1.8rem;
+  }
+
+  .preguntas-subtitle {
+    font-size: 1rem;
+  }
+
+  ion-accordion div[slot="content"] {
+    font-size: 0.95rem;
+    padding: 14px;
+  }
+}
+
+/* Pantallas grandes */
+@media (min-width: 1024px) {
+  .preguntas-title {
+    font-size: 2rem;
+  }
+
+  .preguntas-subtitle {
+    font-size: 1.1rem;
+  }
+}
