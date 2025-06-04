@@ -5,15 +5,20 @@ ion-menu {
 
 ion-content {
   --background: var(--bg-gradient-primary);
-  --overflow: hidden;
+  --overflow: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
 }
 
+.sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
 ion-list {
-  padding-bottom: 200px;
+  
   background: rgba(255, 255, 255, 0.2);
   border-radius: var(--border-radius-md);
   box-shadow: var(--box-shadow-md);
