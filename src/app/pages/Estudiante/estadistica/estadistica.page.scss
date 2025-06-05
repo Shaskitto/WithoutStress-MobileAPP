@@ -165,7 +165,15 @@ ion-content {
 
 ion-list,
 ion-item {
-  background: var(--bg-white) !important;
-  --background: var(--bg-white) !important;
+  background: var(--bg-white);
+  --background: var(--bg-white);
+  color: black;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+ion-item:hover * {
   color: black !important;
+  opacity: 1 !important;
+  filter: none !important;
+  text-shadow: none !important;
 }

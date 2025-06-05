@@ -41,34 +41,29 @@
       </ion-card-content>
     </ion-card>
 
-    <!-- Historial de Estados de Ánimo -->
-    <ion-card *ngIf="user?.estadoDeAnimo?.length > 0" class="mood-history-card">
-      <ion-card-header>
-        <ion-card-title class="title">
-          <ion-icon name="happy-outline" class="title-icon"></ion-icon>
-          Historial de Estados de Ánimo
-        </ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-list class="mood-list">
-          <ion-item *ngFor="let mood of user.estadoDeAnimo" class="mood-item">
-            <ion-chip
+    <!-- Historial de Estados de Ánimo con Accordion -->
+    <ion-accordion-group expand="inset">
+      <!-- Agrupador de todos los acordeones -->
+      <ion-accordion *ngFor="let grupo of groupedMoods">
+        <ion-item slot="header">
+          <ion-label>{{ grupo.semana }}</ion-label>
+        </ion-item>
+        <ion-list slot="content">
+          <!-- Esto es importante: el contenido debe ir aquí -->
+          <ion-item *ngFor="let mood of grupo.moods">
+            <ion-icon
+              slot="start"
+              [name]="getMoodIcon(mood.estado)"
               [color]="getMoodColor(mood.estado).ionic"
-              class="mood-chip"
-            >
-              <ion-icon
-                [name]="getMoodIcon(mood.estado)"
-                class="mood-icon"
-              ></ion-icon>
-              <ion-label class="mood-label">
-                <strong>{{ mood.estado }}</strong>
-                <span class="date">{{ formatDate(mood.fecha) }}</span>
-              </ion-label>
-            </ion-chip>
+            ></ion-icon>
+            <ion-label>
+              <h2>{{ mood.estado }}</h2>
+              <p>{{ formatDate(mood.fecha) }}</p>
+            </ion-label>
           </ion-item>
         </ion-list>
-      </ion-card-content>
-    </ion-card>
+      </ion-accordion>
+    </ion-accordion-group>
 
     <!-- Gráfico de Estados de Ánimo -->
     <ion-card class="chart-card">
