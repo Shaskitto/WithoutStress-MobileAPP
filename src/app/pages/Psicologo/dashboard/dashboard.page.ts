@@ -24,26 +24,28 @@ export class DashboardPage implements OnInit {
           user.profileImage = this.userService.getProfileImageUrl(user._id);
           return user;
         });
-  
+
       this.estudiantes = estudiantesFiltrados;
-  
+
       setTimeout(() => {
         this.estudiantes.forEach((est) => {
           // 👇 Ajustar zona horaria de las fechas aquí
           if (est.estadoDeAnimo) {
             est.estadoDeAnimo = est.estadoDeAnimo.map((e: any) => ({
               ...e,
-              fecha: new Date(new Date(e.fecha).getTime() + new Date().getTimezoneOffset() * 60000)
+              fecha: new Date(
+                new Date(e.fecha).getTime() +
+                  new Date().getTimezoneOffset() * 60000
+              ),
             }));
           }
-  
+
           this.renderLineChart(est);
           this.renderPieChart(est);
         });
       }, 500);
     });
   }
-  
 
   renderLineChart(estudiante: any) {
     const estados = estudiante.estadoDeAnimo || [];
@@ -207,23 +209,24 @@ export class DashboardPage implements OnInit {
 
   // Convierte estados en valores numéricos para el gráfico de líneas
   estadoToValor(estado: string): number {
-    const estadosMap: any = {
-      'Muy Mal': 1,
-      Mal: 2,
-      Neutro: 3,
-      Bien: 4,
-      'Muy Bien': 5,
+    const estadosMap: Record<string, number> = {
+      'muy mal': 1,
+      mal: 2,
+      neutro: 3,
+      bien: 4,
+      'muy bien': 5,
     };
-    return estadosMap[estado] || 3;
+
+    return estadosMap[estado.toLowerCase()] || 3;
   }
 
   valorToEstado(valor: number): string {
-    const valoresMap: any = {
-      1: 'Muy Mal',
+    const valoresMap: Record<number, string> = {
+      1: 'Muy mal',
       2: 'Mal',
       3: 'Neutro',
       4: 'Bien',
-      5: 'Muy Bien',
+      5: 'Muy bien',
     };
     return valoresMap[valor] || '';
   }
